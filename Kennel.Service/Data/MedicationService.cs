@@ -1,5 +1,5 @@
 ﻿using Kennel.Data.Users;
-using Kennel.Models.Data.DogBasic;
+using Kennel.Models.Data.Medication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,58 +20,61 @@ namespace Kennel.Service.Data
         private ApplicationDbContext _context = new ApplicationDbContext();
 
         //service constructor
-        public DogBasicService(Guid userId)
+        public MedicationService(Guid userId)
         {
             _userId = userId;
         }
 
-        //Create new dogBasic
-        public async Task<bool> CreateDogBasic(DogBasicCreate model)
+        //Create new
+        public async Task<bool> CreateMedication(MedicationCreate model)
         {
-            DogBasic dogBasic =
-                new DogBasic()
+            Medication medication =
+                new Medication()
                 {
-                    DogName = model.DogName,
-                    Breed = model.Breed,
-                    Weight = model.Weight,
-                    Size = model.Size
+                    Name = model.Name,
+                    Dose = model.Dose,
+                    Instructions = model.Instructions,
+                    MorningMeal = model.MorningMeal,
+                    EveningMeal = model.EveningMeal
                 };
 
-            _context.DogBasics.Add(dogBasic);
+            _context.Medications.Add(medication);
             return await _context.SaveChangesAsync() == 1;
         }
 
-        //Get dogBasic by id
-        public async Task<List<DogBasicDetails>> GetDogBasicById([FromUri] int id)
+        //Get by id
+        public async Task<List<MedicationDetails>> GetDogMedicationById([FromUri] int id)
         {
             var query =
                 await
                 _context
-                .DogBasics
-                .Where(q => q.DogBasicId == id)
+                .Medications
+                .Where(q => q.MedicationId == id)
                 .Select(
                     q =>
-                    new DogBasicDetails()
+                    new MedicationDetails()
                     {
-                        DogName = q.DogName,
-                        Breed = q.Breed,
-                        Weight = q.Weight,
-                        Size = q.Size
+                        Name = q.Name,
+                        Dose = q.Dose,
+                        Instructions = q.Instructions,
+                        MorningMeal = q.MorningMeal,
+                        EveningMeal = q.EveningMeal
                     }).ToListAsync();
             return query;
         }
 
-        //Update area by id
-        public async Task<bool> UpdateDogBasic([FromUri] int id, [FromBody] DogBasicEdit model)
+        //Update by id
+        public async Task<bool> UpdateMedication([FromUri] int id, [FromBody] MedicationEdit model)
         {
-            DogBasic dogBasic =
+            Medication medication =
                 _context
-                .DogBasics
-                .Single(a => a.DogBasicId == id);
-            dogBasic.DogName = model.DogName;
-            dogBasic.Breed = model.Breed;
-            dogBasic.Weight = model.Weight;
-            dogBasic.Size = model.Size;
+                .Medications
+                .Single(a => a.MedicationId == id);
+            medication.Name = model.Name;
+            medication.Dose = model.Dose;
+            medication.Instructions = model.Instructions;
+            medication.MorningMeal = model.MorningMeal;
+            medication.EveningMeal = model.EveningMeal;
 
             return await _context.SaveChangesAsync() == 1;
         }

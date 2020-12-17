@@ -16,7 +16,7 @@ namespace KennelData.Data
 
         [Required]
         [ForeignKey(nameof(ApplicationUserDisplay))]
-        public string ApplicationUserId { get; set; }
+        public Guid ApplicationUserId { get; set; }
 
         public virtual ApplicationUser ApplicationUserDisplay { get; set; }
 

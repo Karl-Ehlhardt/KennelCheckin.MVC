@@ -1,5 +1,5 @@
 ﻿using Kennel.Data.Users;
-using Kennel.Models.Data.DogBasic;
+using Kennel.Models.Data.Owner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,58 +20,65 @@ namespace Kennel.Service.Data
         private ApplicationDbContext _context = new ApplicationDbContext();
 
         //service constructor
-        public DogBasicService(Guid userId)
+        public OwnerService(Guid userId)
         {
             _userId = userId;
         }
 
-        //Create new dogBasic
-        public async Task<bool> CreateDogBasic(DogBasicCreate model)
+        //Create new
+        public async Task<bool> CreateOwner(OwnerCreate model)
         {
-            DogBasic dogBasic =
-                new DogBasic()
+            Owner owner =
+                new Owner()
                 {
-                    DogName = model.DogName,
-                    Breed = model.Breed,
-                    Weight = model.Weight,
-                    Size = model.Size
+                    ApplicationUserId = _userId,
+                    Name = model.Name,
+                    Phone = model.Phone,
+                    Email = model.Email,
+                    BackupName = model.BackupName,
+                    BackupPhone = model.BackupPhone,
+                    BackupEmail = model.BackupEmail,
                 };
 
-            _context.DogBasics.Add(dogBasic);
+            _context.Owners.Add(owner);
             return await _context.SaveChangesAsync() == 1;
         }
 
-        //Get dogBasic by id
-        public async Task<List<DogBasicDetails>> GetDogBasicById([FromUri] int id)
+        //Get by id
+        public async Task<List<OwnerDetails>> GetOwnerById([FromUri] int id)
         {
             var query =
                 await
                 _context
-                .DogBasics
-                .Where(q => q.DogBasicId == id)
+                .Owners
+                .Where(q => q.OwnerId == id)
                 .Select(
                     q =>
-                    new DogBasicDetails()
+                    new OwnerDetails()
                     {
-                        DogName = q.DogName,
-                        Breed = q.Breed,
-                        Weight = q.Weight,
-                        Size = q.Size
+                        Name = q.Name,
+                        Phone = q.Phone,
+                        Email = q.Email,
+                        BackupName = q.BackupName,
+                        BackupPhone = q.BackupPhone,
+                        BackupEmail = q.BackupEmail
                     }).ToListAsync();
             return query;
         }
 
-        //Update area by id
-        public async Task<bool> UpdateDogBasic([FromUri] int id, [FromBody] DogBasicEdit model)
+        //Update by id
+        public async Task<bool> UpdateOwner([FromUri] int id, [FromBody] OwnerEdit model)
         {
-            DogBasic dogBasic =
+            Owner owner =
                 _context
-                .DogBasics
-                .Single(a => a.DogBasicId == id);
-            dogBasic.DogName = model.DogName;
-            dogBasic.Breed = model.Breed;
-            dogBasic.Weight = model.Weight;
-            dogBasic.Size = model.Size;
+                .Owners
+                .Single(a => a.OwnerId == id);
+            owner.Name = model.Name;
+            owner.Phone = model.Phone;
+            owner.Email = model.Email;
+            owner.BackupName = model.BackupName;
+            owner.BackupPhone = model.BackupPhone;
+            owner.BackupEmail = model.BackupEmail;
 
             return await _context.SaveChangesAsync() == 1;
         }

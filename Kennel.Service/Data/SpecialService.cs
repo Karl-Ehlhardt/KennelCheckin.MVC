@@ -1,5 +1,5 @@
 ﻿using Kennel.Data.Users;
-using Kennel.Models.Data.DogBasic;
+using Kennel.Models.Data.Special;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,58 +20,52 @@ namespace Kennel.Service.Data
         private ApplicationDbContext _context = new ApplicationDbContext();
 
         //service constructor
-        public DogBasicService(Guid userId)
+        public SpecialService(Guid userId)
         {
             _userId = userId;
         }
 
-        //Create new dogBasic
-        public async Task<bool> CreateDogBasic(DogBasicCreate model)
+        //Create new special
+        public async Task<bool> CreateSpecial(SpecialCreate model)
         {
-            DogBasic dogBasic =
-                new DogBasic()
+            Special special =
+                new Special()
                 {
-                    DogName = model.DogName,
-                    Breed = model.Breed,
-                    Weight = model.Weight,
-                    Size = model.Size
+                    Instructions = model.Instructions,
+                    Allergies = model.Allergies
                 };
 
-            _context.DogBasics.Add(dogBasic);
+            _context.Specials.Add(special);
             return await _context.SaveChangesAsync() == 1;
         }
 
-        //Get dogBasic by id
-        public async Task<List<DogBasicDetails>> GetDogBasicById([FromUri] int id)
+        //Get special by id
+        public async Task<List<SpecialDetails>> GetSpecialById([FromUri] int id)
         {
             var query =
                 await
                 _context
-                .DogBasics
-                .Where(q => q.DogBasicId == id)
+                .Specials
+                .Where(q => q.SpecialId == id)
                 .Select(
                     q =>
-                    new DogBasicDetails()
+                    new SpecialDetails()
                     {
-                        DogName = q.DogName,
-                        Breed = q.Breed,
-                        Weight = q.Weight,
-                        Size = q.Size
+                        Instructions = q.Instructions,
+                        Allergies = q.Allergies
                     }).ToListAsync();
             return query;
         }
 
-        //Update area by id
-        public async Task<bool> UpdateDogBasic([FromUri] int id, [FromBody] DogBasicEdit model)
+        //Update by id
+        public async Task<bool> UpdateSpecial([FromUri] int id, [FromBody] SpecialEdit model)
         {
-            DogBasic dogBasic =
+            Special special =
                 _context
-                .DogBasics
-                .Single(a => a.DogBasicId == id);
-            dogBasic.DogName = model.DogName;
-            dogBasic.Breed = model.Breed;
-            dogBasic.Weight = model.Weight;
-            dogBasic.Size = model.Size;
+                .Specials
+                .Single(a => a.SpecialId == id);
+            special.Instructions = model.Instructions;
+            special.Allergies = model.Allergies;
 
             return await _context.SaveChangesAsync() == 1;
         }
