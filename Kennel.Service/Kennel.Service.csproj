@@ -63,7 +63,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DogService.cs" />
+    <Compile Include="Data\VetService.cs" />
+    <Compile Include="Data\SpecialService.cs" />
+    <Compile Include="Data\OwnerService.cs" />
+    <Compile Include="Data\MedicationService.cs" />
+    <Compile Include="Data\FoodService.cs" />
+    <Compile Include="Data\DogImageService.cs" />
+    <Compile Include="Data\DogBasicService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,7 @@ using System.Data.Entity;
 
 namespace Kennel.Service.Data
 {
-    class DogService
+    class SpecialService
     {
         //private user field
         private readonly Guid _userId;
@@ -20,7 +20,7 @@ namespace Kennel.Service.Data
         private ApplicationDbContext _context = new ApplicationDbContext();
 
         //service constructor
-        public DogService(Guid userId)
+        public DogBasicService(Guid userId)
         {
             _userId = userId;
         }
@@ -41,8 +41,8 @@ namespace Kennel.Service.Data
             return await _context.SaveChangesAsync() == 1;
         }
 
-        //Get area by id
-        public async Task<List<DogBasicDetails>> GetAreaById([FromUri] int id)
+        //Get dogBasic by id
+        public async Task<List<DogBasicDetails>> GetDogBasicById([FromUri] int id)
         {
             var query =
                 await
@@ -59,6 +59,21 @@ namespace Kennel.Service.Data
                         Size = q.Size
                     }).ToListAsync();
             return query;
+        }
+
+        //Update area by id
+        public async Task<bool> UpdateDogBasic([FromUri] int id, [FromBody] DogBasicEdit model)
+        {
+            DogBasic dogBasic =
+                _context
+                .DogBasics
+                .Single(a => a.DogBasicId == id);
+            dogBasic.DogName = model.DogName;
+            dogBasic.Breed = model.Breed;
+            dogBasic.Weight = model.Weight;
+            dogBasic.Size = model.Size;
+
+            return await _context.SaveChangesAsync() == 1;
         }
     }
 }

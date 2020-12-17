@@ -15,7 +15,7 @@ namespace Kennel.Models.Data.DisplayOnly
         [ForeignKey(nameof(DogBasic))]
         public int DogId { get; set; }
 
-        public virtual DogBasic DogBasic { get; set; }
+        public virtual KennelData.Data.DogBasic DogBasic { get; set; }
 
         [ForeignKey(nameof(DogImage))]
         public int DogImageId { get; set; }
