@@ -1,8 +1,10 @@
 ﻿using Kennel.Data.Users;
 using Kennel.Models.Joining_Data.DogVisit;
+using KennelData.Data;
 using KennelData.JoiningData;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,24 +43,24 @@ namespace Kennel.Service.Joining
         }
 
         //Get dogVisit by id not needed
-        public async Task<List<DogVisitListItem>> GetAllDogVisit()
+        public async Task<List<DogVisitListItem>> GetAllDogVisits()
         {
             var query =
                 await
                 _context
-                .DogBasics
-                .Where(q => q.DogBasicId == id)
+                .DogVisits
                 .Select(
                     q =>
-                    new DogBasicDetails()
+                    new DogVisitListItem()
                     {
-                        DogName = q.DogName,
-                        Breed = q.Breed,
-                        Weight = q.Weight,
-                        Size = q.Size
+                        DogName = GetDogName(q.DogInfoId),
+                        DropOffTime = q.DropOffTime,
+                        PickUpTime = q.PickUpTime,
+                        Notes = q.Notes
                     }).ToListAsync();
             return query;
         }
+
 
         //Update dogVisit by id
         public async Task<bool> UpdateDogVisit([FromUri] int id, [FromBody] DogVisitEdit model)
@@ -72,6 +74,24 @@ namespace Kennel.Service.Joining
             dogVisit.Notes = model.Notes;
 
             return await _context.SaveChangesAsync() == 1;
+        }
+
+
+        //================Helpers========================
+        //Helper the get dog name
+        public string GetDogName(int id)
+        {
+            DogInfo dogInfo =
+                _context
+                .DogInfos
+                .Single(a => a.DogInfoId == id);
+
+            DogBasic dogBasic =
+                _context
+                .DogBasics
+                .Single(q => q.DogBasicId == dogInfo.DogBasicId);
+
+            return dogBasic.DogName;
         }
     }
 }
