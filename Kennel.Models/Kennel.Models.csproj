@@ -57,9 +57,9 @@
     <Compile Include="Data\DogImage\DogImageDisplay.cs" />
     <Compile Include="Data\DogImage\DogImageEdit.cs" />
     <Compile Include="Data\DogImage\DogImageCreate.cs" />
-    <Compile Include="Data\Dog\DogDetails.cs" />
-    <Compile Include="Data\Dog\DogEdit.cs" />
-    <Compile Include="Data\Dog\DogCreate.cs" />
+    <Compile Include="Data\DogBasic\DogBasicDetails.cs" />
+    <Compile Include="Data\DogBasic\DogBasicEdit.cs" />
+    <Compile Include="Data\DogBasic\DogBasicCreate.cs" />
     <Compile Include="Data\Food\FoodDetails.cs" />
     <Compile Include="Data\Food\FoodEdit.cs" />
     <Compile Include="Data\Food\FoodCreate.cs" />

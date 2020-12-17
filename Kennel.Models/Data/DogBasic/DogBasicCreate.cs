@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kennel.Models.Data.Dog
+namespace Kennel.Models.Data.DogBasic
 {
-    public class DogCreate
+    public class DogBasicCreate
     {
         [Required]
         public string DogName { get; set; }

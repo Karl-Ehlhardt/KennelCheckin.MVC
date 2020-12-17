@@ -3,6 +3,8 @@ using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using KennelData.Data;
+using KennelData.JoiningData;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -32,7 +34,17 @@ namespace Kennel.Data.Users
             return new ApplicationDbContext();
         }
 
-        //public DbSet<Note> Notes { get; set; } //<--- Add this
+        public DbSet<DogBasic> DogBasics { get; set; }
+        public DbSet<DogImage> DogImages { get; set; }
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<Medication> Medications { get; set; }
+        public DbSet<Owner> Owners { get; set; }
+        public DbSet<Special> Specials { get; set; }
+        public DbSet<Vet> Vets { get; set; }
+
+        //Joining
+        public DbSet<DogInfo> DogInfos { get; set; }
+        public DbSet<DogVisit> DogVisits { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
