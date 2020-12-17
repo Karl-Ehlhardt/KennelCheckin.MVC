@@ -70,6 +70,7 @@
     <Compile Include="Data\FoodService.cs" />
     <Compile Include="Data\DogImageService.cs" />
     <Compile Include="Data\DogBasicService.cs" />
+    <Compile Include="Joining\DogVisitService.cs" />
     <Compile Include="Joining\DogInfoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
