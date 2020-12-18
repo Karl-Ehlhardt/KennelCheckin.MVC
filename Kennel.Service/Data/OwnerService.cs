@@ -31,7 +31,7 @@ namespace Kennel.Service.Data
             Owner owner =
                 new Owner()
                 {
-                    ApplicationUserId = _userId,
+                    ApplicationUserId = _userId.ToString(),
                     Name = model.Name,
                     Phone = model.Phone,
                     Email = model.Email,
