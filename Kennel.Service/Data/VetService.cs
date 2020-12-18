@@ -59,6 +59,25 @@ namespace Kennel.Service.Data
             return query[0];
         }
 
+        //Get vet by id
+        public async Task<VetEdit> GetVetByIdEditable([FromUri] int id)
+        {
+            var query =
+                await
+                _context
+                .Vets
+                .Where(q => q.VetId == id)
+                .Select(
+                    q =>
+                    new VetEdit()
+                    {
+                        BusinessName = q.BusinessName,
+                        VetName = q.VetName,
+                        Phone = q.Phone
+                    }).ToListAsync();
+            return query[0];
+        }
+
         //Update area by id
         public async Task<bool> UpdateVet([FromUri] int id, [FromBody] VetEdit model)
         {

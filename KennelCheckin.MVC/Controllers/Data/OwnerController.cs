@@ -43,7 +43,7 @@ namespace KennelCheckin.MVC.Controllers.Data
         {
             OwnerService service = CreateOwnerService();
 
-            var model = await service.GetOwnerById(id);
+            var model = await service.GetOwnerByIdEditable(id);
 
             return View(model);
         }

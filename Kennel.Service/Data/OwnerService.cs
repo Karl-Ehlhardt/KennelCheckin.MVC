@@ -66,6 +66,28 @@ namespace Kennel.Service.Data
             return query[0];
         }
 
+        //Get by id
+        public async Task<OwnerEdit> GetOwnerByIdEditable([FromUri] int id)
+        {
+            var query =
+                await
+                _context
+                .Owners
+                .Where(q => q.OwnerId == id)
+                .Select(
+                    q =>
+                    new OwnerEdit()
+                    {
+                        Name = q.Name,
+                        Phone = q.Phone,
+                        Email = q.Email,
+                        BackupName = q.BackupName,
+                        BackupPhone = q.BackupPhone,
+                        BackupEmail = q.BackupEmail
+                    }).ToListAsync();
+            return query[0];
+        }
+
         //Update by id
         public async Task<bool> UpdateOwner([FromUri] int id, [FromBody] OwnerEdit model)
         {

@@ -57,6 +57,24 @@ namespace Kennel.Service.Data
             return query[0];
         }
 
+        //Get special by id
+        public async Task<SpecialEdit> GetSpecialByIdEditable([FromUri] int id)
+        {
+            var query =
+                await
+                _context
+                .Specials
+                .Where(q => q.SpecialId == id)
+                .Select(
+                    q =>
+                    new SpecialEdit()
+                    {
+                        Instructions = q.Instructions,
+                        Allergies = q.Allergies
+                    }).ToListAsync();
+            return query[0];
+        }
+
         //Update by id
         public async Task<bool> UpdateSpecial([FromUri] int id, [FromBody] SpecialEdit model)
         {

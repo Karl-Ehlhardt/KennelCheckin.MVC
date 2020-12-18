@@ -61,6 +61,26 @@ namespace Kennel.Service.Data
             return query[0];
         }
 
+        //Get by id
+        public async Task<FoodEdit> GetFoodByIdEditable([FromUri] int id)
+        {
+            var query =
+                await
+                _context
+                .Foods
+                .Where(q => q.FoodId == id)
+                .Select(
+                    q =>
+                    new FoodEdit()
+                    {
+                        Name = q.Name,
+                        AmountPerMeal = q.AmountPerMeal,
+                        MorningMeal = q.MorningMeal,
+                        EveningMeal = q.EveningMeal
+                    }).ToListAsync();
+            return query[0];
+        }
+
         //Update by id
         public async Task<bool> UpdateFood([FromUri] int id, [FromBody] FoodEdit model)
         {
