@@ -39,7 +39,7 @@ namespace Kennel.Service.Data
         }
 
         //Get by id
-        public async Task<List<DogImageDisplay>> GetDogImageById([FromUri] int id)
+        public async Task<DogImageDisplay> GetDogImageById([FromUri] int id)
         {
             var query =
                 await
@@ -52,7 +52,7 @@ namespace Kennel.Service.Data
                     {
                         ImgFile = q.ImgFile,
                     }).ToListAsync();
-            return query;
+            return query[0];
         }
 
         //Update by id

@@ -3,6 +3,7 @@ using Kennel.Models.Joining_Data.DogInfo;
 using KennelData.JoiningData;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,25 @@ namespace Kennel.Service.Joining
         }
 
         //Get dogInfo by id not needed
+        public async Task<DogInfoEdit> GetDogInfoById(int id)
+        {
+            var query =
+                await
+                _context
+                .DogInfos
+                .Where(q => q.DogInfoId == id)
+                .Select(
+                    q =>
+                    new DogInfoEdit()
+                    {
+                        FoodId = q.FoodId,
+                        MedicationIdList = q.MedicationIdList,
+                        SpecialId = q.SpecialId,
+                        VetId = q.VetId
+                    }).ToListAsync();
+
+            return query[0];
+        }
 
         //Update dogInfo by id
         public async Task<bool> UpdateDogInfo([FromUri] int id, [FromBody] DogInfoEdit model)

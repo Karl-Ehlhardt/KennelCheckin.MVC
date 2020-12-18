@@ -45,7 +45,7 @@ namespace Kennel.Service.Data
         }
 
         //Get by id
-        public async Task<List<OwnerDetails>> GetOwnerById([FromUri] int id)
+        public async Task<OwnerDetails> GetOwnerById([FromUri] int id)
         {
             var query =
                 await
@@ -63,7 +63,7 @@ namespace Kennel.Service.Data
                         BackupPhone = q.BackupPhone,
                         BackupEmail = q.BackupEmail
                     }).ToListAsync();
-            return query;
+            return query[0];
         }
 
         //Update by id

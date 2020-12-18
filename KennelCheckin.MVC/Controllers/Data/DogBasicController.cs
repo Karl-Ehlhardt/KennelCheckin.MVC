@@ -33,6 +33,7 @@ namespace KennelCheckin.MVC.Controllers.Data
             DogBasicService service = CreateDogBasicService();
 
             var model = await service.GetDogBasicById(id);
+
             return View(model);
         }
 
@@ -43,6 +44,7 @@ namespace KennelCheckin.MVC.Controllers.Data
             DogBasicService service = CreateDogBasicService();
 
             var model = await service.GetDogBasicById(id);
+
             return View(model);
         }
 

@@ -40,7 +40,7 @@ namespace Kennel.Service.Data
         }
 
         //Get special by id
-        public async Task<List<SpecialDetails>> GetSpecialById([FromUri] int id)
+        public async Task<SpecialDetails> GetSpecialById([FromUri] int id)
         {
             var query =
                 await
@@ -54,7 +54,7 @@ namespace Kennel.Service.Data
                         Instructions = q.Instructions,
                         Allergies = q.Allergies
                     }).ToListAsync();
-            return query;
+            return query[0];
         }
 
         //Update by id

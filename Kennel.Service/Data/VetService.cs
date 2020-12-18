@@ -41,7 +41,7 @@ namespace Kennel.Service.Data
         }
 
         //Get vet by id
-        public async Task<List<VetDetails>> GetVetById([FromUri] int id)
+        public async Task<VetDetails> GetVetById([FromUri] int id)
         {
             var query =
                 await
@@ -56,7 +56,7 @@ namespace Kennel.Service.Data
                         VetName = q.VetName,
                         Phone = q.Phone
                     }).ToListAsync();
-            return query;
+            return query[0];
         }
 
         //Update area by id

@@ -61,6 +61,25 @@ namespace Kennel.Service.Joining
             return query;
         }
 
+        public async Task<DogVisitListItem> GetDogVisitById(int id)
+        {
+            var query =
+                await
+                _context
+                .DogVisits
+                .Where(q => q.DogVisitId == id)
+                .Select(
+                    q =>
+                    new DogVisitListItem()
+                    {
+                        DogName = GetDogName(q.DogInfoId),
+                        DropOffTime = q.DropOffTime,
+                        PickUpTime = q.PickUpTime,
+                        Notes = q.Notes
+                    }).ToListAsync();
+            return query[0];
+        }
+
 
         //Update dogVisit by id
         public async Task<bool> UpdateDogVisit([FromUri] int id, [FromBody] DogVisitEdit model)

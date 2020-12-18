@@ -42,7 +42,7 @@ namespace Kennel.Service.Data
         }
 
         //Get dogBasic by id
-        public async Task<List<DogBasicDetails>> GetDogBasicById([FromUri] int id)
+        public async Task<DogBasicDetails> GetDogBasicById([FromUri] int id)
         {
             var query =
                 await
@@ -58,7 +58,7 @@ namespace Kennel.Service.Data
                         Weight = q.Weight,
                         Size = q.Size
                     }).ToListAsync();
-            return query;
+            return query[0];
         }
 
         //Update area by id

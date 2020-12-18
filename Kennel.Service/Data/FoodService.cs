@@ -42,7 +42,7 @@ namespace Kennel.Service.Data
         }
 
         //Get by id
-        public async Task<List<FoodDetails>> GetFoodById([FromUri] int id)
+        public async Task<FoodDetails> GetFoodById([FromUri] int id)
         {
             var query =
                 await
@@ -58,7 +58,7 @@ namespace Kennel.Service.Data
                         MorningMeal = q.MorningMeal,
                         EveningMeal = q.EveningMeal
                     }).ToListAsync();
-            return query;
+            return query[0];
         }
 
         //Update by id
