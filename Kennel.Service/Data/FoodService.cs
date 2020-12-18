@@ -11,7 +11,7 @@ using System.Data.Entity;
 
 namespace Kennel.Service.Data
 {
-    class FoodService
+    public class FoodService
     {
         //private user field
         private readonly Guid _userId;

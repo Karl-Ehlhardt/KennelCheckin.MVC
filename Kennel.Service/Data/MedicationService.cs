@@ -11,7 +11,7 @@ using System.Data.Entity;
 
 namespace Kennel.Service.Data
 {
-    class MedicationService
+    public class MedicationService
     {
         //private user field
         private readonly Guid _userId;

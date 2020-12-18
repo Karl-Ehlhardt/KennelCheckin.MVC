@@ -61,6 +61,26 @@ namespace Kennel.Service.Data
             return query[0];
         }
 
+        //Get dogBasic by id Editable
+        public async Task<DogBasicEdit> GetDogBasicByIdEditable([FromUri] int id)
+        {
+            var query =
+                await
+                _context
+                .DogBasics
+                .Where(q => q.DogBasicId == id)
+                .Select(
+                    q =>
+                    new DogBasicEdit()
+                    {
+                        DogName = q.DogName,
+                        Breed = q.Breed,
+                        Weight = q.Weight,
+                        Size = q.Size
+                    }).ToListAsync();
+            return query[0];
+        }
+
         //Update area by id
         public async Task<bool> UpdateDogBasic([FromUri] int id, [FromBody] DogBasicEdit model)
         {

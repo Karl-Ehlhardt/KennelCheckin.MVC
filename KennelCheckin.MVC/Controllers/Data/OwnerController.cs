@@ -1,4 +1,4 @@
-﻿using Kennel.Models.Data.DogBasic;
+﻿using Kennel.Models.Data.Owner;
 using Kennel.Service.Data;
 using Microsoft.AspNet.Identity;
 using System;
@@ -10,13 +10,13 @@ using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.Data
 {
-    public class DogBasicController : Controller
+    public class OwnerController : Controller
     {
-        private DogBasicService CreateDogBasicService()
+        private OwnerService CreateOwnerService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
-            var dogBasicService = new DogBasicService(userId);
-            return dogBasicService;
+            var ownerService = new OwnerService(userId);
+            return ownerService;
         }
 
         //Add method here VVVV
@@ -30,9 +30,9 @@ namespace KennelCheckin.MVC.Controllers.Data
         //GET
         public async Task<ActionResult> Details(int id)
         {
-            DogBasicService service = CreateDogBasicService();
+            OwnerService service = CreateOwnerService();
 
-            var model = await service.GetDogBasicById(id);
+            var model = await service.GetOwnerById(id);
 
             return View(model);
         }
@@ -41,9 +41,9 @@ namespace KennelCheckin.MVC.Controllers.Data
         //GET
         public async Task<ActionResult> Edit(int id)
         {
-            DogBasicService service = CreateDogBasicService();
+            OwnerService service = CreateOwnerService();
 
-            var model = await service.GetDogBasicByIdEditable(id);
+            var model = await service.GetOwnerById(id);
 
             return View(model);
         }
@@ -51,13 +51,13 @@ namespace KennelCheckin.MVC.Controllers.Data
         //Add code here vvvv
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(DogBasicCreate model)
+        public async Task<ActionResult> Create(OwnerCreate model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var service = CreateDogBasicService();
+            var service = CreateOwnerService();
 
-            if (await service.CreateDogBasic(model))
+            if (await service.CreateOwner(model))
             {
                 TempData["SaveResult"] = "Your note was created.";
                 return RedirectToAction("Create");
@@ -72,13 +72,13 @@ namespace KennelCheckin.MVC.Controllers.Data
         [HttpPost]
         [ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, DogBasicEdit model)
+        public async Task<ActionResult> Edit(int id, OwnerEdit model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var service = CreateDogBasicService();
+            var service = CreateOwnerService();
 
-            if (await service.UpdateDogBasic(id, model))
+            if (await service.UpdateOwner(id, model))
             {
                 TempData["SaveResult"] = "Your note was edited.";
                 return RedirectToAction("Create");

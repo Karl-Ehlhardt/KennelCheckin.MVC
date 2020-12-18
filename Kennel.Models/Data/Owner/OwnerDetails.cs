@@ -11,16 +11,25 @@ namespace Kennel.Models.Data.Owner
 {
     public class OwnerDetails
     {
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Phone { get; set; }
 
+        [Required]
         public string Email { get; set; }
 
+        [Required]
+        [Display(Name = "Backup Name")]
         public string BackupName { get; set; }
 
+        [Required]
+        [Display(Name = "Backup Phone")]
         public string BackupPhone { get; set; }
 
+        [Required]
+        [Display(Name = "Backup Email")]
         public string BackupEmail { get; set; }
     }
 }
