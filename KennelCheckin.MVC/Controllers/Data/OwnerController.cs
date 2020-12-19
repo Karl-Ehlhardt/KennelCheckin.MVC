@@ -21,9 +21,14 @@ namespace KennelCheckin.MVC.Controllers.Data
 
         //Add method here VVVV
         //GET
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            OwnerService service = CreateOwnerService();
+            if (await service.CheckOwnerExists())//True if there is no owner set up
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "DogInfo");
         }
 
         //Add method here VVVV

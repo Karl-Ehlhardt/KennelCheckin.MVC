@@ -13,6 +13,7 @@ namespace Kennel.Service.Data
 {
     public class DogBasicService
     {
+
         //private user field
         private readonly Guid _userId;
 
@@ -23,6 +24,17 @@ namespace Kennel.Service.Data
         public DogBasicService(Guid userId)
         {
             _userId = userId;
+        }
+
+        public async Task<bool> CheckOwner()
+        {
+
+            Owner owner =
+                _context
+                .Owners
+                .SingleOrDefault(a => a.ApplicationUserId == _userId.ToString());
+
+            return owner == null;
         }
 
         //Create new dogBasic

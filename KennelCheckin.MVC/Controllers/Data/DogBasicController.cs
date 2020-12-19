@@ -1,5 +1,7 @@
 ﻿using Kennel.Models.Data.DogBasic;
+using Kennel.Models.Joining_Data.DogInfo;
 using Kennel.Service.Data;
+using Kennel.Service.Joining;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -19,10 +21,22 @@ namespace KennelCheckin.MVC.Controllers.Data
             return dogBasicService;
         }
 
+        private DogInfoService CreateDogInfoService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var dogInfoService = new DogInfoService(userId);
+            return dogInfoService;
+        }
+
         //Add method here VVVV
         //GET
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            DogBasicService service = CreateDogBasicService();
+            if (await service.CheckOwner())//True if there is no owner set up
+            {
+                return RedirectToAction("Create", "Owner");
+            }
             return View();
         }
 
@@ -59,7 +73,8 @@ namespace KennelCheckin.MVC.Controllers.Data
 
             if (await service.CreateDogBasic(model))
             {
-                TempData["SaveResult"] = "Your note was created.";
+                DogInfoService infoService = CreateDogInfoService();
+                await infoService.CreateDogInfo();
                 return RedirectToAction("Create");
             };
 

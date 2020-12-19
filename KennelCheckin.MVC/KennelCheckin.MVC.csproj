@@ -171,6 +171,7 @@
     <Compile Include="Controllers\Data\OwnerController.cs" />
     <Compile Include="Controllers\Data\DogBasicController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Joining Data\DogInfoController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -242,6 +243,7 @@
     <Content Include="Views\Owner\Create.cshtml" />
     <Content Include="Views\Owner\Details.cshtml" />
     <Content Include="Views\Owner\Edit.cshtml" />
+    <Content Include="Views\DogInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

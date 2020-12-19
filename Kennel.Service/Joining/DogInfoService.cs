@@ -1,5 +1,6 @@
 ﻿using Kennel.Data.Users;
 using Kennel.Models.Joining_Data.DogInfo;
+using KennelData.Data;
 using KennelData.JoiningData;
 using System;
 using System.Collections.Generic;
@@ -26,13 +27,23 @@ namespace Kennel.Service.Joining
         }
 
         //Create new dogInfo
-        public async Task<bool> CreateDogInfo(DogInfoCreate model)
-        {
+        public async Task<bool> CreateDogInfo()
+        {                       
+            DogBasic dogBasic = 
+                _context
+                .DogBasics.OrderByDescending(p => p.DogBasicId)
+                .FirstOrDefault();
+
+            Owner owner =
+                _context
+                .Owners
+                .Single(a => a.ApplicationUserId == _userId.ToString());
+
             DogInfo dogInfo =
                 new DogInfo()
                 {
-                    DogBasicId = model.DogBasicId,
-                    OwnerId = model.OwnerId
+                    DogBasicId = dogBasic.DogBasicId,
+                    OwnerId = owner.OwnerId
                 };
 
             _context.DogInfos.Add(dogInfo);

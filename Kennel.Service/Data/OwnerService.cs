@@ -25,6 +25,17 @@ namespace Kennel.Service.Data
             _userId = userId;
         }
 
+        public async Task<bool> CheckOwnerExists()
+        {
+
+            Owner owner =
+                _context
+                .Owners
+                .SingleOrDefault(a => a.ApplicationUserId == _userId.ToString());
+
+            return owner == null;
+        }
+
         //Create new
         public async Task<bool> CreateOwner(OwnerCreate model)
         {
