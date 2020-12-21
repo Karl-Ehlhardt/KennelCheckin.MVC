@@ -1,7 +1,39 @@
-﻿
+﻿@model Kennel.Models.Data.DisplayOnly.DogInfoIndexView
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>MainPage</h2>
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Edit Profile", "Edit", "Owner", new { id = Model.Owner.OwnerId }, null)
+</p>
 
+<table class="table">
+    <br />
+    <tr>
+<p>
+    @Html.ActionLink("Create New Dog", "Create", "DogBasic")
+</p>
+    </tr>
+    <tr>
+        <th>
+            <h1>Dog Name</h1>
+        </th>
+        <th></th>
+    </tr>
+
+    @for (int i = 0; i < Model.DogBasic.Count(); i++)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.DogBasic.ElementAt(i).DogName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = Model.DogInfo.ElementAt(i).DogInfoId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = Model.DogInfo.ElementAt(i).DogInfoId })
+            </td>
+        </tr>
+    }
+
+</table>

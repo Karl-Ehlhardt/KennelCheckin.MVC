@@ -10,6 +10,7 @@ namespace KennelData.Data
     public class DogBasic
     {
         [Key]
+        [Display(Name = "Dog Name")]
         public int DogBasicId { get; set; }
 
         [Required]

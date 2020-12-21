@@ -75,7 +75,7 @@ namespace KennelCheckin.MVC.Controllers.Data
             {
                 DogInfoService infoService = CreateDogInfoService();
                 await infoService.CreateDogInfo();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index", "DogInfo");
             };
 
             ModelState.AddModelError("", "Note could not be created.");
@@ -96,7 +96,7 @@ namespace KennelCheckin.MVC.Controllers.Data
             if (await service.UpdateDogBasic(id, model))
             {
                 TempData["SaveResult"] = "Your note was edited.";
-                return RedirectToAction("Create");
+                return RedirectToAction("Index", "DogInfo");
             };
 
             ModelState.AddModelError("", "Note could not be edited.");

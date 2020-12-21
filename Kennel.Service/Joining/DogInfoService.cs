@@ -1,4 +1,5 @@
 ﻿using Kennel.Data.Users;
+using Kennel.Models.Data.DisplayOnly;
 using Kennel.Models.Joining_Data.DogInfo;
 using KennelData.Data;
 using KennelData.JoiningData;
@@ -28,8 +29,8 @@ namespace Kennel.Service.Joining
 
         //Create new dogInfo
         public async Task<bool> CreateDogInfo()
-        {                       
-            DogBasic dogBasic = 
+        {
+            DogBasic dogBasic =
                 _context
                 .DogBasics.OrderByDescending(p => p.DogBasicId)
                 .FirstOrDefault();
@@ -50,7 +51,39 @@ namespace Kennel.Service.Joining
             return await _context.SaveChangesAsync() == 1;
         }
 
-        //Get dogInfo by id not needed
+        //Create new dogInfo
+        public async Task<DogInfoIndexView> DisplayDogInfoIndexView()
+        {
+            Owner owner =
+                _context
+                .Owners
+                .SingleOrDefault(a => a.ApplicationUserId == _userId.ToString());
+
+            IEnumerable<DogInfo> dogInfo =
+                await
+                _context
+                .DogInfos
+                .Where(q => q.OwnerId == owner.OwnerId)
+                .ToListAsync();
+
+
+            List<DogBasic> dogBasic = new List<DogBasic>();
+
+            foreach (DogInfo dogIn in dogInfo)
+            {
+                DogBasic item =
+                await
+                _context
+                .DogBasics
+                .SingleAsync(q => q.DogBasicId == dogIn.DogBasicId);
+                dogBasic.Add(item);
+            }
+
+            DogInfoIndexView model = new DogInfoIndexView(dogBasic.AsEnumerable(), owner, dogInfo);
+
+            return model;
+        }
+
         public async Task<DogInfoEdit> GetDogInfoById(int id)
         {
             var query =
