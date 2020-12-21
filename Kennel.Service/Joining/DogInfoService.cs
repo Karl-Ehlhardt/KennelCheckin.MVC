@@ -27,6 +27,17 @@ namespace Kennel.Service.Joining
             _userId = userId;
         }
 
+        public async Task<bool> CheckOwnerExists()
+        {
+            Owner owner =
+                await
+                _context
+                .Owners
+                .SingleOrDefaultAsync(a => a.ApplicationUserId == _userId.ToString());
+
+            return owner == null;
+        }
+
         //Create new dogInfo
         public async Task<bool> CreateDogInfo()
         {
@@ -84,24 +95,23 @@ namespace Kennel.Service.Joining
             return model;
         }
 
-        public async Task<DogInfoEdit> GetDogInfoById(int id)
+        public async Task<DogInfoDetails> GetDogInfoById(int id)
         {
-            var query =
+            DogInfo dogInfo =
                 await
                 _context
                 .DogInfos
-                .Where(q => q.DogInfoId == id)
-                .Select(
-                    q =>
-                    new DogInfoEdit()
-                    {
-                        FoodId = q.FoodId,
-                        MedicationIdList = q.MedicationIdList,
-                        SpecialId = q.SpecialId,
-                        VetId = q.VetId
-                    }).ToListAsync();
+                .SingleAsync(q => q.DogInfoId == id);
 
-            return query[0];
+            DogBasic dogBasic =
+                await
+                _context
+                .DogBasics
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
+
+            DogInfoDetails model = new DogInfoDetails(dogBasic);
+
+            return model;
         }
 
         //Update dogInfo by id

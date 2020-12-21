@@ -244,6 +244,7 @@
     <Content Include="Views\Owner\Details.cshtml" />
     <Content Include="Views\Owner\Edit.cshtml" />
     <Content Include="Views\DogInfo\Index.cshtml" />
+    <Content Include="Views\DogInfo\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

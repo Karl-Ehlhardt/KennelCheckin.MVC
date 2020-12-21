@@ -26,7 +26,21 @@ namespace KennelCheckin.MVC.Controllers.Joining_Data
         {
             DogInfoService service = CreateDogInfoService();
 
+            if (await service.CheckOwnerExists())//True if there is no owner set up
+            {
+                return RedirectToAction("Create", "Owner");
+            }
+
             DogInfoIndexView mymodel = await service.DisplayDogInfoIndexView();
+
+            return View(mymodel);
+        }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            DogInfoService service = CreateDogInfoService();
+
+            DogInfoDetails mymodel = await service.GetDogInfoById(id);
 
             return View(mymodel);
         }

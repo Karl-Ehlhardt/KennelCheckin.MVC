@@ -78,7 +78,7 @@ namespace KennelCheckin.MVC.Controllers.Data
                 return RedirectToAction("Index", "DogInfo");
             };
 
-            ModelState.AddModelError("", "Note could not be created.");
+            ModelState.AddModelError("", "Dog could not be added");
 
             return View(model);
         }
@@ -95,11 +95,11 @@ namespace KennelCheckin.MVC.Controllers.Data
 
             if (await service.UpdateDogBasic(id, model))
             {
-                TempData["SaveResult"] = "Your note was edited.";
+                //TempData["SaveResult"] = "Your note was edited.";
                 return RedirectToAction("Index", "DogInfo");
             };
 
-            ModelState.AddModelError("", "Note could not be edited.");
+            ModelState.AddModelError("", "Dog could not be edited.");
 
             return View(model);
         }

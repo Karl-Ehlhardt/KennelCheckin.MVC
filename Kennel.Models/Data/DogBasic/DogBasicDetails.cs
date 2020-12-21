@@ -9,6 +9,8 @@ namespace Kennel.Models.Data.DogBasic
 {
     public class DogBasicDetails
     {
+        public int DogBasicId { get; set; }
+
         [Display(Name = "Dog Name")]
         public string DogName { get; set; }
         public string Breed { get; set; }

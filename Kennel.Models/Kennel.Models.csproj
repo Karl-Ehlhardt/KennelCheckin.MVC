@@ -75,6 +75,7 @@
     <Compile Include="Data\Vet\VetDetails.cs" />
     <Compile Include="Data\Vet\VetEdit.cs" />
     <Compile Include="Data\Vet\VetCreate.cs" />
+    <Compile Include="DisplayOnly\DogInfoDetails.cs" />
     <Compile Include="DisplayOnly\DogInfoIndexView.cs" />
     <Compile Include="Joining Data\DogInfo\DogInfoEdit.cs" />
     <Compile Include="Joining Data\DogInfo\DogInfoCreate.cs" />

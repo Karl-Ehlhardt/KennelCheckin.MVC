@@ -1,0 +1,51 @@
+﻿@model Kennel.Models.Data.DisplayOnly.DogInfoDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DogBasicDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DogBasic.DogName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogBasic.DogName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DogBasic.Breed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogBasic.Breed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DogBasic.Weight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogBasic.Weight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DogBasic.Size)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogBasic.Size)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", "DogBasic", new { id = Model.DogBasic.DogBasicId }, null) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+

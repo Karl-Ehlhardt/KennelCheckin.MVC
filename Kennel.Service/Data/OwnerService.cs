@@ -29,9 +29,10 @@ namespace Kennel.Service.Data
         {
 
             Owner owner =
+                await
                 _context
                 .Owners
-                .SingleOrDefault(a => a.ApplicationUserId == _userId.ToString());
+                .SingleOrDefaultAsync(a => a.ApplicationUserId == _userId.ToString());
 
             return owner == null;
         }
@@ -67,6 +68,7 @@ namespace Kennel.Service.Data
                     q =>
                     new OwnerDetails()
                     {
+                        OwnerId = q.OwnerId,
                         Name = q.Name,
                         Phone = q.Phone,
                         Email = q.Email,

@@ -64,11 +64,11 @@ namespace KennelCheckin.MVC.Controllers.Data
 
             if (await service.CreateOwner(model))
             {
-                TempData["SaveResult"] = "Your note was created.";
-                return RedirectToAction("Create");
+                //TempData["SaveResult"] = "Your note was created.";
+                return RedirectToAction("Index", "DogInfo");
             };
 
-            ModelState.AddModelError("", "Note could not be created.");
+            ModelState.AddModelError("", "Owner information could not be created.");
 
             return View(model);
         }
@@ -85,11 +85,11 @@ namespace KennelCheckin.MVC.Controllers.Data
 
             if (await service.UpdateOwner(id, model))
             {
-                TempData["SaveResult"] = "Your note was edited.";
-                return RedirectToAction("Create");
+                //TempData["SaveResult"] = "Your note was edited.";
+                return RedirectToAction("Index", "DogInfo");
             };
 
-            ModelState.AddModelError("", "Note could not be edited.");
+            ModelState.AddModelError("", "Owner information could not be edited.");
 
             return View(model);
         }
