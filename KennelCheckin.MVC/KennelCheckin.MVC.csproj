@@ -172,6 +172,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Data\SpecialController.cs" />
     <Compile Include="Controllers\Data\FoodController.cs" />
     <Compile Include="Controllers\Data\OwnerController.cs" />
     <Compile Include="Controllers\Data\DogBasicController.cs" />
@@ -254,6 +255,10 @@
     <Content Include="Views\Food\Details.cshtml" />
     <Content Include="Views\Food\Edit.cshtml" />
     <Content Include="Views\Food\Delete.cshtml" />
+    <Content Include="Views\Special\Create.cshtml" />
+    <Content Include="Views\Special\Details.cshtml" />
+    <Content Include="Views\Special\Edit.cshtml" />
+    <Content Include="Views\Special\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

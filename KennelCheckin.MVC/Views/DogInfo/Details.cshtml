@@ -102,3 +102,37 @@
     }
 </div>
 
+<div>
+    <h4>SpecialDetails</h4>
+    <hr />
+    @if (Model.DogInfo.SpecialId == 0)
+    {
+        @Html.ActionLink("Add", "Create", "Special", new { id = Model.DogInfo.DogInfoId }, null)
+    }
+    else
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Special.Instructions)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Special.Instructions)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Special.Allergies)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Special.Allergies)
+            </dd>
+
+        </dl>
+        <p>
+            @Html.ActionLink("Edit", "Edit", "Special", new { id = Model.Food.FoodId }, null)|
+            @Html.ActionLink("Delete", "Delete", "Special", new { id = Model.Food.FoodId }, null)
+        </p>
+    }
+</div>
+

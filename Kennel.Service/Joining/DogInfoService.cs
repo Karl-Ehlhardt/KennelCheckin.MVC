@@ -118,8 +118,18 @@ namespace Kennel.Service.Joining
                 _context
                 .Foods
                 .SingleOrDefaultAsync(q => q.FoodId == dogInfo.FoodId);
+            Special special =
+                await
+                _context
+                .Specials
+                .SingleOrDefaultAsync(q => q.SpecialId == dogInfo.SpecialId);
+            Vet vet =
+                await
+                _context
+                .Vets
+                .SingleOrDefaultAsync(q => q.VetId == dogInfo.VetId);
 
-            DogInfoDetails model = new DogInfoDetails(dogInfo, dogBasic, food);
+            DogInfoDetails model = new DogInfoDetails(dogInfo, dogBasic, food, special, vet);
 
             return model;
         }
