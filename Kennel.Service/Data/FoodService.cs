@@ -95,5 +95,17 @@ namespace Kennel.Service.Data
 
             return await _context.SaveChangesAsync() == 1;
         }
+
+        public async Task<bool> DeleteFood(int id)
+        {
+                var entity =
+                    _context
+                    .Foods
+                    .Single(e => e.FoodId == id);
+
+            _context.Foods.Remove(entity);
+
+                return await _context.SaveChangesAsync() == 1;
+        }
     }
 }

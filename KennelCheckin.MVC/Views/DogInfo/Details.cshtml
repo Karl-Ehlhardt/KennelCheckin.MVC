@@ -95,9 +95,10 @@
             </dd>
 
         </dl>
-<p>
-    @Html.ActionLink("Edit", "Edit", "Food", new { id = Model.Food.FoodId }, null)
-</p>
+        <p>
+            @Html.ActionLink("Edit", "Edit", "Food", new { id = Model.Food.FoodId }, null)|
+            @Html.ActionLink("Delete", "Delete", "Food", new { id = Model.Food.FoodId }, null)
+        </p>
     }
 </div>
 

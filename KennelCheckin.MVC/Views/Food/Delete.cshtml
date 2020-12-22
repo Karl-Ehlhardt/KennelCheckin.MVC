@@ -1,0 +1,56 @@
+﻿@model Kennel.Models.Data.Food.FoodDetails
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>FoodDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountPerMeal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountPerMeal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MorningMeal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MorningMeal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EveningMeal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EveningMeal)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

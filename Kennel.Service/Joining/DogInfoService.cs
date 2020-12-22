@@ -158,7 +158,7 @@ namespace Kennel.Service.Joining
                     .FirstOrDefaultAsync();
                     dogInfo.VetId = vet.VetId;
                     break;
-                case "MedicationAdd":
+                case "Medication":
                     Medication medication =
                         await
                     _context
@@ -168,6 +168,54 @@ namespace Kennel.Service.Joining
                     break;
                 default:
                     return false;
+            }
+
+            return await _context.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> UpdateDogInfoRemove(int id, string mark)
+        {
+            switch (mark)
+            {
+                case "Food":
+                    DogInfo dogInfoFood =
+                        await
+                        _context
+                        .DogInfos
+                        .SingleAsync(a => a.FoodId == id);
+                    dogInfoFood.FoodId = 0;
+                    return await _context.SaveChangesAsync() == 1;
+                case "Special":
+                    DogInfo dogInfoSpecial =
+                        await
+                        _context
+                        .DogInfos
+                        .SingleAsync(a => a.SpecialId == id);
+                    dogInfoSpecial.SpecialId = 0;
+                    return await _context.SaveChangesAsync() == 1;
+                case "Vet":
+                    DogInfo dogInfoVet =
+                        await
+                        _context
+                        .DogInfos
+                        .SingleAsync(a => a.VetId == id);
+                    dogInfoVet.VetId = 0;
+                    return await _context.SaveChangesAsync() == 1;
+                case "Medication":
+                    foreach (DogInfo dogInfo in _context.DogInfos)
+                    {
+                        for (int i = 0; i < dogInfo.MedicationIdList.Count(); ++i)
+                        {
+                            if (dogInfo.MedicationIdList[i] == id)
+                            {
+                                dogInfo.MedicationIdList.RemoveAt(i);
+                                return await _context.SaveChangesAsync() == 1;
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
 
             return await _context.SaveChangesAsync() == 1;

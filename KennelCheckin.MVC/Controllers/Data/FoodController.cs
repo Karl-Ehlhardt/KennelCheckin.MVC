@@ -57,6 +57,16 @@ namespace KennelCheckin.MVC.Controllers.Data
             return View(model);
         }
 
+        //Add method here VVVV
+        //GET
+        public async Task<ActionResult> Delete(int id)
+        {
+            FoodService service = CreateFoodService();
+
+            var model = await service.GetFoodById(id);
+            return View(model);
+        }
+
         //Add code here vvvv
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
@@ -97,6 +107,26 @@ namespace KennelCheckin.MVC.Controllers.Data
             ModelState.AddModelError("", "Dog could not be edited.");
 
             return View(model);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteFood(int id)
+        {
+
+            var service = CreateFoodService();
+
+            DogInfoService infoService = CreateDogInfoService();
+            if (await infoService.UpdateDogInfoRemove(id, "Food"))
+            {
+                await service.DeleteFood(id);
+                return RedirectToAction("Index", "DogInfo");
+            };
+
+            ModelState.AddModelError("", "Food could not be deleted.");
+
+            return await Delete(id);
         }
     }
 }
