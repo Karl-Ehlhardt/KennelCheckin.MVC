@@ -172,6 +172,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Data\VetController.cs" />
     <Compile Include="Controllers\Data\SpecialController.cs" />
     <Compile Include="Controllers\Data\FoodController.cs" />
     <Compile Include="Controllers\Data\OwnerController.cs" />
@@ -259,6 +260,10 @@
     <Content Include="Views\Special\Details.cshtml" />
     <Content Include="Views\Special\Edit.cshtml" />
     <Content Include="Views\Special\Delete.cshtml" />
+    <Content Include="Views\Vet\Create.cshtml" />
+    <Content Include="Views\Vet\Details.cshtml" />
+    <Content Include="Views\Vet\Edit.cshtml" />
+    <Content Include="Views\Vet\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
