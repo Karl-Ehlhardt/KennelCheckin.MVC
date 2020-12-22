@@ -6,6 +6,10 @@
 
 <h2>Details</h2>
 
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
 <div>
     <h4>DogBasicDetails</h4>
     <hr />
@@ -43,9 +47,57 @@
         </dd>
 
     </dl>
+    <p>
+        @Html.ActionLink("Edit", "Edit", "DogBasic", new { id = Model.DogBasic.DogBasicId }, null)
+    </p>
 </div>
+
+<div>
+    <h4>FoodDetails</h4>
+    <hr />
+    @if (Model.DogInfo.FoodId == 0)
+    {
+        @Html.ActionLink("Add", "Create", "Food", new { id = Model.DogInfo.DogInfoId }, null)
+    }
+    else
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Food.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Food.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Food.AmountPerMeal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Food.AmountPerMeal)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Food.MorningMeal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Food.MorningMeal)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Food.EveningMeal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Food.EveningMeal)
+            </dd>
+
+        </dl>
 <p>
-    @Html.ActionLink("Edit", "Edit", "DogBasic", new { id = Model.DogBasic.DogBasicId }, null) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", "Food", new { id = Model.Food.FoodId }, null)
 </p>
+    }
+</div>
 

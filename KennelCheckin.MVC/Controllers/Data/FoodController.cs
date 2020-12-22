@@ -1,4 +1,4 @@
-﻿using Kennel.Models.Data.DogBasic;
+﻿using Kennel.Models.Data.Food;
 using Kennel.Models.Joining_Data.DogInfo;
 using Kennel.Service.Data;
 using Kennel.Service.Joining;
@@ -8,19 +8,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.Data
 {
-    public class DogBasicController : Controller
+    public class FoodController : Controller
     {
-        private DogBasicService CreateDogBasicService()
+        private FoodService CreateFoodService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
-            var dogBasicService = new DogBasicService(userId);
-            return dogBasicService;
+            var foodService = new FoodService(userId);
+            return foodService;
         }
-
         private DogInfoService CreateDogInfoService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
@@ -30,13 +30,8 @@ namespace KennelCheckin.MVC.Controllers.Data
 
         //Add method here VVVV
         //GET
-        public async Task<ActionResult> Create()
+        public async Task<ActionResult> Create()//ID of the DogInfo
         {
-            DogBasicService service = CreateDogBasicService();
-            if (await service.CheckOwner())//True if there is no owner set up
-            {
-                return RedirectToAction("Create", "Owner");
-            }
             return View();
         }
 
@@ -44,9 +39,9 @@ namespace KennelCheckin.MVC.Controllers.Data
         //GET
         public async Task<ActionResult> Details(int id)
         {
-            DogBasicService service = CreateDogBasicService();
+            FoodService service = CreateFoodService();
 
-            var model = await service.GetDogBasicById(id);
+            var model = await service.GetFoodById(id);
 
             return View(model);
         }
@@ -55,45 +50,45 @@ namespace KennelCheckin.MVC.Controllers.Data
         //GET
         public async Task<ActionResult> Edit(int id)
         {
-            DogBasicService service = CreateDogBasicService();
+            FoodService service = CreateFoodService();
 
-            var model = await service.GetDogBasicByIdEditable(id);
+            var model = await service.GetFoodByIdEditable(id);
 
             return View(model);
         }
 
         //Add code here vvvv
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(DogBasicCreate model)
+        public async Task<ActionResult> Create([FromUri] int id, FoodCreate model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var service = CreateDogBasicService();
+            var service = CreateFoodService();
 
-            if (await service.CreateDogBasic(model))
+            if (await service.CreateFood(model))
             {
                 DogInfoService infoService = CreateDogInfoService();
-                int newDogInfoId = await infoService.CreateDogInfo();
-                return RedirectToAction($"Details/{newDogInfoId}", "DogInfo");
+                await infoService.UpdateDogInfoAdd(id, "Food");
+                return RedirectToAction($"Details/{id}", "DogInfo");
             };
 
-            ModelState.AddModelError("", "Dog could not be added");
+            ModelState.AddModelError("", "Food could not be added");
 
             return View(model);
         }
 
         //Add method here VVVV
-        [HttpPost]
-        [ActionName("Edit")]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, DogBasicEdit model)
+        public async Task<ActionResult> Edit(int id, FoodEdit model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var service = CreateDogBasicService();
+            var service = CreateFoodService();
 
-            if (await service.UpdateDogBasic(id, model))
+            if (await service.UpdateFood(id, model))
             {
                 //TempData["SaveResult"] = "Your note was edited.";
                 return RedirectToAction("Index", "DogInfo");

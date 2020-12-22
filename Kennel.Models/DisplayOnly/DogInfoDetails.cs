@@ -12,10 +12,14 @@ namespace Kennel.Models.Data.DisplayOnly
     public class DogInfoDetails
     {
         //Dogs List
+        public KennelData.JoiningData.DogInfo DogInfo { get; set; }
         public KennelData.Data.DogBasic DogBasic { get; set; }
-        public DogInfoDetails(KennelData.Data.DogBasic dogBasic)
+        public KennelData.Data.Food Food { get; set; }
+        public DogInfoDetails(KennelData.JoiningData.DogInfo dogInfo, KennelData.Data.DogBasic dogBasic, KennelData.Data.Food food)
         {
+            DogInfo = dogInfo;
             DogBasic = dogBasic;
+            Food = food;
         }
 
     }

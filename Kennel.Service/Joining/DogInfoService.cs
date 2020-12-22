@@ -39,7 +39,7 @@ namespace Kennel.Service.Joining
         }
 
         //Create new dogInfo
-        public async Task<bool> CreateDogInfo()
+        public async Task<int> CreateDogInfo()
         {
             DogBasic dogBasic =
                 _context
@@ -59,10 +59,14 @@ namespace Kennel.Service.Joining
                 };
 
             _context.DogInfos.Add(dogInfo);
-            return await _context.SaveChangesAsync() == 1;
+            if (await _context.SaveChangesAsync() == 1)
+            {
+                return dogInfo.DogInfoId;
+            }
+            return 0;
         }
 
-        //Create new dogInfo
+        // dogInfo Display
         public async Task<DogInfoIndexView> DisplayDogInfoIndexView()
         {
             Owner owner =
@@ -109,22 +113,62 @@ namespace Kennel.Service.Joining
                 .DogBasics
                 .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
 
-            DogInfoDetails model = new DogInfoDetails(dogBasic);
+            Food food =
+                await
+                _context
+                .Foods
+                .SingleOrDefaultAsync(q => q.FoodId == dogInfo.FoodId);
+
+            DogInfoDetails model = new DogInfoDetails(dogInfo, dogBasic, food);
 
             return model;
         }
 
         //Update dogInfo by id
-        public async Task<bool> UpdateDogInfo([FromUri] int id, [FromBody] DogInfoEdit model)
+        public async Task<bool> UpdateDogInfoAdd(int dogInfoId, string mark)
         {
             DogInfo dogInfo =
-                _context
-                .DogInfos
-                .Single(a => a.DogInfoId == id);
-            dogInfo.FoodId = model.FoodId;
-            dogInfo.SpecialId = model.SpecialId;
-            dogInfo.VetId = model.VetId;
-            dogInfo.MedicationIdList = model.MedicationIdList;
+                    _context
+                    .DogInfos
+                    .Single(a => a.DogInfoId == dogInfoId);
+
+            switch (mark)
+            {
+                case "Food":
+                    Food food =
+                        await
+                    _context
+                    .Foods.OrderByDescending(p => p.FoodId)
+                    .FirstOrDefaultAsync();
+                    dogInfo.FoodId = food.FoodId;
+                    break;
+                case "Special":
+                    Special special =
+                        await
+                    _context
+                    .Specials.OrderByDescending(p => p.SpecialId)
+                    .FirstOrDefaultAsync();
+                    dogInfo.SpecialId = special.SpecialId;
+                    break;
+                case "Vet":
+                    Vet vet =
+                        await
+                    _context
+                    .Vets.OrderByDescending(p => p.VetId)
+                    .FirstOrDefaultAsync();
+                    dogInfo.VetId = vet.VetId;
+                    break;
+                case "MedicationAdd":
+                    Medication medication =
+                        await
+                    _context
+                    .Medications.OrderByDescending(p => p.MedicationId)
+                    .FirstOrDefaultAsync();
+                    dogInfo.MedicationIdList.Add(medication.MedicationId);
+                    break;
+                default:
+                    return false;
+            }
 
             return await _context.SaveChangesAsync() == 1;
         }
