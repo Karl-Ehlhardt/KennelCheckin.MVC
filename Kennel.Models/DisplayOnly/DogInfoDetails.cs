@@ -17,13 +17,22 @@ namespace Kennel.Models.Data.DisplayOnly
         public KennelData.Data.Food Food { get; set; }
         public KennelData.Data.Special Special { get; set; }
         public KennelData.Data.Vet Vet { get; set; }
-        public DogInfoDetails(KennelData.JoiningData.DogInfo dogInfo, KennelData.Data.DogBasic dogBasic, KennelData.Data.Food food, KennelData.Data.Special special, KennelData.Data.Vet vet)
+        public IEnumerable<KennelData.Data.Medication> MedicationList { get; set; }
+        public DogInfoDetails
+            (
+            KennelData.JoiningData.DogInfo dogInfo, 
+            KennelData.Data.DogBasic dogBasic, 
+            KennelData.Data.Food food, 
+            KennelData.Data.Special special, 
+            KennelData.Data.Vet vet, IEnumerable<KennelData.Data.Medication> medicationList
+            )
         {
             DogInfo = dogInfo;
             DogBasic = dogBasic;
             Food = food;
             Special = special;
             Vet = vet;
+            MedicationList = medicationList;
         }
 
     }

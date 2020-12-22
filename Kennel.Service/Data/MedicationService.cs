@@ -43,7 +43,7 @@ namespace Kennel.Service.Data
         }
 
         //Get by id
-        public async Task<MedicationDetails> GetDogMedicationById([FromUri] int id)
+        public async Task<MedicationDetails> GetMedicationById([FromUri] int id)
         {
             var query =
                 await
@@ -64,7 +64,7 @@ namespace Kennel.Service.Data
         }
 
         //Get by id
-        public async Task<MedicationEdit> GetDogMedicationByIdEditable([FromUri] int id)
+        public async Task<MedicationEdit> GetMedicationByIdEditable([FromUri] int id)
         {
             var query =
                 await
@@ -96,6 +96,18 @@ namespace Kennel.Service.Data
             medication.Instructions = model.Instructions;
             medication.MorningMeal = model.MorningMeal;
             medication.EveningMeal = model.EveningMeal;
+
+            return await _context.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> DeleteMedication(int id)
+        {
+            var entity =
+                _context
+                .Medications
+                .Single(e => e.MedicationId == id);
+
+            _context.Medications.Remove(entity);
 
             return await _context.SaveChangesAsync() == 1;
         }

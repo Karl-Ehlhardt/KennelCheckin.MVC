@@ -130,8 +130,8 @@
 
         </dl>
         <p>
-            @Html.ActionLink("Edit", "Edit", "Special", new { id = Model.Food.FoodId }, null)|
-            @Html.ActionLink("Delete", "Delete", "Special", new { id = Model.Food.FoodId }, null)
+            @Html.ActionLink("Edit", "Edit", "Special", new { id = Model.Special.SpecialId }, null)|
+            @Html.ActionLink("Delete", "Delete", "Special", new { id = Model.Special.SpecialId }, null)
         </p>
     }
 </div>
@@ -145,34 +145,98 @@
     }
     else
     {
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.Vet.BusinessName)
-    </dt>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Vet.BusinessName)
+            </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.Vet.BusinessName)
-    </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Vet.BusinessName)
+            </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.Vet.VetName)
-    </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Vet.VetName)
+            </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.Vet.VetName)
-    </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Vet.VetName)
+            </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.Vet.Phone)
-    </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Vet.Phone)
+            </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.Vet.Phone)
-    </dd>
-</dl>
+            <dd>
+                @Html.DisplayFor(model => model.Vet.Phone)
+            </dd>
+        </dl>
         <p>
-            @Html.ActionLink("Edit", "Edit", "Vet", new { id = Model.Food.FoodId }, null)|
-            @Html.ActionLink("Delete", "Delete", "Vet", new { id = Model.Food.FoodId }, null)
+            @Html.ActionLink("Edit", "Edit", "Vet", new { id = Model.Vet.VetId }, null)|
+            @Html.ActionLink("Delete", "Delete", "Vet", new { id = Model.Vet.VetId }, null)
+        </p>
+    }
+</div>
+
+<div>
+    <h4>MedicationDetails</h4>
+    <hr />
+    @if (Model.DogInfo.MedicationIdList == null)
+    {
+        @Html.ActionLink("Add", "Create", "Medication", new { id = Model.DogInfo.DogInfoId }, null)
+    }
+    else
+    {
+        for (int i = 0; i < Model.DogInfo.MedicationIdList.Count(); i++)
+        {
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MedicationList.ElementAt(i).Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Dose)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MedicationList.ElementAt(i).Dose)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).MorningMeal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MedicationList.ElementAt(i).MorningMeal)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).EveningMeal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MedicationList.ElementAt(i).EveningMeal)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Instructions)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MedicationList.ElementAt(i).Instructions)
+            </dd>
+        </dl>
+        <p>
+            @Html.ActionLink("Edit", "Edit", "Medication", new { id = Model.MedicationList.ElementAt(i).MedicationId }, null)|
+            @Html.ActionLink("Delete", "Delete", "Medication", new { id = Model.MedicationList.ElementAt(i).MedicationId }, null)
+        </p>
+        }
+        <br />
+        <p>
+            @Html.ActionLink("Add", "Create", "Medication", new { id = Model.DogInfo.DogInfoId }, null)
         </p>
     }
 </div>

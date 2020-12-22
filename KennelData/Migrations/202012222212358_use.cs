@@ -1,0 +1,16 @@
+namespace KennelData.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class use : DbMigration
+    {
+        public override void Up()
+        {
+        }
+        
+        public override void Down()
+        {
+        }
+    }
+}
