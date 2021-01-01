@@ -55,8 +55,7 @@ namespace Kennel.Service.Joining
                 new DogInfo()
                 {
                     DogBasicId = dogBasic.DogBasicId,
-                    OwnerId = owner.OwnerId,
-                    MedicationIdList = new List<int>()
+                    OwnerId = owner.OwnerId
                 };
 
             _context.DogInfos.Add(dogInfo);
@@ -132,16 +131,23 @@ namespace Kennel.Service.Joining
                 .Vets
                 .SingleOrDefaultAsync(q => q.VetId == dogInfo.VetId);
 
+            List<MedicationToDogInfo> medicationToDogInfoList =
+                await
+                _context
+                .MedicationToDogInfos
+                .Where(q => q.DogInfoId == dogInfo.DogInfoId).ToListAsync();
+
             List<Medication> medicationList = new List<Medication>();
-            if (dogInfo.MedicationIdList != null)
+
+            if (medicationToDogInfoList.Count() > 0)
             {
-                foreach (int medicationId in dogInfo.MedicationIdList)
+                foreach (MedicationToDogInfo item in medicationToDogInfoList)
                 {
                     Medication medication =
                     await
                     _context
                     .Medications
-                    .SingleOrDefaultAsync(q => q.MedicationId == medicationId);
+                    .SingleOrDefaultAsync(q => q.MedicationId == item.MedicationId);
                     medicationList.Add(medication);
                 }
             }
@@ -185,14 +191,6 @@ namespace Kennel.Service.Joining
                     .FirstOrDefaultAsync();
                     dogInfo.VetId = vet.VetId;
                     break;
-                case "Medication":
-                    Medication medication =
-                        await
-                    _context
-                    .Medications.OrderByDescending(p => p.MedicationId)
-                    .FirstOrDefaultAsync();
-                    dogInfo.MedicationIdList.Add(medication.MedicationId);
-                    break;
                 default:
                     return false;
             }
@@ -228,19 +226,6 @@ namespace Kennel.Service.Joining
                         .SingleAsync(a => a.VetId == id);
                     dogInfoVet.VetId = 0;
                     return await _context.SaveChangesAsync() == 1;
-                case "Medication":
-                    foreach (DogInfo dogInfo in _context.DogInfos)
-                    {
-                        for (int i = 0; i < dogInfo.MedicationIdList.Count(); ++i)
-                        {
-                            if (dogInfo.MedicationIdList[i] == id)
-                            {
-                                dogInfo.MedicationIdList.RemoveAt(i);
-                                return await _context.SaveChangesAsync() == 1;
-                            }
-                        }
-                    }
-                    break;
                 default:
                     break;
             }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using KennelData.Data;
 using System.Web.Http;
 using System.Data.Entity;
+using KennelData.JoiningData;
 
 namespace Kennel.Service.Data
 {
@@ -37,10 +38,29 @@ namespace Kennel.Service.Data
                     MorningMeal = model.MorningMeal,
                     EveningMeal = model.EveningMeal
                 };
+            _context.Medications.Add(medication); //This has to update before we have the Id to store
 
-            _context.Medications.Add(medication);
             return await _context.SaveChangesAsync() == 1;
         }
+
+        public async Task<bool> CreateMedicationToDogInfo(int id)
+        {
+            Medication medicationTag =
+                _context
+                .Medications.OrderByDescending(p => p.MedicationId)
+                .FirstOrDefault();
+
+            MedicationToDogInfo medicationToDogInfo =
+                new MedicationToDogInfo()
+                {
+                    DogInfoId = id,
+                    MedicationId = medicationTag.MedicationId
+                };
+
+            _context.MedicationToDogInfos.Add(medicationToDogInfo);
+            return await _context.SaveChangesAsync() == 1;
+        }
+
 
         //Get by id
         public async Task<MedicationDetails> GetMedicationById([FromUri] int id)
@@ -102,14 +122,20 @@ namespace Kennel.Service.Data
 
         public async Task<bool> DeleteMedication(int id)
         {
-            var entity =
+            var medication =
                 _context
                 .Medications
                 .Single(e => e.MedicationId == id);
 
-            _context.Medications.Remove(entity);
+            var medicationToDogInfo =
+                _context
+                .MedicationToDogInfos
+                .Single(e => e.MedicationId == id);
 
-            return await _context.SaveChangesAsync() == 1;
+            _context.Medications.Remove(medication);
+            _context.MedicationToDogInfos.Remove(medicationToDogInfo);
+
+            return await _context.SaveChangesAsync() == 2;
         }
     }
 }

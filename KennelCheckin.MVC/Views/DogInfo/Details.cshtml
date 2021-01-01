@@ -180,13 +180,13 @@
 <div>
     <h4>MedicationDetails</h4>
     <hr />
-    @if (Model.DogInfo.MedicationIdList == null)
+    @if (Model.MedicationList.Count() == 0)
     {
         @Html.ActionLink("Add", "Create", "Medication", new { id = Model.DogInfo.DogInfoId }, null)
     }
     else
     {
-        for (int i = 0; i < Model.DogInfo.MedicationIdList.Count(); i++)
+        for (int i = 0; i < Model.MedicationList.Count(); i++)
         {
         <dl class="dl-horizontal">
             <dt>

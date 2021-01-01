@@ -78,8 +78,7 @@ namespace KennelCheckin.MVC.Controllers.Data
 
             if (await service.CreateMedication(model))
             {
-                DogInfoService infoService = CreateDogInfoService();
-                await infoService.UpdateDogInfoAdd(id, "Medication");
+                await service.CreateMedicationToDogInfo(id);
                 return RedirectToAction($"Details/{id}", "DogInfo");
             };
 
@@ -117,9 +116,8 @@ namespace KennelCheckin.MVC.Controllers.Data
             var service = CreateMedicationService();
 
             DogInfoService infoService = CreateDogInfoService();
-            if (await infoService.UpdateDogInfoRemove(id, "Medication"))
+            if (await service.DeleteMedication(id))
             {
-                await service.DeleteMedication(id);
                 return RedirectToAction("Index", "DogInfo");
             };
 

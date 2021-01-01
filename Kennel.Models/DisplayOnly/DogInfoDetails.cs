@@ -24,7 +24,8 @@ namespace Kennel.Models.Data.DisplayOnly
             KennelData.Data.DogBasic dogBasic, 
             KennelData.Data.Food food, 
             KennelData.Data.Special special, 
-            KennelData.Data.Vet vet, IEnumerable<KennelData.Data.Medication> medicationList
+            KennelData.Data.Vet vet,
+            IEnumerable<KennelData.Data.Medication> medicationList
             )
         {
             DogInfo = dogInfo;
