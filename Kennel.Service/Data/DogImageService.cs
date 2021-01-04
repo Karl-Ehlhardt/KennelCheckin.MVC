@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using KennelData.Data;
 using System.Web.Http;
 using System.Data.Entity;
+using System.Drawing;
+using System.Web;
+using System.IO;
 
 namespace Kennel.Service.Data
 {
@@ -26,12 +29,20 @@ namespace Kennel.Service.Data
         }
 
         //Create new
-        public async Task<bool> CreateDogImage(DogImageCreate model)
+        public async Task<bool> CreateDogImage(HttpPostedFileBase file)
         {
+            byte[] image = new byte[file.ContentLength];
+            file.InputStream.Position = 0;
+            file.InputStream.Read(image, 0, image.Length);
+
+
+            //ImageConverter _imageConverter = new ImageConverter();
+            //byte[] xByte = (byte[])_imageConverter.ConvertTo(file, typeof(byte[]));
+
             DogImage dogImage =
                 new DogImage()
                 {
-                    ImgFile = model.ImgFile,
+                    ImgFile = image
                 };
 
             _context.DogImages.Add(dogImage);
@@ -45,14 +56,22 @@ namespace Kennel.Service.Data
                 await
                 _context
                 .DogImages
-                .Where(q => q.DogImageId == id)
-                .Select(
-                    q =>
-                    new DogImageDisplay()
-                    {
-                        ImgFile = q.ImgFile,
-                    }).ToListAsync();
-            return query[0];
+                .SingleAsync(q => q.DogImageId == id);
+
+            MemoryStream bipimag = new MemoryStream(query.ImgFile);
+            Image imag = new Bitmap(bipimag);
+
+            //ImageConverter _imageConverter = new ImageConverter();
+            //Image image = (Image)_imageConverter.ConvertTo(query.ImgFile, typeof(Image));
+
+            DogImageDisplay dogImageDisplay =
+                new DogImageDisplay()
+                {
+                    DogImageId = query.DogImageId,
+                    ImgOut = imag
+                };
+
+            return dogImageDisplay;
         }
 
         //Update by id
@@ -63,6 +82,18 @@ namespace Kennel.Service.Data
                 .DogImages
                 .Single(a => a.DogImageId == id);
             dogImage.ImgFile = model.ImgFile;
+
+            return await _context.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> DeleteDogImage(int id)
+        {
+            var entity =
+                _context
+                .DogImages
+                .Single(e => e.DogImageId == id);
+
+            _context.DogImages.Remove(entity);
 
             return await _context.SaveChangesAsync() == 1;
         }

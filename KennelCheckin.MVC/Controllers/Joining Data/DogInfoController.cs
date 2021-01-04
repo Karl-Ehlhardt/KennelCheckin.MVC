@@ -44,5 +44,34 @@ namespace KennelCheckin.MVC.Controllers.Joining_Data
 
             return View(mymodel);
         }
+
+        //Add method here VVVV
+        //GET
+        public async Task<ActionResult> Delete(int id)
+        {
+            DogInfoService infoService = CreateDogInfoService();
+
+            var model = await infoService.GetDogInfoById(id);
+            return View(model);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteDogInfo(int id)
+        {
+
+            var service = CreateDogInfoService();
+
+            DogInfoService infoService = CreateDogInfoService();
+            if (await infoService.DeleteDogInfo(id))
+            {
+                return RedirectToAction("Index", "DogInfo");
+            };
+
+            ModelState.AddModelError("", "Food could not be deleted.");
+
+            return await Delete(id);
+        }
     }
 }

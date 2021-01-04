@@ -1,0 +1,31 @@
+﻿@model Kennel.Models.Data.DogImage.DogImageDisplay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DogImageDisplay</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DogImageId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogImageId)
+        </dd>
+        <dd>
+            <img src="@Model.ImgOut" />
+
+            <img src="@Url.Action("RenderPhoto", "DogImage", new { photoId = 1 })" width="100" height="100" alt="Pet Image" />
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

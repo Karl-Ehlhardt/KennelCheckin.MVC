@@ -172,6 +172,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Data\DogImageController.cs" />
     <Compile Include="Controllers\Data\MedicationController.cs" />
     <Compile Include="Controllers\Data\VetController.cs" />
     <Compile Include="Controllers\Data\SpecialController.cs" />
@@ -269,6 +270,9 @@
     <Content Include="Views\Medication\Edit.cshtml" />
     <Content Include="Views\Medication\Delete.cshtml" />
     <Content Include="Views\Medication\Details.cshtml" />
+    <Content Include="Views\DogInfo\Delete.cshtml" />
+    <Content Include="Views\DogImage\Create.cshtml" />
+    <Content Include="Views\DogImage\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

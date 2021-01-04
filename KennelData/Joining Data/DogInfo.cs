@@ -23,5 +23,7 @@ namespace KennelData.JoiningData
         public int SpecialId { get; set; }
 
         public int VetId { get; set; }
+
+        public int DogImageId { get; set; }
     }
 }

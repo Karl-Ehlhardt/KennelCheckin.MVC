@@ -191,6 +191,14 @@ namespace Kennel.Service.Joining
                     .FirstOrDefaultAsync();
                     dogInfo.VetId = vet.VetId;
                     break;
+                case "DogImage":
+                    DogImage dogImage =
+                        await
+                    _context
+                    .DogImages.OrderByDescending(p => p.DogImageId)
+                    .FirstOrDefaultAsync();
+                    dogInfo.DogImageId = dogImage.DogImageId;
+                    break;
                 default:
                     return false;
             }
@@ -232,5 +240,18 @@ namespace Kennel.Service.Joining
 
             return await _context.SaveChangesAsync() == 1;
         }
+        public async Task<bool> DeleteDogInfo(int id)
+        {
+            var dogInfo =
+                _context
+                .DogInfos
+                .Single(e => e.DogInfoId == id);
+            //Clean up data base
+
+            _context.DogInfos.Remove(dogInfo);
+
+            return await _context.SaveChangesAsync() == 1;
+        }
     }
+
 }
