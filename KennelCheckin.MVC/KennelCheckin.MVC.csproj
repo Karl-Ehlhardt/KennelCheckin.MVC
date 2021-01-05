@@ -181,6 +181,7 @@
     <Compile Include="Controllers\Data\DogBasicController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Joining Data\DogInfoController.cs" />
+    <Compile Include="Controllers\Joining Data\DogVisitController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

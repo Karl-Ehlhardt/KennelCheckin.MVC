@@ -80,6 +80,8 @@
     <Compile Include="Joining Data\DogInfo\DogInfoEdit.cs" />
     <Compile Include="Joining Data\DogInfo\DogInfoCreate.cs" />
     <Compile Include="Joining Data\DogVisit\DogVisitListItem.cs" />
+    <Compile Include="Joining Data\DogVisit\DogVisitListItemOnGoing.cs" />
+    <Compile Include="Joining Data\DogVisit\DogVisitListItemFuture.cs" />
     <Compile Include="Joining Data\DogVisit\DogVisitEdit.cs" />
     <Compile Include="Joining Data\DogVisit\DogVisitCreate.cs" />
     <Compile Include="Joining Data\MedicationToDogInfo\MedicationToDogInfoCreate.cs" />

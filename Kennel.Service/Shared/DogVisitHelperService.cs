@@ -10,9 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace Kennel.Service.Joining
+namespace Kennel.Service.Shared
 {
-    public class DogVisitService
+    public class DogVisitHelperService
     {
         //private user field
         private readonly Guid _userId;
@@ -21,62 +21,50 @@ namespace Kennel.Service.Joining
         private ApplicationDbContext _context = new ApplicationDbContext();
 
         //service constructor
-        public DogVisitService(Guid userId)
+        public DogVisitHelperService(Guid userId)
         {
             _userId = userId;
         }
 
-        //Create new dogVisit
-        public async Task<bool> CreateDogVisit(DogVisitCreate model)
-        {
-            DogVisit dogVisit =
-                new DogVisit()
-                {
-                    DogInfoId = model.DogInfoId,
-                    DropOffTime = model.DropOffTime,
-                    PickUpTime = model.PickUpTime,
-                    Notes = model.Notes,
-                    OnSite = false
-                };
-
-            _context.DogVisits.Add(dogVisit);
-            return await _context.SaveChangesAsync() == 1;
-        }
-
-        public async Task<DogVisitListItem> GetDogVisitById(int id)
+        //Get
+        public async Task<List<DogVisitListItemFuture>> GetAllFutureDogVisits(int dogInfoId)
         {
             var query =
                 await
                 _context
                 .DogVisits
-                .Where(q => q.DogVisitId == id)
+                .Where(q => q.OnSite == false && q.HoursOnSite == 0 && q.DogInfoId == dogInfoId)
                 .Select(
                     q =>
-                    new DogVisitListItem()
+                    new DogVisitListItemFuture()
                     {
                         DogName = GetDogName(q.DogInfoId),
                         DropOffTime = q.DropOffTime,
                         PickUpTime = q.PickUpTime,
                         Notes = q.Notes
                     }).ToListAsync();
-            return query[0];
+            return query;
         }
 
-
-        //Update dogVisit by id
-        public async Task<bool> UpdateDogVisit([FromUri] int id, [FromBody] DogVisitEdit model)
+        //Get
+        public async Task<List<DogVisitListItemOnGoing>> GetAllOngoingDogVisits(int dogInfoId)
         {
-            DogVisit dogVisit =
+            var query =
+                await
                 _context
                 .DogVisits
-                .Single(a => a.DogVisitId == id);
-            dogVisit.DropOffTime = model.DropOffTime;
-            dogVisit.PickUpTime = model.PickUpTime;
-            dogVisit.Notes = model.Notes;
-
-            return await _context.SaveChangesAsync() == 1;
+                .Where(q => q.OnSite == true && q.HoursOnSite == 0 && q.DogInfoId == dogInfoId)
+                .Select(
+                    q =>
+                    new DogVisitListItemOnGoing()
+                    {
+                        DogName = GetDogName(q.DogInfoId),
+                        DropOffTime = q.DropOffTime,
+                        PickUpTime = q.PickUpTime,
+                        Notes = q.Notes
+                    }).ToListAsync();
+            return query;
         }
-
 
         //================Helpers========================
         //Helper the get dog name
