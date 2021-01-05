@@ -272,7 +272,8 @@
     <Content Include="Views\Medication\Details.cshtml" />
     <Content Include="Views\DogInfo\Delete.cshtml" />
     <Content Include="Views\DogImage\Create.cshtml" />
-    <Content Include="Views\DogImage\Details.cshtml" />
+    <Content Include="Views\DogImage\Edit.cshtml" />
+    <Content Include="Views\DogImage\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

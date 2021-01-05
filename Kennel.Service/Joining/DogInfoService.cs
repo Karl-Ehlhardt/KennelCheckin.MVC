@@ -234,6 +234,14 @@ namespace Kennel.Service.Joining
                         .SingleAsync(a => a.VetId == id);
                     dogInfoVet.VetId = 0;
                     return await _context.SaveChangesAsync() == 1;
+                case "DogImage":
+                    DogInfo dogInfoImage =
+                        await
+                        _context
+                        .DogInfos
+                        .SingleAsync(a => a.DogImageId == id);
+                    dogInfoImage.DogImageId = 0;
+                    return await _context.SaveChangesAsync() == 1;
                 default:
                     break;
             }

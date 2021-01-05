@@ -56,9 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DogImage\DogImageDisplay.cs" />
     <Compile Include="Data\DogImage\DogImageEdit.cs" />
-    <Compile Include="Data\DogImage\DogImageCreate.cs" />
     <Compile Include="Data\DogBasic\DogBasicDetails.cs" />
     <Compile Include="Data\DogBasic\DogBasicEdit.cs" />
     <Compile Include="Data\DogBasic\DogBasicCreate.cs" />

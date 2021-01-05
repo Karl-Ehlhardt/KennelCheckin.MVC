@@ -21,8 +21,5 @@ namespace KennelData.Data
 
         [Required]
         public double Weight { get; set; }
-
-        [Required]
-        public string Size { get; set; }
     }
 }

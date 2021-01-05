@@ -46,8 +46,7 @@ namespace Kennel.Service.Data
                 {
                     DogName = model.DogName,
                     Breed = model.Breed,
-                    Weight = model.Weight,
-                    Size = model.Size
+                    Weight = model.Weight
                 };
 
             _context.DogBasics.Add(dogBasic);
@@ -69,8 +68,7 @@ namespace Kennel.Service.Data
                         DogBasicId = q.DogBasicId,
                         DogName = q.DogName,
                         Breed = q.Breed,
-                        Weight = q.Weight,
-                        Size = q.Size
+                        Weight = q.Weight
                     }).ToListAsync();
             return query[0];
         }
@@ -89,8 +87,7 @@ namespace Kennel.Service.Data
                     {
                         DogName = q.DogName,
                         Breed = q.Breed,
-                        Weight = q.Weight,
-                        Size = q.Size
+                        Weight = q.Weight
                     }).ToListAsync();
             return query[0];
         }
@@ -105,7 +102,6 @@ namespace Kennel.Service.Data
             dogBasic.DogName = model.DogName;
             dogBasic.Breed = model.Breed;
             dogBasic.Weight = model.Weight;
-            dogBasic.Size = model.Size;
 
             return await _context.SaveChangesAsync() == 1;
         }

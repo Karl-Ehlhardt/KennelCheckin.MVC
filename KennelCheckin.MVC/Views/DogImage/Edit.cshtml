@@ -1,0 +1,34 @@
+﻿@model Kennel.Models.Data.DogImage.DogImageEdit
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+</br>
+</br>
+</br>
+
+<h3>Current Photo</h3>
+
+<img src="@Url.Action("RenderPhoto", "DogImage", new { photoId = Model.DogImageId})" width="100" height="100" alt="Pet Image" />
+
+
+
+<h2>Replacement Photo</h2>
+@using (Html.BeginForm("Edit", "DogImage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <form action="/action_page.php">
+        <label for="img">Select image:</label>
+        <input type="file" id="ImageData" name="ImageData" accept="image/*">
+        <input type="submit">
+    </form>
+}
+
+<div>
+    @Html.ActionLink("Back to Index", "Index", "DogInfo")
+</div>
+

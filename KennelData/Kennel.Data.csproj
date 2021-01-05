@@ -72,6 +72,10 @@
     <Compile Include="Migrations\202101042052272_first.Designer.cs">
       <DependentUpon>202101042052272_first.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101051421249_removeSize.cs" />
+    <Compile Include="Migrations\202101051421249_removeSize.Designer.cs">
+      <DependentUpon>202101051421249_removeSize.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users\IdentityModels.cs" />
@@ -86,6 +90,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101042052272_first.resx">
       <DependentUpon>202101042052272_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101051421249_removeSize.resx">
+      <DependentUpon>202101051421249_removeSize.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

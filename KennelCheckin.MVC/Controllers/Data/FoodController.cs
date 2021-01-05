@@ -104,7 +104,7 @@ namespace KennelCheckin.MVC.Controllers.Data
                 return RedirectToAction("Index", "DogInfo");
             };
 
-            ModelState.AddModelError("", "Dog could not be edited.");
+            ModelState.AddModelError("", "Food could not be edited.");
 
             return View(model);
         }

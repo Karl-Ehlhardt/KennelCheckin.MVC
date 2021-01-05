@@ -31,89 +31,33 @@ namespace KennelCheckin.MVC.Controllers.Data
             var dogInfoService = new DogInfoService(userId);
             return dogInfoService;
         }
-
-        public async Task<ActionResult> Create()
-        {
-            return View();
-        }
-
-        //Add method here VVVV
-        //GET
-        public async Task<ActionResult> Details(int id)
-        {
-            DogImageService service = CreateDogImageService();
-
-            var model = await service.GetDogImageById(id);
-
-            return View(model);
-        }
         public ActionResult RenderPhoto(int photoId)
         {
             byte[] photo = (new ApplicationDbContext()).DogImages.Find(photoId).ImgFile;
             return File(photo, "image/jpeg");
         }
 
-        //Add method here VVVV
-        //GET
-        //public async Task<ActionResult> Edit(int id)
-        //{
-        //    DogImageService service = CreateDogImageService();
-
-        //    var model = await service.GetDogImageByIdEditable(id);
-
-        //    return View(model);
-        //}
+        public async Task<ActionResult> Create()
+        {
+            return View();
+        }
 
         //Add code here vvvv
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([FromUri] int id)
         {
-            //try
-            //{
-            //    ImageConverter _imageConverter = new ImageConverter();
-            //    byte[] xByte = (byte[])_imageConverter.ConvertTo(x, typeof(byte[]));
-
-            //    MemoryStream target = new MemoryStream();
-            //    model.ImgRaw.InputStream.CopyTo(target);
-            //    byte[] data = target.ToArray();
-
-            //    var service = CreateDogImageService();
-
-            //    if (await service.CreateDogImage(data))
-            //    {
-            //        return RedirectToAction("Index", "DogInfo");
-            //    };
-
-            //    byte[] imageSize = new byte[file.ContentLength];
-            //    file.InputStream.Read(imageSize, 0, (int)file.ContentLength);
-            //    Image image = new Image()
-            //    {
-            //        Name = file.FileName.Split('\\').Last(),
-            //        Size = file.ContentLength,
-            //        Title = fileTitle,
-            //        ID = 1,
-            //        Image1 = imageSize
-            //    };
-            //    db.Images.AddObject(image);
-            //    db.SaveChanges();
-            //    return RedirectToAction("Detail");
-            //}
-            //catch (Exception e)
-            //{
-            //    ModelState.AddModelError("uploadError", e);
-            //}
-            //return View();
-
             HttpPostedFileBase file = Request.Files["ImageData"];
+
+            if (file.ContentLength == 0) return View();
 
             var service = CreateDogImageService();
 
             if (await service.CreateDogImage(file))
             {
-                    DogInfoService infoService = CreateDogInfoService();
-                    await infoService.UpdateDogInfoAdd(id, "DogImage");
-                    return RedirectToAction($"Details/{id}", "DogInfo");
+                DogInfoService infoService = CreateDogInfoService();
+                await infoService.UpdateDogInfoAdd(id, "DogImage");
+                return RedirectToAction($"Details/{id}", "DogInfo");
             };
 
             ModelState.AddModelError("", "Image could not be added");
@@ -122,24 +66,79 @@ namespace KennelCheckin.MVC.Controllers.Data
         }
 
         //Add method here VVVV
-        //[HttpPost]
-        //[ActionName("Edit")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Edit(int id, DogImageEdit model)
+        //GET
+        //public async Task<ActionResult> Details(int id)
         //{
-        //    if (!ModelState.IsValid) return View(model);
+        //    DogImageService service = CreateDogImageService();
 
-        //    var service = CreateDogImageService();
-
-        //    if (await service.UpdateDogImage(id, model))
-        //    {
-        //        //TempData["SaveResult"] = "Your note was edited.";
-        //        return RedirectToAction("Index", "DogInfo");
-        //    };
-
-        //    ModelState.AddModelError("", "Dog could not be edited.");
+        //    var model = await service.GetDogImageById(id);
 
         //    return View(model);
         //}
+
+
+        //Add method here VVVV
+        //GET
+        public async Task<ActionResult> Edit(int id)
+        {
+            var service = CreateDogImageService();
+
+            var model = await service.GetDogImageIdEdit(id);
+
+            return View(model);
+        }
+
+
+        //Add method here VVVV
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int id, string nothing)
+        {
+            HttpPostedFileBase file = Request.Files["ImageData"];
+
+            var service = CreateDogImageService();
+
+            if (file.ContentLength == 0) return RedirectToAction("Edit");
+
+            if (await service.UpdateDogImage(id, file))
+            {
+                return RedirectToAction("Index", "DogInfo");
+            };
+
+            ModelState.AddModelError("", "Image could not be replaced.");
+
+            return RedirectToAction("Edit");
+        }
+
+        //Add method here VVVV
+        //GET
+        public async Task<ActionResult> Delete(int id)
+        {
+            var service = CreateDogImageService();
+
+            var model = await service.GetDogImageIdEdit(id);
+            return View(model);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteDogImage(int id)
+        {
+
+            var service = CreateDogImageService();
+
+            DogInfoService infoService = CreateDogInfoService();
+            if (await infoService.UpdateDogInfoRemove(id, "DogImage"))
+            {
+                await service.DeleteDogImage(id);
+                return RedirectToAction("Index", "DogInfo");
+            };
+
+            ModelState.AddModelError("", "Image could not be deleted.");
+
+            return await Delete(id);
+        }
     }
 }

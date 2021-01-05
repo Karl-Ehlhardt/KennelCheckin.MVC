@@ -35,10 +35,6 @@ namespace Kennel.Service.Data
             file.InputStream.Position = 0;
             file.InputStream.Read(image, 0, image.Length);
 
-
-            //ImageConverter _imageConverter = new ImageConverter();
-            //byte[] xByte = (byte[])_imageConverter.ConvertTo(file, typeof(byte[]));
-
             DogImage dogImage =
                 new DogImage()
                 {
@@ -50,7 +46,7 @@ namespace Kennel.Service.Data
         }
 
         //Get by id
-        public async Task<DogImageDisplay> GetDogImageById([FromUri] int id)
+        public async Task<DogImageEdit> GetDogImageIdEdit([FromUri] int id)
         {
             var query =
                 await
@@ -58,30 +54,28 @@ namespace Kennel.Service.Data
                 .DogImages
                 .SingleAsync(q => q.DogImageId == id);
 
-            MemoryStream bipimag = new MemoryStream(query.ImgFile);
-            Image imag = new Bitmap(bipimag);
-
-            //ImageConverter _imageConverter = new ImageConverter();
-            //Image image = (Image)_imageConverter.ConvertTo(query.ImgFile, typeof(Image));
-
-            DogImageDisplay dogImageDisplay =
-                new DogImageDisplay()
+            DogImageEdit dogImageEdit =
+                new DogImageEdit()
                 {
                     DogImageId = query.DogImageId,
-                    ImgOut = imag
                 };
 
-            return dogImageDisplay;
+            return dogImageEdit;
         }
 
         //Update by id
-        public async Task<bool> UpdateDogImage([FromUri] int id, [FromBody] DogImageEdit model)
+        public async Task<bool> UpdateDogImage([FromUri] int id, [FromBody] HttpPostedFileBase file)
         {
+
+            byte[] image = new byte[file.ContentLength];
+            file.InputStream.Position = 0;
+            file.InputStream.Read(image, 0, image.Length);
+
             DogImage dogImage =
                 _context
                 .DogImages
                 .Single(a => a.DogImageId == id);
-            dogImage.ImgFile = model.ImgFile;
+            dogImage.ImgFile = image;
 
             return await _context.SaveChangesAsync() == 1;
         }

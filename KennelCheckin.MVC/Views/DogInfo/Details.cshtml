@@ -37,19 +37,28 @@
         <dd>
             @Html.DisplayFor(model => model.DogBasic.Weight)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DogBasic.Size)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DogBasic.Size)
-        </dd>
-
     </dl>
     <p>
         @Html.ActionLink("Edit", "Edit", "DogBasic", new { id = Model.DogBasic.DogBasicId }, null)
     </p>
+</div>
+
+<div>
+    <h4>DogImage</h4>
+
+    @if (Model.DogInfo.DogImageId == 0)
+    {
+        @Html.ActionLink("Add", "Create", "DogImage", new { id = Model.DogInfo.DogInfoId }, null)
+    }
+    else
+    {
+        <img src="@Url.Action("RenderPhoto", "DogImage", new { photoId = Model.DogInfo.DogImageId })" width="200" height="200" alt="Pet Image" />
+        <p>
+            @Html.ActionLink("Replace", "Edit", "DogImage", new { id = Model.DogInfo.DogImageId }, null)|
+            @Html.ActionLink("Delete", "Delete", "DogImage", new { id = Model.DogInfo.DogImageId }, null)
+        </p>
+    }
+
 </div>
 
 <div>

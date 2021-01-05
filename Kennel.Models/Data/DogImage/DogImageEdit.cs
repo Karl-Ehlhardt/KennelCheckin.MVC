@@ -9,7 +9,6 @@ namespace Kennel.Models.Data.DogImage
 {
     public class DogImageEdit
     {
-        [Required]
-        public byte[] ImgFile { get; set; }
+        public int DogImageId { get; set; }
     }
 }

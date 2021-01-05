@@ -20,7 +20,7 @@ namespace Kennel.Models.Data.DisplayOnly
         public IEnumerable<KennelData.Data.Medication> MedicationList { get; set; }
         public DogInfoDetails
             (
-            KennelData.JoiningData.DogInfo dogInfo, 
+            KennelData.JoiningData.DogInfo dogInfo,
             KennelData.Data.DogBasic dogBasic, 
             KennelData.Data.Food food, 
             KennelData.Data.Special special, 

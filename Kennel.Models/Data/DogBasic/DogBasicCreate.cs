@@ -21,9 +21,5 @@ namespace Kennel.Models.Data.DogBasic
         [Required]
         [Display(Name = "Weight (Lbs)")]
         public double Weight { get; set; }
-
-        [Required]
-        [MaxLength(100, ErrorMessage = "There are too many characters in this field.")]
-        public string Size { get; set; }
     }
 }

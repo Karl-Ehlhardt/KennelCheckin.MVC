@@ -16,6 +16,5 @@ namespace Kennel.Models.Data.DogBasic
         public string Breed { get; set; }
         [Display(Name = "Weight (Lbs)")]
         public double Weight { get; set; }
-        public string Size { get; set; }
     }
 }
