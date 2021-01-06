@@ -85,8 +85,8 @@ namespace Kennel.Service.Joining
 
 
             List<DogBasic> dogBasic = new List<DogBasic>();
-            List<DogVisitListItemFuture> dogFuture = new List<DogVisitListItemFuture>();
-            List<DogVisitListItemOnGoing> dogOnGoing = new List<DogVisitListItemOnGoing>();
+            List<DogVisitListItem> dogFuture = new List<DogVisitListItem>();
+            List<DogVisitListItem> dogOnGoing = new List<DogVisitListItem>();
 
             var dogVistService = new DogVisitHelperService(_userId);
 
@@ -99,8 +99,8 @@ namespace Kennel.Service.Joining
                 .SingleAsync(q => q.DogBasicId == dogIn.DogBasicId);
                 dogBasic.Add(item);
 
-                dogFuture.AddRange(await dogVistService.GetAllFutureDogVisits(dogIn.DogInfoId));
-                dogOnGoing.AddRange(await dogVistService.GetAllOngoingDogVisits(dogIn.DogInfoId));
+                dogFuture.AddRange(await dogVistService.GetAllFutureDogVisits(dogIn.DogInfoId, item.DogName));
+                dogOnGoing.AddRange(await dogVistService.GetAllOngoingDogVisits(dogIn.DogInfoId, item.DogName));
             }
 
             DogInfoIndexView model = new DogInfoIndexView(dogBasic.AsEnumerable(), owner, dogInfo, dogFuture.AsEnumerable(), dogOnGoing.AsEnumerable());

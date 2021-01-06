@@ -16,23 +16,23 @@ namespace Kennel.Models.Data.DisplayOnly
         public IEnumerable<KennelData.Data.DogBasic> DogBasic { get; set; }
         public KennelData.Data.Owner Owner { get; set; }
         public IEnumerable<KennelData.JoiningData.DogInfo> DogInfo { get; set; }
-        public IEnumerable<DogVisitListItemFuture> DogFuture { get; set; }
-        public IEnumerable<DogVisitListItemOnGoing> DogOngoing { get; set; }
+        public IEnumerable<DogVisitListItem> DogFutureVisit { get; set; }
+        public IEnumerable<DogVisitListItem> DogOngoingVisit { get; set; }
 
         public DogInfoIndexView
             (
             IEnumerable<KennelData.Data.DogBasic> dogBasic,
             KennelData.Data.Owner owner,
             IEnumerable<KennelData.JoiningData.DogInfo> dogInfo,
-            IEnumerable<DogVisitListItemFuture> dogFuture,
-            IEnumerable<DogVisitListItemOnGoing> dogOnGoing
+            IEnumerable<DogVisitListItem> dogFuture,
+            IEnumerable<DogVisitListItem> dogOnGoing
             )
         {
             DogBasic = dogBasic;
             Owner = owner;
             DogInfo = dogInfo;
-            DogFuture = dogFuture;
-            DogOngoing = dogOnGoing;
+            DogFutureVisit = dogFuture;
+            DogOngoingVisit = dogOnGoing;
         }
 
     }

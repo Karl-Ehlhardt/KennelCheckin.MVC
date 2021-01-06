@@ -275,6 +275,9 @@
     <Content Include="Views\DogImage\Create.cshtml" />
     <Content Include="Views\DogImage\Edit.cshtml" />
     <Content Include="Views\DogImage\Delete.cshtml" />
+    <Content Include="Views\DogVisit\Create.cshtml" />
+    <Content Include="Views\DogVisit\Edit.cshtml" />
+    <Content Include="Views\DogVisit\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

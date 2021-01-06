@@ -27,12 +27,12 @@ namespace Kennel.Service.Joining
         }
 
         //Create new dogVisit
-        public async Task<bool> CreateDogVisit(DogVisitCreate model)
+        public async Task<bool> CreateDogVisit(int id, DogVisitCreate model)
         {
             DogVisit dogVisit =
                 new DogVisit()
                 {
-                    DogInfoId = model.DogInfoId,
+                    DogInfoId = id,
                     DropOffTime = model.DropOffTime,
                     PickUpTime = model.PickUpTime,
                     Notes = model.Notes,
@@ -54,11 +54,32 @@ namespace Kennel.Service.Joining
                     q =>
                     new DogVisitListItem()
                     {
-                        DogName = GetDogName(q.DogInfoId),
                         DropOffTime = q.DropOffTime,
                         PickUpTime = q.PickUpTime,
                         Notes = q.Notes
                     }).ToListAsync();
+
+            query[0].DogName = await GetDogName(id); //uses the DogVisit id to do a couple look ups and returns the dogs name
+
+            return query[0];
+        }
+
+        public async Task<DogVisitEdit> GetDogVisitByIdEditable(int id)
+        {
+            var query =
+                await
+                _context
+                .DogVisits
+                .Where(q => q.DogVisitId == id)
+                .Select(
+                    q =>
+                    new DogVisitEdit()
+                    {
+                        DropOffTime = q.DropOffTime,
+                        PickUpTime = q.PickUpTime,
+                        Notes = q.Notes
+                    }).ToListAsync();
+            query[0].DogName = await GetDogName(id); //uses the DogVisit id to do a couple look ups and returns the dogs name
             return query[0];
         }
 
@@ -77,22 +98,42 @@ namespace Kennel.Service.Joining
             return await _context.SaveChangesAsync() == 1;
         }
 
+        public async Task<bool> DeleteDogVisit(int id)
+        {
+            var entity =
+                _context
+                .DogVisits
+                .Single(e => e.DogVisitId == id);
+
+            _context.DogVisits.Remove(entity);
+
+            return await _context.SaveChangesAsync() == 1;
+        }
 
         //================Helpers========================
         //Helper the get dog name
-        public string GetDogName(int id)
+        public async Task<string> GetDogName(int dogVisitid)
         {
+            DogVisit dogVisit =
+                await
+                _context
+                .DogVisits
+                .SingleAsync(a => a.DogVisitId == dogVisitid);
+
             DogInfo dogInfo =
+                await
                 _context
                 .DogInfos
-                .Single(a => a.DogInfoId == id);
+                .SingleAsync(a => a.DogInfoId == dogVisit.DogInfoId);
 
             DogBasic dogBasic =
+                await
                 _context
                 .DogBasics
-                .Single(q => q.DogBasicId == dogInfo.DogBasicId);
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
 
             return dogBasic.DogName;
         }
+
     }
 }

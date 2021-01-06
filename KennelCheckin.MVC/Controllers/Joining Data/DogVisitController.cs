@@ -30,9 +30,9 @@ namespace KennelCheckin.MVC.Controllers.Joinging_Data
 
         //Add method here VVVV
         //GET
-        public async Task<ActionResult> Create(List<int> dogInfoIdList)//ID of the DogInfo
+        public async Task<ActionResult> Create()//ID of the DogInfo
         {
-            return View(dogInfoIdList.AsEnumerable());
+            return View();
         }
 
         ////Add code here vvvv
@@ -44,7 +44,7 @@ namespace KennelCheckin.MVC.Controllers.Joinging_Data
 
             var service = CreateDogVisitService();
 
-            if (await service.CreateDogVisit(model))
+            if (await service.CreateDogVisit(id, model))
             {
                 return RedirectToAction($"Index", "DogInfo");
             };
@@ -67,64 +67,72 @@ namespace KennelCheckin.MVC.Controllers.Joinging_Data
 
         ////Add method here VVVV
         ////GET
-        //public async Task<ActionResult> Edit(int id)
-        //{
-        //    DogVisitService service = CreateDogVisitService();
+        public async Task<ActionResult> Edit(int id)
+        {
+            DogVisitService service = CreateDogVisitService();
 
-        //    var model = await service.GetDogVisitByIdEditable(id);
+            var model = await service.GetDogVisitByIdEditable(id);
 
-        //    return View(model);
-        //}
+            return View(model);
+        }
+
+        //Add method here VVVV
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int id, DogVisitEdit model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var service = CreateDogVisitService();
+
+            if (await service.UpdateDogVisit(id, model))
+            {
+                //TempData["SaveResult"] = "Your note was edited.";
+                return RedirectToAction("Index", "DogInfo");
+            };
+
+            ModelState.AddModelError("", "Dog Visit could not be edited.");
+
+            return View(model);
+        }
 
         ////Add method here VVVV
         ////GET
-        //public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
+        {
+            DogVisitService service = CreateDogVisitService();
+
+            var model = await service.GetDogVisitById(id);
+            return View(model);
+        }
+
+
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteDogVisit(int id)
+        {
+
+            var service = CreateDogVisitService();
+
+            if (await service.DeleteDogVisit(id))
+            {
+                return RedirectToAction("Index", "DogInfo");
+            };
+
+            ModelState.AddModelError("", "DogVisit could not be deleted.");
+
+            return await Delete(id);
+        }
+
+        //=============Helper=======//
+        //public async Task<ActionResult> DogNameLookUp(int dogInfoId)
         //{
         //    DogVisitService service = CreateDogVisitService();
-
-        //    var model = await service.GetDogVisitById(id);
-        //    return View(model);
+        //    var dogName = await service.GetDogName(dogInfoId);
+        //    return Content($"{dogName}");
         //}
-
-
-        ////Add method here VVVV
-        //[System.Web.Mvc.HttpPost]
-        //[System.Web.Mvc.ActionName("Edit")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Edit(int id, DogVisitEdit model)
-        //{
-        //    if (!ModelState.IsValid) return View(model);
-
-        //    var service = CreateDogVisitService();
-
-        //    if (await service.UpdateDogVisit(id, model))
-        //    {
-        //        //TempData["SaveResult"] = "Your note was edited.";
-        //        return RedirectToAction("Index", "DogInfo");
-        //    };
-
-        //    ModelState.AddModelError("", "DogVisit could not be edited.");
-
-        //    return View(model);
-        //}
-
-        //[System.Web.Mvc.HttpPost]
-        //[System.Web.Mvc.ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> DeleteDogVisit(int id)
-        //{
-
-        //    var service = CreateDogVisitService();
-
-        //    DogInfoService infoService = CreateDogInfoService();
-        //    if (await infoService.UpdateDogInfoRemove(id, "DogVisit"))
-        //    {
-        //        await service.DeleteDogVisit(id);
-        //        return RedirectToAction("Index", "DogInfo");
-        //    };
-
-        //    ModelState.AddModelError("", "DogVisit could not be deleted.");
-
-        //    return await Delete(id);
     }
-    }
+}

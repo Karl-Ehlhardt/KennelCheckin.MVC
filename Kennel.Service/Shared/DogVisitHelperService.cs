@@ -27,7 +27,7 @@ namespace Kennel.Service.Shared
         }
 
         //Get
-        public async Task<List<DogVisitListItemFuture>> GetAllFutureDogVisits(int dogInfoId)
+        public async Task<List<DogVisitListItem>> GetAllFutureDogVisits(int dogInfoId, string dogName)
         {
             var query =
                 await
@@ -36,18 +36,20 @@ namespace Kennel.Service.Shared
                 .Where(q => q.OnSite == false && q.HoursOnSite == 0 && q.DogInfoId == dogInfoId)
                 .Select(
                     q =>
-                    new DogVisitListItemFuture()
+                    new DogVisitListItem()
                     {
-                        DogName = GetDogName(q.DogInfoId),
+                        DogVisitId = q.DogVisitId,
+                        DogName = dogName ,
                         DropOffTime = q.DropOffTime,
                         PickUpTime = q.PickUpTime,
                         Notes = q.Notes
                     }).ToListAsync();
+
             return query;
         }
 
         //Get
-        public async Task<List<DogVisitListItemOnGoing>> GetAllOngoingDogVisits(int dogInfoId)
+        public async Task<List<DogVisitListItem>> GetAllOngoingDogVisits(int dogInfoId, string dogName)
         {
             var query =
                 await
@@ -56,9 +58,10 @@ namespace Kennel.Service.Shared
                 .Where(q => q.OnSite == true && q.HoursOnSite == 0 && q.DogInfoId == dogInfoId)
                 .Select(
                     q =>
-                    new DogVisitListItemOnGoing()
+                    new DogVisitListItem()
                     {
-                        DogName = GetDogName(q.DogInfoId),
+                        DogVisitId = q.DogVisitId,
+                        DogName = dogName,
                         DropOffTime = q.DropOffTime,
                         PickUpTime = q.PickUpTime,
                         Notes = q.Notes
@@ -67,20 +70,20 @@ namespace Kennel.Service.Shared
         }
 
         //================Helpers========================
-        //Helper the get dog name
-        public string GetDogName(int id)
-        {
-            DogInfo dogInfo =
-                _context
-                .DogInfos
-                .Single(a => a.DogInfoId == id);
+        //Helper the get dog name NOT WORKING
+        //public string GetDogName(int id)
+        //{
+        //    DogInfo dogInfo =
+        //        _context
+        //        .DogInfos
+        //        .Single(a => a.DogInfoId == id);
 
-            DogBasic dogBasic =
-                _context
-                .DogBasics
-                .Single(q => q.DogBasicId == dogInfo.DogBasicId);
+        //    DogBasic dogBasic =
+        //        _context
+        //        .DogBasics
+        //        .Single(q => q.DogBasicId == dogInfo.DogBasicId);
 
-            return dogBasic.DogName;
-        }
+        //    return dogBasic.DogName;
+        //}
     }
 }
