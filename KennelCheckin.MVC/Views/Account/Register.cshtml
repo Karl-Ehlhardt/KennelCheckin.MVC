@@ -23,6 +23,15 @@
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
     </div>
+    <div >
+        <ul>
+            <li>Requires Number</li>
+            <li>Requires Lowercase Letter</li>
+            <li>Requires Uppercase Letter</li>
+            <li>Requires Special Character</li>
+            <li>Minimum  6 Characters</li>
+        </ul>
+    </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">

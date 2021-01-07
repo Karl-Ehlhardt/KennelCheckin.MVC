@@ -13,7 +13,7 @@ namespace Kennel.Models.Data.Medication
         public string Name { get; set; }
 
         [Required]
-        public double Dose { get; set; }
+        public string Dose { get; set; }
 
         [Required]
         [Display(Name = "Has this with the morning meal?")]

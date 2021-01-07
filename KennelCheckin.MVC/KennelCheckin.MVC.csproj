@@ -180,6 +180,7 @@
     <Compile Include="Controllers\Data\OwnerController.cs" />
     <Compile Include="Controllers\Data\DogBasicController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KennelControllers\KennelController.cs" />
     <Compile Include="Controllers\Joining Data\DogInfoController.cs" />
     <Compile Include="Controllers\Joining Data\DogVisitController.cs" />
     <Compile Include="Controllers\ManageController.cs" />

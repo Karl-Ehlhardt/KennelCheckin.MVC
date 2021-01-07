@@ -74,6 +74,7 @@
     <Compile Include="Data\DogBasicService.cs" />
     <Compile Include="Joining\DogVisitService.cs" />
     <Compile Include="Joining\DogInfoService.cs" />
+    <Compile Include="Kennel\KennelService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\DogVisitHelperService.cs" />
   </ItemGroup>
