@@ -37,14 +37,14 @@ namespace KennelCheckin.MVC.Controllers.Data
 
         //Add method here VVVV
         //GET
-        public async Task<ActionResult> Details(int id)
-        {
-            MedicationService service = CreateMedicationService();
+        //public async Task<ActionResult> Details(int id)
+        //{
+        //    MedicationService service = CreateMedicationService();
 
-            var model = await service.GetMedicationById(id);
+        //    var model = await service.GetMedicationById(id);
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
         //Add method here VVVV
         //GET
