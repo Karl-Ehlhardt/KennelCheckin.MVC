@@ -79,6 +79,7 @@
     <Compile Include="Joining Data\DogInfo\DisplayOnly\DogInfoIndexView.cs" />
     <Compile Include="Joining Data\DogInfo\DogInfoEdit.cs" />
     <Compile Include="Joining Data\DogInfo\DogInfoCreate.cs" />
+    <Compile Include="Joining Data\DogVisit\DogVisitChangePickup.cs" />
     <Compile Include="Joining Data\DogVisit\DogVisitListItem.cs" />
     <Compile Include="Joining Data\DogVisit\DogVisitEdit.cs" />
     <Compile Include="Joining Data\DogVisit\DogVisitCreate.cs" />

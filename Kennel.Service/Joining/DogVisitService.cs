@@ -82,6 +82,23 @@ namespace Kennel.Service.Joining
             query[0].DogName = await GetDogName(id); //uses the DogVisit id to do a couple look ups and returns the dogs name
             return query[0];
         }
+        
+        public async Task<DogVisitChangePickup> GetDogVisitByIdChangePickup(int id)
+        {
+            var query =
+                await
+                _context
+                .DogVisits
+                .Where(q => q.DogVisitId == id)
+                .Select(
+                    q =>
+                    new DogVisitChangePickup()
+                    {
+                        PickUpTime = q.PickUpTime,
+                    }).ToListAsync();
+            query[0].DogName = await GetDogName(id); //uses the DogVisit id to do a couple look ups and returns the dogs name
+            return query[0];
+        }
 
 
         //Update dogVisit by id
@@ -94,6 +111,18 @@ namespace Kennel.Service.Joining
             dogVisit.DropOffTime = model.DropOffTime;
             dogVisit.PickUpTime = model.PickUpTime;
             dogVisit.Notes = model.Notes;
+
+            return await _context.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> ChangePickupDogVisit([FromUri] int id, [FromBody] DogVisitChangePickup model)
+        {
+
+            DogVisit dogVisit =
+                _context
+                .DogVisits
+                .Single(a => a.DogVisitId == id);
+            dogVisit.PickUpTime = model.PickUpTime;
 
             return await _context.SaveChangesAsync() == 1;
         }
