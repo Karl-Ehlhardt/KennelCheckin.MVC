@@ -121,6 +121,9 @@
     <td>
         @Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).Notes)
     </td>
+    <td>
+        @Html.ActionLink("Change Pickup", "ChangePickup", "DogVisit", new { id = Model.DogOngoingVisit.ElementAt(i).DogVisitId }, null)
+    </td>
 </tr>
     }
 

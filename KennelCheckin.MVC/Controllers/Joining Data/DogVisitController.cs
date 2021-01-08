@@ -119,6 +119,52 @@ namespace KennelCheckin.MVC.Controllers.Joinging_Data
             return View(model);
         }
 
+        ////GET
+        public async Task<ActionResult> ChangePickup(int id)
+        {
+            DogVisitService service = CreateDogVisitService();
+
+            var model = await service.GetDogVisitByIdChangePickup(id);
+
+            return View(model);
+        }
+
+        //Add method here VVVV
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("ChangePickup")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePickup(int id, DogVisitChangePickup model)
+        {
+                
+            DogVisitService service = CreateDogVisitService();
+
+            if (!ModelState.IsValid)
+            {
+                var original = await service.GetDogVisitByIdChangePickup(id);
+                return View(original);
+            }
+
+            if (DateTime.Now.Date> model.PickUpTime)
+            {
+                ModelState.AddModelError("", "New pick-up date must be today or later");
+
+                var original = await service.GetDogVisitByIdChangePickup(id);
+
+                return View(original);
+            }
+            else if(await service.ChangePickupDogVisit(id, model))
+            {
+                return RedirectToAction("Index", "DogInfo");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Dog Visit could not be edited.");
+                var original = await service.GetDogVisitByIdChangePickup(id);
+                return View(original);
+            }
+
+        }
+
         ////Add method here VVVV
         ////GET
         public async Task<ActionResult> Delete(int id)

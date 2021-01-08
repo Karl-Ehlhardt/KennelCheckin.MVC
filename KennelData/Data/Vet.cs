@@ -13,9 +13,11 @@ namespace KennelData.Data
         public int VetId { get; set; }
 
         [Required]
+        [Display(Name = "Business Name")]
         public string BusinessName { get; set; }
 
         [Required]
+        [Display(Name = "Veterinarian Name")]
         public string VetName { get; set; }
 
         [Required]

@@ -13,7 +13,7 @@ namespace Kennel.Models.Data.Food
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Amount Per Meal(Cups)")]
+        [Display(Name = "Amount Per Meal (Cups)")]
         public double AmountPerMeal { get; set; }
 
         [Required]

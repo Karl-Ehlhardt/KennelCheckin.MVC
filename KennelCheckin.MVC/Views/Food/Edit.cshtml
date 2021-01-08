@@ -9,7 +9,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>FoodEdit</h4>
         <hr />
@@ -20,6 +20,7 @@
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
+            <p>Write generic if you want us to use the kennel's food</p>
         </div>
 
         <div class="form-group">

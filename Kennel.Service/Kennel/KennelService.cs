@@ -1,5 +1,6 @@
 ﻿using Kennel.Data.Users;
 using Kennel.Models.Data.Kennel.KennelDashboardItems;
+using Kennel.Models.Data.Kennel.MealsAndMedications;
 using Kennel.Models.Joining_Data.DogVisit;
 using Kennel.Models.Kennel.KennelDashboardItems;
 using Kennel.Service.Shared;
@@ -333,111 +334,181 @@ namespace Kennel.Service.Kennel
             return await _context.SaveChangesAsync() == 1;
         }
 
+        public async Task<List<MealsAndMeds>> AllMorningMealsAndMeds()
+        {
+            //On Site Dogs
+            List<DogVisit> morningMealDogVisitList =
+                await
+                _context
+                .DogVisits
+                .Where(q => q.OnSite == true)
+                .ToListAsync();
+
+            List<MealsAndMeds> morningMealsAndMedsList = new List<MealsAndMeds>();
+
+            foreach (DogVisit dogVisit in morningMealDogVisitList)
+            {
+                DogInfo dogInfo =
+                await
+                _context
+                .DogInfos
+                .SingleAsync(q => q.DogInfoId == dogVisit.DogInfoId);
+
+                DogBasic dogBasic =
+                await
+                _context
+                .DogBasics
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
+
+                Food morningFood = new Food();
+
+                if (_context.Foods.Any(q => q.FoodId == dogInfo.FoodId && q.MorningMeal == true))//Only feed dogs with no Food in the evening
+                {
+                    morningFood =
+                    await
+                    _context
+                    .Foods
+                    .SingleAsync(q => q.FoodId == dogInfo.FoodId);
+                }
+
+                List<MedicationToDogInfo> medicationToDogInfoList =
+                    await
+                    _context
+                    .MedicationToDogInfos
+                    .Where(q => q.DogInfoId == dogInfo.DogInfoId).ToListAsync();
+
+                List<Medication> medicationList = new List<Medication>();
+
+                //if (medicationToDogInfoList.Count() > 0)
+                //{
+                    foreach (MedicationToDogInfo item in medicationToDogInfoList)
+                    {
+                        if (_context.Medications.Any(q => q.MedicationId == item.MedicationId && q.MorningMeal == true))
+                        {
+                        Medication medication =
+                        await
+                        _context
+                        .Medications
+                        .SingleAsync(q => q.MedicationId == item.MedicationId);
+                        medicationList.Add(medication);
+                        }
+                    }
+                //}
+                if (medicationToDogInfoList.Count() > 0 || dogInfo.FoodId > 0)
+                {
+                morningMealsAndMedsList.Add(new MealsAndMeds(dogInfo, dogVisit, dogBasic, morningFood, medicationList.AsEnumerable()));
+                }
+            }
+
+            return morningMealsAndMedsList;
+        }
+
+        public async Task<List<MealsAndMeds>> AllEveningMealsAndMeds()
+        {
+            //On Site Dogs
+            List<DogVisit> eveningMealDogVisitList =
+                await
+                _context
+                .DogVisits
+                .Where(q => q.OnSite == true)
+                .ToListAsync();
+
+            List<MealsAndMeds> eveningMealsAndMedsList = new List<MealsAndMeds>();
+
+            foreach (DogVisit dogVisit in eveningMealDogVisitList)
+            {
+                DogInfo dogInfo =
+                await
+                _context
+                .DogInfos
+                .SingleAsync(q => q.DogInfoId == dogVisit.DogInfoId);
+
+                DogBasic dogBasic =
+                await
+                _context
+                .DogBasics
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
+
+                Food eveingFood = new Food();
+
+                if (_context.Foods.Any(q => q.FoodId == dogInfo.FoodId && q.EveningMeal == true))//Only feed dogs with no Food in the evening
+                {
+                    eveingFood =
+                    await
+                    _context
+                    .Foods
+                    .SingleAsync(q => q.FoodId == dogInfo.FoodId);
+                }
+                else if(_context.Foods.Any(q => q.FoodId != dogInfo.FoodId))
+                {
+                    eveingFood.FoodId = 500;
+                    eveingFood.Name = "Generic";
+                    eveingFood.AmountPerMeal = await FoodForDogByWeight(dogBasic.Weight);//equation to determine food
+                }
+
+                List<MedicationToDogInfo> medicationToDogInfoList =
+                    await
+                    _context
+                    .MedicationToDogInfos
+                    .Where(q => q.DogInfoId == dogInfo.DogInfoId).ToListAsync();
+
+                List<Medication> medicationList = new List<Medication>();
+
+                //if (medicationToDogInfoList.Count() > 0)
+                //{
+                foreach (MedicationToDogInfo item in medicationToDogInfoList)
+                {
+                    if (_context.Medications.Any(q => q.MedicationId == item.MedicationId && q.EveningMeal == true))
+                    {
+                        Medication medication =
+                        await
+                        _context
+                        .Medications
+                        .SingleAsync(q => q.MedicationId == item.MedicationId);
+                        medicationList.Add(medication);
+                    }
+                }
+                //}
+                if (medicationToDogInfoList.Count() > 0 || dogInfo.FoodId > 0)
+                {
+                    eveningMealsAndMedsList.Add(new MealsAndMeds(dogInfo, dogVisit, dogBasic, eveingFood, medicationList.AsEnumerable()));
+                }
+            }
+
+            return eveningMealsAndMedsList;
+        }
+        //=====HELPER======//
+        public async Task<double> FoodForDogByWeight(double weight)
+        {
+            double result;
+            if (weight<=5)
+            {
+                return .5;
+            }
+            else if (weight <= 26)
+            {
+                return (weight/12);
+            }
+            else if (weight <= 60)
+            {
+                return weight/18;
+            }
+            else if (weight <= 85)
+            {
+                return weight/22.5;
+            }
+            else if (weight <= 100)
+            {
+                return weight/23.5;
+            }
+            else
+            {
+                return 4.25 + ((weight-100)*.025);
+            }
+        }
 
 
-        ////Update kennel by id
-        //public async Task<bool> UpdateKennelAdd(int kennelId, string mark)
-        //{
-        //    Kennel kennel =
-        //            _context
-        //            .Kennels
-        //            .Single(a => a.KennelId == kennelId);
 
-        //    switch (mark)
-        //    {
-        //        case "Food":
-        //            Food food =
-        //                await
-        //            _context
-        //            .Foods.OrderByDescending(p => p.FoodId)
-        //            .FirstOrDefaultAsync();
-        //            kennel.FoodId = food.FoodId;
-        //            break;
-        //        case "Special":
-        //            Special special =
-        //                await
-        //            _context
-        //            .Specials.OrderByDescending(p => p.SpecialId)
-        //            .FirstOrDefaultAsync();
-        //            kennel.SpecialId = special.SpecialId;
-        //            break;
-        //        case "Vet":
-        //            Vet vet =
-        //                await
-        //            _context
-        //            .Vets.OrderByDescending(p => p.VetId)
-        //            .FirstOrDefaultAsync();
-        //            kennel.VetId = vet.VetId;
-        //            break;
-        //        case "DogImage":
-        //            DogImage dogImage =
-        //                await
-        //            _context
-        //            .DogImages.OrderByDescending(p => p.DogImageId)
-        //            .FirstOrDefaultAsync();
-        //            kennel.DogImageId = dogImage.DogImageId;
-        //            break;
-        //        default:
-        //            return false;
-        //    }
-
-        //    return await _context.SaveChangesAsync() == 1;
-        //}
-
-        //public async Task<bool> UpdateKennelRemove(int id, string mark)
-        //{
-        //    switch (mark)
-        //    {
-        //        case "Food":
-        //            Kennel kennelFood =
-        //                await
-        //                _context
-        //                .Kennels
-        //                .SingleAsync(a => a.FoodId == id);
-        //            kennelFood.FoodId = 0;
-        //            return await _context.SaveChangesAsync() == 1;
-        //        case "Special":
-        //            Kennel kennelSpecial =
-        //                await
-        //                _context
-        //                .Kennels
-        //                .SingleAsync(a => a.SpecialId == id);
-        //            kennelSpecial.SpecialId = 0;
-        //            return await _context.SaveChangesAsync() == 1;
-        //        case "Vet":
-        //            Kennel kennelVet =
-        //                await
-        //                _context
-        //                .Kennels
-        //                .SingleAsync(a => a.VetId == id);
-        //            kennelVet.VetId = 0;
-        //            return await _context.SaveChangesAsync() == 1;
-        //        case "DogImage":
-        //            Kennel kennelImage =
-        //                await
-        //                _context
-        //                .Kennels
-        //                .SingleAsync(a => a.DogImageId == id);
-        //            kennelImage.DogImageId = 0;
-        //            return await _context.SaveChangesAsync() == 1;
-        //        default:
-        //            break;
-        //    }
-
-        //    return await _context.SaveChangesAsync() == 1;
-        //}
-        //public async Task<bool> DeleteKennel(int id)
-        //{
-        //    var kennel =
-        //        _context
-        //        .Kennels
-        //        .Single(e => e.KennelId == id);
-        //    //Clean up data base
-
-        //    _context.Kennels.Remove(kennel);
-
-        //    return await _context.SaveChangesAsync() == 1;
-        //}
     }
 
 }

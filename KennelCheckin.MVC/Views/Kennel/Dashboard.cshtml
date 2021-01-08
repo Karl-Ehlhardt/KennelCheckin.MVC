@@ -5,6 +5,9 @@
 
 <h2>Dashboard</h2>
 
+@Html.ActionLink("Morning Meals and Medications", "MorningMealsAndMeds", "Kennel", null, new { @class = "btn btn-default" })
+@Html.ActionLink("Evening Meals and Medications", "EveningMealsAndMeds", "Kennel", null, new { @class = "btn btn-default" })
+
 <table class="table">
     <br />
     <tr>
@@ -29,24 +32,24 @@
     </tr>
     @for (int i = 0; i < Model.DogsOnSite.Count(); i++)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).DogName)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).VisitNotes)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).SpecialInstructions)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).Allergies)
-    </td>
-    <td>
-        @Html.ActionLink("Dog Details", "DogDetails", "Kennel", new { id = Model.DogsOnSite.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
-        @Html.ActionLink("Check-out Early", "CheckOut", "Kennel", new { id = Model.DogsOnSite.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
-    </td>
-</tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).DogName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).VisitNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).SpecialInstructions)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).Allergies)
+            </td>
+            <td>
+                @Html.ActionLink("Dog Details", "DogDetails", "Kennel", new { id = Model.DogsOnSite.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Check-out Early", "CheckOut", "Kennel", new { id = Model.DogsOnSite.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
+            </td>
+        </tr>
     }
 
 </table>
@@ -112,6 +115,7 @@
             </td>
             <td>
                 @Html.ActionLink("Check-out", "CheckOut", "Kennel", new { id = Model.OutgoingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Change Pickup", "ChangePickup", "DogVisit", new { id = Model.OutgoingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
             </td>
         </tr>
     }

@@ -64,6 +64,7 @@
 <div class="border border-primary">
     <h4>FoodDetails</h4>
     <hr />
+    <h5>If there is no food entered, your dog will be fed one time a day based on their weight.</h5>
     @if (Model.DogInfo.FoodId == 0)
     {
         @Html.ActionLink("Add", "Create", "Food", new { id = Model.DogInfo.DogInfoId }, null)

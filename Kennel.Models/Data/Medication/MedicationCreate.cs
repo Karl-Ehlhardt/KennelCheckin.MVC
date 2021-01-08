@@ -10,6 +10,7 @@ namespace Kennel.Models.Data.Medication
     public class MedicationCreate
     {
         [Required]
+        [Display(Name = "Medication Name")]
         public string Name { get; set; }
 
         [Required]
