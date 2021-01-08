@@ -22,5 +22,11 @@ namespace KennelData.JoiningData
         public DateTime PickUpTime { get; set; }
 
         public string Notes { get; set; }
+
+        public DateTimeOffset CheckInTime { get; set; }
+
+        public bool OnSite { get; set; }
+
+        public int HoursOnSite { get; set; }
     }
 }

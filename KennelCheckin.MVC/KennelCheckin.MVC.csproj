@@ -181,6 +181,7 @@
     <Compile Include="Controllers\Data\DogBasicController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Joining Data\DogInfoController.cs" />
+    <Compile Include="Controllers\Joining Data\DogVisitController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -274,6 +275,9 @@
     <Content Include="Views\DogImage\Create.cshtml" />
     <Content Include="Views\DogImage\Edit.cshtml" />
     <Content Include="Views\DogImage\Delete.cshtml" />
+    <Content Include="Views\DogVisit\Create.cshtml" />
+    <Content Include="Views\DogVisit\Edit.cshtml" />
+    <Content Include="Views\DogVisit\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

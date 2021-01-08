@@ -12,9 +12,9 @@
 <table class="table">
     <br />
     <tr>
-<p>
-    @Html.ActionLink("Create New Dog", "Create", "DogBasic")
-</p>
+        <p>
+            @Html.ActionLink("Create New Dog", "Create", "DogBasic")
+        </p>
     </tr>
     <tr>
         <th>
@@ -22,7 +22,6 @@
         </th>
         <th></th>
     </tr>
-
     @for (int i = 0; i < Model.DogBasic.Count(); i++)
     {
         <tr>
@@ -31,9 +30,98 @@
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", new { id = Model.DogInfo.ElementAt(i).DogInfoId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = Model.DogInfo.ElementAt(i).DogInfoId })
+                @Html.ActionLink("Delete", "Delete", new { id = Model.DogInfo.ElementAt(i).DogInfoId }) |
+                @Html.ActionLink("Add Visit", "Create", "DogVisit", new { id = Model.DogInfo.ElementAt(i).DogInfoId }, null)
             </td>
         </tr>
+    }
+
+</table>
+
+<table class="table upcoming">
+    <br />
+    <tr>
+        <h2>
+            Upcoming dog kennel stays
+        </h2>
+    </tr>
+    <tr>
+        <th>
+            <h1>Dog Name</h1>
+        </th>
+        <th>
+            <h1>Dropoff Date</h1>
+        </th>
+        <th>
+            <h1>Pickup Date</h1>
+        </th>
+        <th>
+            <h1>Notes</h1>
+        </th>
+        <th></th>
+    </tr>
+    @for (int i = 0; i < Model.DogFutureVisit.Count(); i++)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).DogName)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).DropOffTime)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).PickUpTime)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).Notes)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", "DogVisit", new { id = Model.DogFutureVisit.ElementAt(i).DogVisitId }, null) |
+        @Html.ActionLink("Delete", "Delete", "DogVisit", new { id = Model.DogFutureVisit.ElementAt(i).DogVisitId }, null)
+    </td>
+</tr>
+    }
+
+</table>
+
+<table class="table onSite">
+    <br />
+    <tr>
+        <h2>
+            Current dogs at kennel
+        </h2>
+    </tr>
+    <tr>
+        <th>
+            <h1>Dog Name</h1>
+        </th>
+        <th>
+            <h1>Dropoff Date</h1>
+        </th>
+        <th>
+            <h1>Pickup Date</h1>
+        </th>
+        <th>
+            <h1>Notes</h1>
+        </th>
+        <th></th>
+    </tr>
+    @for (int i = 0; i < Model.DogOngoingVisit.Count(); i++)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).DogName)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).DropOffTime)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).PickUpTime)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).Notes)
+    </td>
+</tr>
     }
 
 </table>

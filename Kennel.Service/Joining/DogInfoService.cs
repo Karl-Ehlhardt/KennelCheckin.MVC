@@ -1,6 +1,8 @@
 ﻿using Kennel.Data.Users;
 using Kennel.Models.Data.DisplayOnly;
 using Kennel.Models.Joining_Data.DogInfo;
+using Kennel.Models.Joining_Data.DogVisit;
+using Kennel.Service.Shared;
 using KennelData.Data;
 using KennelData.JoiningData;
 using System;
@@ -83,6 +85,10 @@ namespace Kennel.Service.Joining
 
 
             List<DogBasic> dogBasic = new List<DogBasic>();
+            List<DogVisitListItem> dogFuture = new List<DogVisitListItem>();
+            List<DogVisitListItem> dogOnGoing = new List<DogVisitListItem>();
+
+            var dogVistService = new DogVisitHelperService(_userId);
 
             foreach (DogInfo dogIn in dogInfo)
             {
@@ -92,9 +98,12 @@ namespace Kennel.Service.Joining
                 .DogBasics
                 .SingleAsync(q => q.DogBasicId == dogIn.DogBasicId);
                 dogBasic.Add(item);
+
+                dogFuture.AddRange(await dogVistService.GetAllFutureDogVisits(dogIn.DogInfoId, item.DogName));
+                dogOnGoing.AddRange(await dogVistService.GetAllOngoingDogVisits(dogIn.DogInfoId, item.DogName));
             }
 
-            DogInfoIndexView model = new DogInfoIndexView(dogBasic.AsEnumerable(), owner, dogInfo);
+            DogInfoIndexView model = new DogInfoIndexView(dogBasic.AsEnumerable(), owner, dogInfo, dogFuture.AsEnumerable(), dogOnGoing.AsEnumerable());
 
             return model;
         }

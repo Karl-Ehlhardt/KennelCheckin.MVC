@@ -1,4 +1,5 @@
-﻿using KennelData.Data;
+﻿using Kennel.Models.Joining_Data.DogVisit;
+using KennelData.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,12 +16,23 @@ namespace Kennel.Models.Data.DisplayOnly
         public IEnumerable<KennelData.Data.DogBasic> DogBasic { get; set; }
         public KennelData.Data.Owner Owner { get; set; }
         public IEnumerable<KennelData.JoiningData.DogInfo> DogInfo { get; set; }
+        public IEnumerable<DogVisitListItem> DogFutureVisit { get; set; }
+        public IEnumerable<DogVisitListItem> DogOngoingVisit { get; set; }
 
-        public DogInfoIndexView(IEnumerable<KennelData.Data.DogBasic> dogBasic, KennelData.Data.Owner owner, IEnumerable<KennelData.JoiningData.DogInfo> dogInfo)
+        public DogInfoIndexView
+            (
+            IEnumerable<KennelData.Data.DogBasic> dogBasic,
+            KennelData.Data.Owner owner,
+            IEnumerable<KennelData.JoiningData.DogInfo> dogInfo,
+            IEnumerable<DogVisitListItem> dogFuture,
+            IEnumerable<DogVisitListItem> dogOnGoing
+            )
         {
             DogBasic = dogBasic;
             Owner = owner;
             DogInfo = dogInfo;
+            DogFutureVisit = dogFuture;
+            DogOngoingVisit = dogOnGoing;
         }
 
     }
