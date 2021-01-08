@@ -112,6 +112,7 @@
             </td>
             <td>
                 @Html.ActionLink("Check-out", "CheckOut", "Kennel", new { id = Model.OutgoingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Change Pickup", "ChangePickup", "DogVisit", new { id = Model.OutgoingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
             </td>
         </tr>
     }

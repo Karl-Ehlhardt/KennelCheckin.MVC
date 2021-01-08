@@ -104,7 +104,7 @@ namespace KennelCheckin.MVC.Controllers.KennelControllers
             return View(model);
         }
 
-        //action that does not load a page
+        //action that does not load a page, returns to dashboard
         public async Task<ActionResult> ResetVisit([FromUri] int id)
         {
             KennelService service = CreateKennelService();
@@ -115,6 +115,16 @@ namespace KennelCheckin.MVC.Controllers.KennelControllers
             };
 
             return View();
+        }
+
+        //GET
+        public async Task<ActionResult> MorningMealsAndMeds([FromUri] int id)
+        {
+            KennelService service = CreateKennelService();
+
+            var mymodel = await service.AllMorningMealsAndMeds(id);
+
+            return View(mymodel);
         }
 
         //public async Task<ActionResult> Details(int id)

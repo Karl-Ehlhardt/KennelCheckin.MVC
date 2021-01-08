@@ -20,6 +20,7 @@ namespace KennelData.Data
         public string Breed { get; set; }
 
         [Required]
+        [Display(Name = "Weight (Lbs)")]
         public double Weight { get; set; }
     }
 }

@@ -10,9 +10,11 @@ namespace Kennel.Models.Data.Vet
     public class VetEdit
     {
         [Required]
+        [Display(Name = "Business Name")]
         public string BusinessName { get; set; }
 
         [Required]
+        [Display(Name = "Veterinarian Name")]
         public string VetName { get; set; }
 
         [Required]

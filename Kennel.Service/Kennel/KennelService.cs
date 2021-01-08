@@ -333,6 +333,72 @@ namespace Kennel.Service.Kennel
             return await _context.SaveChangesAsync() == 1;
         }
 
+        public async Task<MorningMealsAndMeds> AllMorningMealsAndMeds()
+        {
+            //On Site Dogs
+            List<DogVisit> morningMealDogVisitList =
+                await
+                _context
+                .DogVisits
+                .Where(q => q.OnSite == true)
+                .ToListAsync();
+
+            List<MorningMealsAndMeds> morningMealsAndMedsList = new List<MorningMealsAndMeds>();
+
+            foreach (DogVisit dogVisit in morningMealDogVisitList)
+            {
+                DogInfo dogInfo =
+                await
+                _context
+                .DogInfos
+                .SingleAsync(q => q.DogInfoId == dogVisit.DogInfoId);
+
+                DogBasic dogBasic =
+                await
+                _context
+                .DogBasics
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
+
+                Food morningFood = new Food();
+
+                if (_context.Foods.Any(q => q.FoodId == dogInfo.FoodId && q.MorningMeal == true))//Only feed dogs with no Food in the evening
+                {
+                    morningFood =
+                    await
+                    _context
+                    .Foods
+                    .SingleAsync(q => q.FoodId == dogInfo.FoodId);
+                }
+
+                List<MedicationToDogInfo> medicationToDogInfoList =
+                    await
+                    _context
+                    .MedicationToDogInfos
+                    .Where(q => q.DogInfoId == dogInfo.DogInfoId).ToListAsync();
+
+                List<Medication> medicationList = new List<Medication>();
+
+                //if (medicationToDogInfoList.Count() > 0)
+                //{
+                    foreach (MedicationToDogInfo item in medicationToDogInfoList)
+                    {
+                        if (_context.Medications.Any(q => q.MedicationId == item.MedicationId && q.MorningMeal == true))
+                        {
+                        Medication medication =
+                        await
+                        _context
+                        .Medications
+                        .SingleAsync(q => q.MedicationId == item.MedicationId);
+                        medicationList.Add(medication);
+                        }
+                    }
+                //}
+                morningMealsAndMedsList.Add(new MorningMealsAndMeds());
+            }
+
+            return morningMealsAndMedsList.AsEnumerable();
+        }
+
 
 
         ////Update kennel by id
