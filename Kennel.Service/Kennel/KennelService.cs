@@ -1,6 +1,7 @@
 ﻿using Kennel.Data.Users;
 using Kennel.Models.Data.Kennel.KennelDashboardItems;
 using Kennel.Models.Joining_Data.DogVisit;
+using Kennel.Models.Kennel.KennelDashboardItems;
 using Kennel.Service.Shared;
 using KennelData.Data;
 using KennelData.JoiningData;
@@ -70,108 +71,269 @@ namespace Kennel.Service.Kennel
         // kennel Dashboard Display
         public async Task<KennelDashboardView> DisplayKennelDashboardView()
         {
+            //On Site Dogs
+            List<DogVisit> onSiteDogVisitList =
+                await
+                _context
+                .DogVisits
+                .Where(q => q.OnSite == true)
+                .ToListAsync();
+
+            List<KennelDashboardDogListItem> onSiteDogs = new List<KennelDashboardDogListItem>();
+
+            foreach (DogVisit dogVisit in onSiteDogVisitList)
+            {
+                DogInfo dogInfo =
+                await
+                _context
+                .DogInfos
+                .SingleAsync(q => q.DogInfoId == dogVisit.DogInfoId);
+
+                DogBasic dogBasic =
+                await
+                _context
+                .DogBasics
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
+
+                Special special = new Special();
+
+                if (dogInfo.SpecialId > 0)
+                {
+                    special =
+                    await
+                    _context
+                    .Specials
+                    .SingleAsync(q => q.SpecialId == dogInfo.SpecialId);
+                }
+
+
+                onSiteDogs.Add(new KennelDashboardDogListItem(dogInfo.DogInfoId, dogVisit.DogVisitId, dogBasic.DogName, special.Instructions, special.Allergies, dogVisit.Notes));
+            }
+
+            //DateTime thisDay = DateTime.Today;
+            //Incoming Dogs
 
             List<DogVisit> incomingDogVisitList =
                 await
                 _context
                 .DogVisits
-                .Where(q => q.OnSite == false && q.HoursOnSite == 0)
-                .Select(
-                q =>
-                new DogVisit()
-                {
-                    DogVisitId = q.DogVisitId,
-                    DogInfoId = q.DogInfoId,
-                    Notes = q.Notes
-                }
-                ).ToListAsync();
+                .Where(q => q.OnSite == false && q.TotalHoursOnSite == 0 && q.DropOffTime == DateTime.Today)
+                .ToListAsync();
 
-            //intilize list
+            List<KennelDashboardDogListItem> incomingDogs = new List<KennelDashboardDogListItem>();
 
-            //Look up dog basic for name and special in for loop and add everything together
-
-
-            List<DogBasic> dogBasic = new List<DogBasic>();
-            List<DogVisitListItem> dogFuture = new List<DogVisitListItem>();
-            List<DogVisitListItem> dogOnGoing = new List<DogVisitListItem>();
-
-            var dogVistService = new DogVisitHelperService(_userId);
-
-            foreach (Kennel dogIn in kennel)
+            foreach (DogVisit dogVisit in incomingDogVisitList)
             {
-                DogBasic item =
+                DogInfo dogInfo =
+                await
+                _context
+                .DogInfos
+                .SingleAsync(q => q.DogInfoId == dogVisit.DogInfoId);
+
+                DogBasic dogBasic =
                 await
                 _context
                 .DogBasics
-                .SingleAsync(q => q.DogBasicId == dogIn.DogBasicId);
-                dogBasic.Add(item);
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
 
-                dogFuture.AddRange(await dogVistService.GetAllFutureDogVisits(dogIn.KennelId, item.DogName));
-                dogOnGoing.AddRange(await dogVistService.GetAllOngoingDogVisits(dogIn.KennelId, item.DogName));
+                Special special = new Special();
+
+                if (dogInfo.SpecialId > 0)
+                {
+                special =
+                await
+                _context
+                .Specials
+                .SingleAsync(q => q.SpecialId == dogInfo.SpecialId);
+                }
+
+                incomingDogs.Add(new KennelDashboardDogListItem(dogInfo.DogInfoId, dogVisit.DogVisitId, dogBasic.DogName, special.Instructions, special.Allergies, dogVisit.Notes));
             }
 
-            KennelIndexView model = new KennelIndexView(dogBasic.AsEnumerable(), owner, kennel, dogFuture.AsEnumerable(), dogOnGoing.AsEnumerable());
+            //Outgoing Dogs
+            List<DogVisit> outgoingDogVisitList =
+                await
+                _context
+                .DogVisits
+                .Where(q => q.OnSite == true && q.PickUpTime >= DateTime.Today)
+                .ToListAsync();
+
+            List<KennelDashboardDogListItem> outgoingDogs = new List<KennelDashboardDogListItem>();
+
+            foreach (DogVisit dogVisit in outgoingDogVisitList)
+            {
+                DogInfo dogInfo =
+                await
+                _context
+                .DogInfos
+                .SingleAsync(q => q.DogInfoId == dogVisit.DogInfoId);
+
+                DogBasic dogBasic =
+                await
+                _context
+                .DogBasics
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
+
+                Special special = new Special();
+
+                if (dogInfo.SpecialId > 0)
+                {
+                    special =
+                    await
+                    _context
+                    .Specials
+                    .SingleAsync(q => q.SpecialId == dogInfo.SpecialId);
+                }
+
+                outgoingDogs.Add(new KennelDashboardDogListItem(dogInfo.DogInfoId, dogVisit.DogVisitId, dogBasic.DogName, special.Instructions, special.Allergies, dogVisit.Notes));
+            }
+
+
+
+            KennelDashboardView model = new KennelDashboardView(onSiteDogs.AsEnumerable(), incomingDogs.AsEnumerable(), outgoingDogs.AsEnumerable());
 
             return model;
         }
 
-        //public async Task<KennelDetails> GetKennelById(int id)
-        //{
-        //    Kennel kennel =
-        //        await
-        //        _context
-        //        .Kennels
-        //        .SingleAsync(q => q.KennelId == id);
+        public async Task<KennelDogDetails> KennelDogDetailsByDogVisitId(int id)
+        {
+            DogVisit dogVisit =
+                await
+                _context
+                .DogVisits
+                .SingleAsync(q => q.DogVisitId == id);
 
-        //    DogBasic dogBasic =
-        //        await
-        //        _context
-        //        .DogBasics
-        //        .SingleAsync(q => q.DogBasicId == kennel.DogBasicId);
+            DogInfo dogInfo =
+                await
+                _context
+                .DogInfos
+                .SingleAsync(q => q.DogInfoId == dogVisit.DogInfoId);
 
-        //    Food food =
-        //        await
-        //        _context
-        //        .Foods
-        //        .SingleOrDefaultAsync(q => q.FoodId == kennel.FoodId);
+            DogBasic dogBasic =
+                await
+                _context
+                .DogBasics
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
 
-        //    Special special =
-        //        await
-        //        _context
-        //        .Specials
-        //        .SingleOrDefaultAsync(q => q.SpecialId == kennel.SpecialId);
+            Owner owner =
+                await
+                _context
+                .Owners
+                .SingleAsync(q => q.OwnerId == dogInfo.OwnerId);
 
-        //    Vet vet =
-        //        await
-        //        _context
-        //        .Vets
-        //        .SingleOrDefaultAsync(q => q.VetId == kennel.VetId);
+            Food food =
+                await
+                _context
+                .Foods
+                .SingleOrDefaultAsync(q => q.FoodId == dogInfo.FoodId);
 
-        //    List<MedicationToKennel> medicationToKennelList =
-        //        await
-        //        _context
-        //        .MedicationToKennels
-        //        .Where(q => q.KennelId == kennel.KennelId).ToListAsync();
+            Special special =
+                await
+                _context
+                .Specials
+                .SingleOrDefaultAsync(q => q.SpecialId == dogInfo.SpecialId);
 
-        //    List<Medication> medicationList = new List<Medication>();
+            Vet vet =
+                await
+                _context
+                .Vets
+                .SingleOrDefaultAsync(q => q.VetId == dogInfo.VetId);
 
-        //    if (medicationToKennelList.Count() > 0)
-        //    {
-        //        foreach (MedicationToKennel item in medicationToKennelList)
-        //        {
-        //            Medication medication =
-        //            await
-        //            _context
-        //            .Medications
-        //            .SingleOrDefaultAsync(q => q.MedicationId == item.MedicationId);
-        //            medicationList.Add(medication);
-        //        }
-        //    }
+            List<MedicationToDogInfo> medicationToDogInfoList =
+                await
+                _context
+                .MedicationToDogInfos
+                .Where(q => q.DogInfoId == dogInfo.DogInfoId).ToListAsync();
 
-        //    KennelDetails model = new KennelDetails(kennel, dogBasic, food, special, vet, medicationList.AsEnumerable());
+            List<Medication> medicationList = new List<Medication>();
 
-        //    return model;
-        //}
+            if (medicationToDogInfoList.Count() > 0)
+            {
+                foreach (MedicationToDogInfo item in medicationToDogInfoList)
+                {
+                    Medication medication =
+                    await
+                    _context
+                    .Medications
+                    .SingleOrDefaultAsync(q => q.MedicationId == item.MedicationId);
+                    medicationList.Add(medication);
+                }
+            }
+
+            KennelDogDetails model = new KennelDogDetails(dogInfo, dogVisit, dogBasic, owner, food, special, vet, medicationList.AsEnumerable());
+
+            return model;
+        }
+
+        public async Task<DogBasic> GetDogBasicByDogVisitId(int id)
+        {
+            DogVisit dogVisit =
+                await
+                _context
+                .DogVisits
+                .SingleAsync(q => q.DogVisitId == id);
+
+            DogInfo dogInfo =
+                await
+                _context
+                .DogInfos
+                .SingleAsync(q => q.DogInfoId == dogVisit.DogInfoId);
+
+            DogBasic dogBasic =
+                await
+                _context
+                .DogBasics
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
+
+            return dogBasic;
+        }
+
+        public async Task<bool> CheckInDogVisitById(int id)
+        {
+            DogVisit dogVisit =
+                await
+                _context
+                .DogVisits
+                .SingleAsync(q => q.DogVisitId == id);
+            dogVisit.OnSite = true;
+            dogVisit.CheckInTime = DateTimeOffset.Now;
+
+            return await _context.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> CheckOutDogVisitById(int id)
+        {
+            DogVisit dogVisit =
+                await
+                _context
+                .DogVisits
+                .SingleAsync(q => q.DogVisitId == id);
+            dogVisit.OnSite = false;
+            dogVisit.TotalHoursOnSite = Convert.ToInt32(Math.Ceiling((DateTimeOffset.Now - dogVisit.CheckInTime).TotalHours));
+
+            return await _context.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> ResetDogVisitById(int id)
+        {
+            DogVisit dogVisit =
+                await
+                _context
+                .DogVisits
+                .SingleOrDefaultAsync(q => q.DogVisitId == id && q.TotalHoursOnSite == 0);
+
+            if(dogVisit == null)
+            {
+                return false;
+            }
+
+            dogVisit.OnSite = false;
+            dogVisit.CheckInTime = new DateTime();
+
+            return await _context.SaveChangesAsync() == 1;
+        }
+
+
 
         ////Update kennel by id
         //public async Task<bool> UpdateKennelAdd(int kennelId, string mark)

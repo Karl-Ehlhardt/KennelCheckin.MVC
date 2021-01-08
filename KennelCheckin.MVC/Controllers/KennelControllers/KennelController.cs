@@ -1,5 +1,7 @@
-﻿using Kennel.Service.Joining;
+﻿using Kennel.Models.Data.Kennel.KennelDashboardItems;
+using Kennel.Service.Joining;
 using Kennel.Service.Kennel;
+using KennelData.Data;
 using KennelData.JoiningData;
 using Microsoft.AspNet.Identity;
 using System;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.KennelControllers
@@ -14,27 +17,105 @@ namespace KennelCheckin.MVC.Controllers.KennelControllers
     public class KennelController : Controller
     {
 
-        //private KennelService CreateKennelService()
-        //{
-        //    var userId = Guid.Parse(User.Identity.GetUserId());
-        //    var kennelService = new KennelService(userId);
-        //    return kennelService;
-        //}
+        private KennelService CreateKennelService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var kennelService = new KennelService(userId);
+            return kennelService;
+        }
 
         //// GET: Kennel
-        //public async Task<ActionResult> Dashboard()
-        //{
-        //    KennelService service = CreateKennelService();
+        public async Task<ActionResult> Dashboard()
+        {
+            KennelService service = CreateKennelService();
 
-        //    if (await service.CheckOwnerExists())//True if there is no owner set up
-        //    {
-        //        return RedirectToAction("Create", "Owner");
-        //    }
+            KennelDashboardView mymodel = await service.DisplayKennelDashboardView();
 
-        //    KennelDashboardView mymodel = await service.DisplayKennelDashboardView();
+            return View(mymodel);
+        }
 
-        //    return View(mymodel);
-        //}
+        //GET
+        public async Task<ActionResult> DogDetails([FromUri] int id)
+        {
+            KennelService service = CreateKennelService();
+
+            KennelDogDetails mymodel = await service.KennelDogDetailsByDogVisitId(id);
+
+            return View(mymodel);
+        }
+
+        //GET
+        public async Task<ActionResult> CheckIn([FromUri] int id)
+        {
+            KennelService service = CreateKennelService();
+
+            DogBasic mymodel = await service.GetDogBasicByDogVisitId(id);
+
+            return View(mymodel);
+        }
+
+        //POST
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("CheckIn")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CheckIn([FromUri] int id, string blank)
+        {
+            KennelService service = CreateKennelService();
+
+            if (await service.CheckInDogVisitById(id))
+            {
+                return RedirectToAction($"Dashboard");
+            };
+
+            ModelState.AddModelError("", "Dog could not be checked-in");
+
+            DogBasic model = await service.GetDogBasicByDogVisitId(id);
+
+            return View(model);
+        }
+
+        //GET
+        public async Task<ActionResult> CheckOut([FromUri] int id)
+        {
+            KennelService service = CreateKennelService();
+
+            DogBasic mymodel = await service.GetDogBasicByDogVisitId(id);
+
+            return View(mymodel);
+        }
+
+        //POST
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("CheckOut")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CheckOut([FromUri] int id, string blank)
+        {
+            KennelService service = CreateKennelService();
+
+            if (await service.CheckOutDogVisitById(id))
+            {
+                return RedirectToAction($"Dashboard");
+            };
+
+            ModelState.AddModelError("", "Dog could not be checked-out");
+
+            DogBasic model = await service.GetDogBasicByDogVisitId(id);
+
+            return View(model);
+        }
+
+        //action that does not load a page
+        public async Task<ActionResult> ResetVisit([FromUri] int id)
+        {
+            KennelService service = CreateKennelService();
+
+            if (await service.ResetDogVisitById(id))
+            {
+                return RedirectToAction("Dashboard");
+            };
+
+            return View();
+        }
 
         //public async Task<ActionResult> Details(int id)
         //{

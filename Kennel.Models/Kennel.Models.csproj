@@ -83,7 +83,8 @@
     <Compile Include="Joining Data\DogVisit\DogVisitEdit.cs" />
     <Compile Include="Joining Data\DogVisit\DogVisitCreate.cs" />
     <Compile Include="Joining Data\MedicationToDogInfo\MedicationToDogInfoCreate.cs" />
-    <Compile Include="Kennel\KennelDashboardItems\KennelDashdoardDogListItem.cs" />
+    <Compile Include="Kennel\KennelDashboardItems\KennelDogDetails.cs" />
+    <Compile Include="Kennel\KennelDashboardItems\KennelDashboardDogListItem.cs" />
     <Compile Include="Kennel\KennelDashboardItems\KennelDashboardView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

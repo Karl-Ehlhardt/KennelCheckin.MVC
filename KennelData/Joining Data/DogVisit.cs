@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,13 @@ namespace KennelData.JoiningData
         public int DogInfoId { get; set; }
 
         [Required]
+        [DisplayName("Drop-Off Date")]
+        [DataType(DataType.Date)]
         public DateTime DropOffTime { get; set; }
 
         [Required]
+        [DisplayName("Pick-Up Date")]
+        [DataType(DataType.Date)]
         public DateTime PickUpTime { get; set; }
 
         public string Notes { get; set; }
@@ -27,6 +32,6 @@ namespace KennelData.JoiningData
 
         public bool OnSite { get; set; }
 
-        public int HoursOnSite { get; set; }
+        public int TotalHoursOnSite { get; set; }
     }
 }

@@ -13,15 +13,15 @@ namespace Kennel.Models.Data.Kennel.KennelDashboardItems
 {
     public class KennelDashboardView
     {
-        public IEnumerable<KennelDashdoardDogListItem> DogsOnSite { get; set; }
-        public IEnumerable<KennelDashdoardDogListItem> IncomingDogs { get; set; }
-        public IEnumerable<KennelDashdoardDogListItem> OutgoingDogs { get; set; }
+        public IEnumerable<KennelDashboardDogListItem> DogsOnSite { get; set; }
+        public IEnumerable<KennelDashboardDogListItem> IncomingDogs { get; set; }
+        public IEnumerable<KennelDashboardDogListItem> OutgoingDogs { get; set; }
 
         public KennelDashboardView
             (
-            IEnumerable<KennelDashdoardDogListItem> dogsOnSite,
-            IEnumerable<KennelDashdoardDogListItem> incomingDogs,
-            IEnumerable<KennelDashdoardDogListItem> outgoingDogs
+            IEnumerable<KennelDashboardDogListItem> dogsOnSite,
+            IEnumerable<KennelDashboardDogListItem> incomingDogs,
+            IEnumerable<KennelDashboardDogListItem> outgoingDogs
             )
         {
             DogsOnSite = dogsOnSite;

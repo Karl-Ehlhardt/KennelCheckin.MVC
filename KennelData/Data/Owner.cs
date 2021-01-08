@@ -29,12 +29,15 @@ namespace KennelData.Data
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "Backup Name")]
         public string BackupName { get; set; }
 
         [Required]
+        [Display(Name = "Backup Phone")]
         public string BackupPhone { get; set; }
 
         [Required]
+        [Display(Name = "Backup Email")]
         public string BackupEmail { get; set; }
     }
 }
