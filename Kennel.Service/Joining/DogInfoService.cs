@@ -1,5 +1,5 @@
 ﻿using Kennel.Data.Users;
-using Kennel.Models.Data.DisplayOnly;
+using Kennel.Models.Data.Joining_Data.DogInfo.DisplayOnly;
 using Kennel.Models.Joining_Data.DogInfo;
 using Kennel.Models.Joining_Data.DogVisit;
 using Kennel.Service.Shared;

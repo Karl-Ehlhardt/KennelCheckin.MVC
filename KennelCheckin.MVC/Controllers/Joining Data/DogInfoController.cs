@@ -1,4 +1,4 @@
-﻿using Kennel.Models.Data.DisplayOnly;
+﻿using Kennel.Models.Data.Joining_Data.DogInfo.DisplayOnly;
 using Kennel.Service.Joining;
 using KennelData.JoiningData;
 using Microsoft.AspNet.Identity;

@@ -1,0 +1,120 @@
+﻿@model Kennel.Models.Data.Kennel.KennelDashboardItems.KennelDashboardView
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Dashboard</h2>
+
+<table class="table">
+    <br />
+    <tr>
+        <h3>
+            Dogs On Site Currently
+        </h3>
+    </tr>
+    <tr>
+        <th>
+            <h2>Dog Name</h2>
+        </th>
+        <th>
+            <h2>Visit Notes</h2>
+        </th>
+        <th>
+            <h2>Special Instructions</h2>
+        </th>
+        <th>
+            <h2>Allergies</h2>
+        </th>
+        <th></th>
+    </tr>
+    @for (int i = 0; i < Model.DogsOnSite.Count(); i++)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).DogName)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).VisitNotes)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).SpecialInstructions)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).Allergies)
+    </td>
+    <td>
+        @Html.ActionLink("Dog Details", "DogDetails", "Kennel", new { id = Model.DogsOnSite.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Check-out Early", "CheckOut", "Kennel", new { id = Model.DogsOnSite.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
+    </td>
+</tr>
+    }
+
+</table>
+
+<table class="table">
+    <br />
+    <tr>
+        <h3>
+            Dogs Incoming Today
+        </h3>
+    </tr>
+    <tr>
+        <th>
+            <h2>Dog Name</h2>
+        </th>
+        <th>
+            <h2>Visit Notes</h2>
+        </th>
+        <th>
+            <h2>Special Instructions</h2>
+        </th>
+        <th></th>
+    </tr>
+    @for (int i = 0; i < Model.IncomingDogs.Count(); i++)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.IncomingDogs.ElementAt(i).DogName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.IncomingDogs.ElementAt(i).VisitNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.IncomingDogs.ElementAt(i).SpecialInstructions)
+            </td>
+            <td>
+                @Html.ActionLink("Dog Details", "DogDetails", "Kennel", new { id = Model.IncomingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Check-In", "CheckIn", "Kennel", new { id = Model.IncomingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<table class="table">
+    <br />
+    <tr>
+        <h3>
+            Dogs Checking Out
+        </h3>
+    </tr>
+    <tr>
+        <th>
+            <h2>Dog Name</h2>
+        </th>
+        <th></th>
+    </tr>
+    @for (int i = 0; i < Model.OutgoingDogs.Count(); i++)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.OutgoingDogs.ElementAt(i).DogName)
+            </td>
+            <td>
+                @Html.ActionLink("Check-out", "CheckOut", "Kennel", new { id = Model.OutgoingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
+            </td>
+        </tr>
+    }
+
+</table>
+

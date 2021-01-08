@@ -16,7 +16,7 @@ namespace KennelData.Data
         public string Name { get; set; }
 
         [Required]
-        public double Dose { get; set; }
+        public string Dose { get; set; }
 
         [Required]
         public bool MorningMeal { get; set; }

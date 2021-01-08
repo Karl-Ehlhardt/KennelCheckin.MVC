@@ -180,6 +180,7 @@
     <Compile Include="Controllers\Data\OwnerController.cs" />
     <Compile Include="Controllers\Data\DogBasicController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KennelControllers\KennelController.cs" />
     <Compile Include="Controllers\Joining Data\DogInfoController.cs" />
     <Compile Include="Controllers\Joining Data\DogVisitController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -278,6 +279,11 @@
     <Content Include="Views\DogVisit\Create.cshtml" />
     <Content Include="Views\DogVisit\Edit.cshtml" />
     <Content Include="Views\DogVisit\Delete.cshtml" />
+    <Content Include="Views\Kennel\Dashboard.cshtml" />
+    <Content Include="Views\Kennel\DogDetails.cshtml" />
+    <Content Include="Views\Kennel\CheckIn.cshtml" />
+    <Content Include="Views\Kennel\CheckOut.cshtml" />
+    <Content Include="Views\Kennel\ResetVisit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

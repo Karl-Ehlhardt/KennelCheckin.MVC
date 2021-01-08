@@ -33,7 +33,7 @@ namespace Kennel.Service.Shared
                 await
                 _context
                 .DogVisits
-                .Where(q => q.OnSite == false && q.HoursOnSite == 0 && q.DogInfoId == dogInfoId)
+                .Where(q => q.OnSite == false && q.TotalHoursOnSite == 0 && q.DogInfoId == dogInfoId)
                 .Select(
                     q =>
                     new DogVisitListItem()
@@ -55,7 +55,7 @@ namespace Kennel.Service.Shared
                 await
                 _context
                 .DogVisits
-                .Where(q => q.OnSite == true && q.HoursOnSite == 0 && q.DogInfoId == dogInfoId)
+                .Where(q => q.OnSite == true && q.TotalHoursOnSite == 0 && q.DogInfoId == dogInfoId)
                 .Select(
                     q =>
                     new DogVisitListItem()

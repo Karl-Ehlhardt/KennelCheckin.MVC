@@ -1,0 +1,309 @@
+﻿@model Kennel.Models.Data.Kennel.KennelDashboardItems.KennelDogDetails
+
+@{
+    ViewBag.Title = "DogDetails";
+}
+
+<h2>Dog Details</h2>
+
+<p>
+    @Html.ActionLink("Back to Dashboard", "Dashboard")
+</p>
+
+<div class="border border-primary">
+    <h4>Dog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DogBasic.DogName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogBasic.DogName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DogBasic.Breed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogBasic.Breed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DogBasic.Weight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogBasic.Weight)
+        </dd>
+    </dl>
+</div>
+
+<div class="border border-primary">
+    <h4>Dog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DogVisit.DropOffTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogVisit.DropOffTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DogVisit.PickUpTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogVisit.PickUpTime)
+        </dd>
+    </dl>
+</div>
+
+<div class="border border-primary">
+    <h4>DogImage</h4>
+
+    @if (Model.DogInfo.DogImageId == 0)
+    {
+        <h3>No Image</h3>
+    }
+    else
+    {
+        <img src="@Url.Action("RenderPhoto", "DogImage", new { photoId = Model.DogInfo.DogImageId })" width="200" height="200" alt="Pet Image" />
+    }
+
+</div>
+
+<div class="border border-primary">
+    <h4>Food</h4>
+    <hr />
+    @if (Model.DogInfo.FoodId == 0)
+    {
+        <h3>No Food Specfied</h3>
+    }
+    else
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Food.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Food.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Food.AmountPerMeal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Food.AmountPerMeal)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Food.MorningMeal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Food.MorningMeal)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Food.EveningMeal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Food.EveningMeal)
+            </dd>
+
+        </dl>
+    }
+</div>
+
+<div class="border border-primary">
+    <h4>SpecialDetails</h4>
+    <hr />
+    @if (Model.DogInfo.SpecialId == 0)
+    {
+        <h3>No Specail Instructions</h3>
+    }
+    else
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Special.Instructions)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Special.Instructions)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Special.Allergies)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Special.Allergies)
+            </dd>
+
+        </dl>
+    }
+</div>
+
+<div class="border border-primary">
+    <h4>VetDetails</h4>
+    <hr />
+    @if (Model.DogInfo.VetId == 0)
+    {
+        <h3>No Vet specfied</h3>
+    }
+    else
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Vet.BusinessName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Vet.BusinessName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Vet.VetName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Vet.VetName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Vet.Phone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Vet.Phone)
+            </dd>
+        </dl>
+    }
+</div>
+
+<div class="border border-primary">
+    <h4>MedicationDetails</h4>
+    <hr />
+    @if (Model.MedicationList.Count() == 0)
+    {
+        <h3>No Medications</h3>
+    }
+    else
+    {
+        for (int i = 0; i < Model.MedicationList.Count(); i++)
+        {
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MedicationList.ElementAt(i).Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Dose)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MedicationList.ElementAt(i).Dose)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).MorningMeal)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MedicationList.ElementAt(i).MorningMeal)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).EveningMeal)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MedicationList.ElementAt(i).EveningMeal)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Instructions)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MedicationList.ElementAt(i).Instructions)
+                </dd>
+            </dl>
+        }
+        <br />
+    }
+</div>
+
+<div class="border border-primary">
+    <h4>Owner Information</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner.Phone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner.Email)
+        </dd>
+
+        <br />
+        <br />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.BackupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner.BackupName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.BackupPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner.BackupPhone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.BackupEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner.BackupEmail)
+        </dd>
+    </dl>
+</div>
+
+@Html.ActionLink("Reset Visit", "ResetVisit", "Kennel", new { id = Model.DogVisit.DogVisitId }, new { @class = "btn btn-default" })
+
+
+<p>
+    @Html.ActionLink("Back to Dashboard", "Dashboard")
+</p>
+

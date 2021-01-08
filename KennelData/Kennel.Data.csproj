@@ -80,6 +80,14 @@
     <Compile Include="Migrations\202101051526439_DogVisitsadd.Designer.cs">
       <DependentUpon>202101051526439_DogVisitsadd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101061434390_DogMed.cs" />
+    <Compile Include="Migrations\202101061434390_DogMed.Designer.cs">
+      <DependentUpon>202101061434390_DogMed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101070415411_DogVisitTotalHoursOnSite.cs" />
+    <Compile Include="Migrations\202101070415411_DogVisitTotalHoursOnSite.Designer.cs">
+      <DependentUpon>202101070415411_DogVisitTotalHoursOnSite.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users\IdentityModels.cs" />
@@ -100,6 +108,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101051526439_DogVisitsadd.resx">
       <DependentUpon>202101051526439_DogVisitsadd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101061434390_DogMed.resx">
+      <DependentUpon>202101061434390_DogMed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101070415411_DogVisitTotalHoursOnSite.resx">
+      <DependentUpon>202101070415411_DogVisitTotalHoursOnSite.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

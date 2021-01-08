@@ -42,6 +42,13 @@ namespace KennelCheckin.MVC.Controllers.Joinging_Data
         {
             if (!ModelState.IsValid) return View(model);
 
+            if (DateTime.Compare(model.DropOffTime, model.PickUpTime) >= 0)
+            {
+                ModelState.AddModelError("", "Dropoff date must be before pickup");
+
+                return View(model);
+            }
+
             var service = CreateDogVisitService();
 
             if (await service.CreateDogVisit(id, model))
@@ -82,7 +89,22 @@ namespace KennelCheckin.MVC.Controllers.Joinging_Data
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, DogVisitEdit model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+                DogVisitService remedialService = CreateDogVisitService();
+
+                var remedialmodel = await remedialService.GetDogVisitByIdEditable(id);
+
+                return View(remedialmodel);
+            }
+
+
+            if (DateTime.Compare(model.DropOffTime, model.PickUpTime) >= 0)
+            {
+                ModelState.AddModelError("", "Dropoff date must be before pickup");
+
+                return View(model);
+            }
 
             var service = CreateDogVisitService();
 

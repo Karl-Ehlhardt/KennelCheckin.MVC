@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kennel.Models.Data.DisplayOnly
+namespace Kennel.Models.Data.Joining_Data.DogInfo.DisplayOnly
 {
     public class DogInfoIndexView
     {

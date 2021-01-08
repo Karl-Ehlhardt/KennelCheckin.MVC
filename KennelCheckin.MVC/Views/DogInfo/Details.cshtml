@@ -1,4 +1,4 @@
-﻿@model Kennel.Models.Data.DisplayOnly.DogInfoDetails
+﻿@model Kennel.Models.Data.Joining_Data.DogInfo.DisplayOnly.DogInfoDetails
 
 @{
     ViewBag.Title = "Details";
@@ -10,7 +10,7 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
 
-<div>
+<div class="border border-primary">
     <h4>DogBasicDetails</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -43,7 +43,7 @@
     </p>
 </div>
 
-<div>
+<div class="border border-primary">
     <h4>DogImage</h4>
 
     @if (Model.DogInfo.DogImageId == 0)
@@ -61,7 +61,7 @@
 
 </div>
 
-<div>
+<div class="border border-primary">
     <h4>FoodDetails</h4>
     <hr />
     @if (Model.DogInfo.FoodId == 0)
@@ -111,7 +111,7 @@
     }
 </div>
 
-<div>
+<div class="border border-primary">
     <h4>SpecialDetails</h4>
     <hr />
     @if (Model.DogInfo.SpecialId == 0)
@@ -145,7 +145,7 @@
     }
 </div>
 
-<div>
+<div class="border border-primary">
     <h4>VetDetails</h4>
     <hr />
     @if (Model.DogInfo.VetId == 0)
@@ -186,7 +186,7 @@
     }
 </div>
 
-<div>
+<div class="border border-primary">
     <h4>MedicationDetails</h4>
     <hr />
     @if (Model.MedicationList.Count() == 0)
@@ -249,4 +249,7 @@
         </p>
     }
 </div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
 
