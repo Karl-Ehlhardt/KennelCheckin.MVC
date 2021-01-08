@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Kennel.Models.Data.Kennel.MealsAndMedications.MealsAndMeds>
+
+@{
+    ViewBag.Title = "EveningMealsAndMeds";
+}
+
+<h2>EveningMealsAndMeds</h2>
+
+
+<p>
+    @Html.ActionLink("Back to Dashboard", "Dashboard")
+</p>
+@for (int i = 0; i < Model.Count(); i++)
+{
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DogBasic.DogName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ElementAt(i).DogBasic.DogName)
+        </dd>
+
+        @if (Model.ElementAt(i).Food.FoodId == 0)
+        {
+            <dt>Fed in the Morning</dt>
+            <dd></dd>
+        }
+        else
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Food.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ElementAt(i).Food.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Food.AmountPerMeal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ElementAt(i).Food.AmountPerMeal)
+            </dd>
+        }
+        @if (Model.ElementAt(i).MedicationList.Count() == 0)
+        {
+            <dt>No Medications for this Meal</dt>
+            <dd></dd>
+        }
+        else
+        {
+            <dt>Medications with this meal</dt>
+            <dd></dd>
+            for (int m = 0; m < Model.ElementAt(i).MedicationList.Count(); m++)
+            {
+                int displayCount = m + 1;
+                <dt>
+                    @Html.DisplayFor(model => displayCount) ) @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(m).Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Dose)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(m).Dose)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Instructions)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(m).Instructions)
+                </dd>
+            }
+        }
+    </dl>
+    <hr />
+}
+
+<p>
+    @Html.ActionLink("Back to Dashboard", "Dashboard")
+</p>

@@ -285,6 +285,8 @@
     <Content Include="Views\Kennel\CheckOut.cshtml" />
     <Content Include="Views\Kennel\ResetVisit.cshtml" />
     <Content Include="Views\DogVisit\ChangePickup.cshtml" />
+    <Content Include="Views\Kennel\MorningMealsAndMeds.cshtml" />
+    <Content Include="Views\Kennel\EveningMealsAndMeds.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

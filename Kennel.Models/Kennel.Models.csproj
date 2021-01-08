@@ -87,6 +87,7 @@
     <Compile Include="Kennel\KennelDashboardItems\KennelDogDetails.cs" />
     <Compile Include="Kennel\KennelDashboardItems\KennelDashboardDogListItem.cs" />
     <Compile Include="Kennel\KennelDashboardItems\KennelDashboardView.cs" />
+    <Compile Include="Kennel\MealsAndMedications\MealsAndMeds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -99,8 +100,6 @@
       <Name>Kennel.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Kennel\MealsAndMedications\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

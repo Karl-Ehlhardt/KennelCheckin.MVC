@@ -118,11 +118,21 @@ namespace KennelCheckin.MVC.Controllers.KennelControllers
         }
 
         //GET
-        public async Task<ActionResult> MorningMealsAndMeds([FromUri] int id)
+        public async Task<ActionResult> MorningMealsAndMeds()
         {
             KennelService service = CreateKennelService();
 
-            var mymodel = await service.AllMorningMealsAndMeds(id);
+            var mymodel = await service.AllMorningMealsAndMeds();
+
+            return View(mymodel);
+        }
+
+        //GET
+        public async Task<ActionResult> EveningMealsAndMeds()
+        {
+            KennelService service = CreateKennelService();
+
+            var mymodel = await service.AllEveningMealsAndMeds();
 
             return View(mymodel);
         }
