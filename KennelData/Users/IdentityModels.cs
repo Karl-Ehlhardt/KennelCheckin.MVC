@@ -45,6 +45,7 @@ namespace Kennel.Data.Users
         //Joining
         public DbSet<DogInfo> DogInfos { get; set; }
         public DbSet<DogVisit> DogVisits { get; set; }
+        public DbSet<MedicationToDogInfo> MedicationToDogInfos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -70,6 +71,9 @@ namespace Kennel.Data.Users
 
     public class IdentityUserRoleConfiguration : EntityTypeConfiguration<IdentityUserRole>
     {
-
+        public IdentityUserRoleConfiguration()
+        {
+            HasKey(iur => iur.UserId);
+        }
     }
 }

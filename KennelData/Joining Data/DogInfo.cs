@@ -24,6 +24,6 @@ namespace KennelData.JoiningData
 
         public int VetId { get; set; }
 
-        public List<int> MedicationIdList { get; set; }
+        public int DogImageId { get; set; }
     }
 }

@@ -61,8 +61,22 @@
     <Compile Include="Data\Medication.cs" />
     <Compile Include="Data\Owner.cs" />
     <Compile Include="Data\DogBasic.cs" />
+    <Compile Include="Joining Data\MedicationToDogInfo.cs" />
     <Compile Include="Joining Data\DogVisit.cs" />
     <Compile Include="Joining Data\DogInfo.cs" />
+    <Compile Include="Migrations\202012291630142_InitialCreate.cs" />
+    <Compile Include="Migrations\202012291630142_InitialCreate.Designer.cs">
+      <DependentUpon>202012291630142_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101042052272_first.cs" />
+    <Compile Include="Migrations\202101042052272_first.Designer.cs">
+      <DependentUpon>202101042052272_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101051421249_removeSize.cs" />
+    <Compile Include="Migrations\202101051421249_removeSize.Designer.cs">
+      <DependentUpon>202101051421249_removeSize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users\IdentityModels.cs" />
   </ItemGroup>
@@ -70,6 +84,16 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202012291630142_InitialCreate.resx">
+      <DependentUpon>202012291630142_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101042052272_first.resx">
+      <DependentUpon>202101042052272_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101051421249_removeSize.resx">
+      <DependentUpon>202101051421249_removeSize.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

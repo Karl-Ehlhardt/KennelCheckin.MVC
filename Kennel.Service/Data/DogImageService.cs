@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 using KennelData.Data;
 using System.Web.Http;
 using System.Data.Entity;
+using System.Drawing;
+using System.Web;
+using System.IO;
 
 namespace Kennel.Service.Data
 {
-    class DogImageService
+    public class DogImageService
     {
         //private user field
         private readonly Guid _userId;
@@ -26,12 +29,16 @@ namespace Kennel.Service.Data
         }
 
         //Create new
-        public async Task<bool> CreateDogImage(DogImageCreate model)
+        public async Task<bool> CreateDogImage(HttpPostedFileBase file)
         {
+            byte[] image = new byte[file.ContentLength];
+            file.InputStream.Position = 0;
+            file.InputStream.Read(image, 0, image.Length);
+
             DogImage dogImage =
                 new DogImage()
                 {
-                    ImgFile = model.ImgFile,
+                    ImgFile = image
                 };
 
             _context.DogImages.Add(dogImage);
@@ -39,30 +46,48 @@ namespace Kennel.Service.Data
         }
 
         //Get by id
-        public async Task<List<DogImageDisplay>> GetDogImageById([FromUri] int id)
+        public async Task<DogImageEdit> GetDogImageIdEdit([FromUri] int id)
         {
             var query =
                 await
                 _context
                 .DogImages
-                .Where(q => q.DogImageId == id)
-                .Select(
-                    q =>
-                    new DogImageDisplay()
-                    {
-                        ImgFile = q.ImgFile,
-                    }).ToListAsync();
-            return query;
+                .SingleAsync(q => q.DogImageId == id);
+
+            DogImageEdit dogImageEdit =
+                new DogImageEdit()
+                {
+                    DogImageId = query.DogImageId,
+                };
+
+            return dogImageEdit;
         }
 
         //Update by id
-        public async Task<bool> UpdateDogImage([FromUri] int id, [FromBody] DogImageEdit model)
+        public async Task<bool> UpdateDogImage([FromUri] int id, [FromBody] HttpPostedFileBase file)
         {
+
+            byte[] image = new byte[file.ContentLength];
+            file.InputStream.Position = 0;
+            file.InputStream.Read(image, 0, image.Length);
+
             DogImage dogImage =
                 _context
                 .DogImages
                 .Single(a => a.DogImageId == id);
-            dogImage.ImgFile = model.ImgFile;
+            dogImage.ImgFile = image;
+
+            return await _context.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> DeleteDogImage(int id)
+        {
+            var entity =
+                _context
+                .DogImages
+                .Single(e => e.DogImageId == id);
+
+            _context.DogImages.Remove(entity);
 
             return await _context.SaveChangesAsync() == 1;
         }

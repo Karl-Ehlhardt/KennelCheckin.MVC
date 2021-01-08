@@ -13,6 +13,7 @@ namespace Kennel.Service.Data
 {
     public class DogBasicService
     {
+
         //private user field
         private readonly Guid _userId;
 
@@ -25,6 +26,18 @@ namespace Kennel.Service.Data
             _userId = userId;
         }
 
+        public async Task<bool> CheckOwner()
+        {
+
+            Owner owner =
+                await
+                _context
+                .Owners
+                .SingleOrDefaultAsync(a => a.ApplicationUserId == _userId.ToString());
+
+            return owner == null;
+        }
+
         //Create new dogBasic
         public async Task<bool> CreateDogBasic(DogBasicCreate model)
         {
@@ -33,8 +46,7 @@ namespace Kennel.Service.Data
                 {
                     DogName = model.DogName,
                     Breed = model.Breed,
-                    Weight = model.Weight,
-                    Size = model.Size
+                    Weight = model.Weight
                 };
 
             _context.DogBasics.Add(dogBasic);
@@ -42,7 +54,7 @@ namespace Kennel.Service.Data
         }
 
         //Get dogBasic by id
-        public async Task<List<DogBasicDetails>> GetDogBasicById([FromUri] int id)
+        public async Task<DogBasicDetails> GetDogBasicById([FromUri] int id)
         {
             var query =
                 await
@@ -53,12 +65,31 @@ namespace Kennel.Service.Data
                     q =>
                     new DogBasicDetails()
                     {
+                        DogBasicId = q.DogBasicId,
                         DogName = q.DogName,
                         Breed = q.Breed,
-                        Weight = q.Weight,
-                        Size = q.Size
+                        Weight = q.Weight
                     }).ToListAsync();
-            return query;
+            return query[0];
+        }
+
+        //Get dogBasic by id Editable
+        public async Task<DogBasicEdit> GetDogBasicByIdEditable([FromUri] int id)
+        {
+            var query =
+                await
+                _context
+                .DogBasics
+                .Where(q => q.DogBasicId == id)
+                .Select(
+                    q =>
+                    new DogBasicEdit()
+                    {
+                        DogName = q.DogName,
+                        Breed = q.Breed,
+                        Weight = q.Weight
+                    }).ToListAsync();
+            return query[0];
         }
 
         //Update area by id
@@ -71,7 +102,6 @@ namespace Kennel.Service.Data
             dogBasic.DogName = model.DogName;
             dogBasic.Breed = model.Breed;
             dogBasic.Weight = model.Weight;
-            dogBasic.Size = model.Size;
 
             return await _context.SaveChangesAsync() == 1;
         }

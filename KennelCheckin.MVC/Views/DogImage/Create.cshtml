@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<h2>Basic File Upload</h2>
+@using (Html.BeginForm("Create", "DogImage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <form action="/action_page.php">
+        <label for="img">Select image:</label>
+        <input type="file" id="ImageData" name="ImageData" accept="image/*">
+        <input type="submit">
+    </form>
+}
+
+<div>
+    @Html.ActionLink("Back to Index", "Index", "DogInfo")
+</div>

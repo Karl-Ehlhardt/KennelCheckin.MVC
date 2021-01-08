@@ -16,9 +16,11 @@ namespace Kennel.Models.Data.Medication
         public double Dose { get; set; }
 
         [Required]
+        [Display(Name = "Has this with the morning meal?")]
         public bool MorningMeal { get; set; }
 
         [Required]
+        [Display(Name = "Has this with the evening meal?")]
         public bool EveningMeal { get; set; }
 
         [Required]

@@ -11,7 +11,7 @@ using System.Data.Entity;
 
 namespace Kennel.Service.Data
 {
-    class FoodService
+    public class FoodService
     {
         //private user field
         private readonly Guid _userId;
@@ -42,7 +42,7 @@ namespace Kennel.Service.Data
         }
 
         //Get by id
-        public async Task<List<FoodDetails>> GetFoodById([FromUri] int id)
+        public async Task<FoodDetails> GetFoodById([FromUri] int id)
         {
             var query =
                 await
@@ -58,7 +58,27 @@ namespace Kennel.Service.Data
                         MorningMeal = q.MorningMeal,
                         EveningMeal = q.EveningMeal
                     }).ToListAsync();
-            return query;
+            return query[0];
+        }
+
+        //Get by id
+        public async Task<FoodEdit> GetFoodByIdEditable([FromUri] int id)
+        {
+            var query =
+                await
+                _context
+                .Foods
+                .Where(q => q.FoodId == id)
+                .Select(
+                    q =>
+                    new FoodEdit()
+                    {
+                        Name = q.Name,
+                        AmountPerMeal = q.AmountPerMeal,
+                        MorningMeal = q.MorningMeal,
+                        EveningMeal = q.EveningMeal
+                    }).ToListAsync();
+            return query[0];
         }
 
         //Update by id
@@ -74,6 +94,18 @@ namespace Kennel.Service.Data
             dogFood.EveningMeal = model.EveningMeal;
 
             return await _context.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> DeleteFood(int id)
+        {
+                var entity =
+                    _context
+                    .Foods
+                    .Single(e => e.FoodId == id);
+
+            _context.Foods.Remove(entity);
+
+                return await _context.SaveChangesAsync() == 1;
         }
     }
 }

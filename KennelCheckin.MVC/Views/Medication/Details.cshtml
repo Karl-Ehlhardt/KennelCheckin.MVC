@@ -1,0 +1,58 @@
+﻿@model Kennel.Models.Data.Medication.MedicationDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MedicationDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dose)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dose)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MorningMeal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MorningMeal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EveningMeal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EveningMeal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Instructions)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Instructions)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

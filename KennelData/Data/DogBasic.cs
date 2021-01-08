@@ -10,6 +10,7 @@ namespace KennelData.Data
     public class DogBasic
     {
         [Key]
+        [Display(Name = "Dog Name")]
         public int DogBasicId { get; set; }
 
         [Required]
@@ -20,8 +21,5 @@ namespace KennelData.Data
 
         [Required]
         public double Weight { get; set; }
-
-        [Required]
-        public string Size { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Kennel.Data.Users;
-using Kennel.Models.Data.DogBasic;
+using Kennel.Models.Data.Special;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Data.Entity;
 
 namespace Kennel.Service.Data
 {
-    class SpecialService
+    public class SpecialService
     {
         //private user field
         private readonly Guid _userId;
@@ -20,58 +20,82 @@ namespace Kennel.Service.Data
         private ApplicationDbContext _context = new ApplicationDbContext();
 
         //service constructor
-        public DogBasicService(Guid userId)
+        public SpecialService(Guid userId)
         {
             _userId = userId;
         }
 
-        //Create new dogBasic
-        public async Task<bool> CreateDogBasic(DogBasicCreate model)
+        //Create new special
+        public async Task<bool> CreateSpecial(SpecialCreate model)
         {
-            DogBasic dogBasic =
-                new DogBasic()
+            Special special =
+                new Special()
                 {
-                    DogName = model.DogName,
-                    Breed = model.Breed,
-                    Weight = model.Weight,
-                    Size = model.Size
+                    Instructions = model.Instructions,
+                    Allergies = model.Allergies
                 };
 
-            _context.DogBasics.Add(dogBasic);
+            _context.Specials.Add(special);
             return await _context.SaveChangesAsync() == 1;
         }
 
-        //Get dogBasic by id
-        public async Task<List<DogBasicDetails>> GetDogBasicById([FromUri] int id)
+        //Get special by id
+        public async Task<SpecialDetails> GetSpecialById([FromUri] int id)
         {
             var query =
                 await
                 _context
-                .DogBasics
-                .Where(q => q.DogBasicId == id)
+                .Specials
+                .Where(q => q.SpecialId == id)
                 .Select(
                     q =>
-                    new DogBasicDetails()
+                    new SpecialDetails()
                     {
-                        DogName = q.DogName,
-                        Breed = q.Breed,
-                        Weight = q.Weight,
-                        Size = q.Size
+                        Instructions = q.Instructions,
+                        Allergies = q.Allergies
                     }).ToListAsync();
-            return query;
+            return query[0];
         }
 
-        //Update area by id
-        public async Task<bool> UpdateDogBasic([FromUri] int id, [FromBody] DogBasicEdit model)
+        //Get special by id
+        public async Task<SpecialEdit> GetSpecialByIdEditable([FromUri] int id)
         {
-            DogBasic dogBasic =
+            var query =
+                await
                 _context
-                .DogBasics
-                .Single(a => a.DogBasicId == id);
-            dogBasic.DogName = model.DogName;
-            dogBasic.Breed = model.Breed;
-            dogBasic.Weight = model.Weight;
-            dogBasic.Size = model.Size;
+                .Specials
+                .Where(q => q.SpecialId == id)
+                .Select(
+                    q =>
+                    new SpecialEdit()
+                    {
+                        Instructions = q.Instructions,
+                        Allergies = q.Allergies
+                    }).ToListAsync();
+            return query[0];
+        }
+
+        //Update by id
+        public async Task<bool> UpdateSpecial([FromUri] int id, [FromBody] SpecialEdit model)
+        {
+            Special special =
+                _context
+                .Specials
+                .Single(a => a.SpecialId == id);
+            special.Instructions = model.Instructions;
+            special.Allergies = model.Allergies;
+
+            return await _context.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> DeleteSpecial(int id)
+        {
+            var entity =
+                _context
+                .Specials
+                .Single(e => e.SpecialId == id);
+
+            _context.Specials.Remove(entity);
 
             return await _context.SaveChangesAsync() == 1;
         }

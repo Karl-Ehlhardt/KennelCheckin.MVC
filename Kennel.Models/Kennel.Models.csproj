@@ -46,6 +46,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,9 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DogImage\DogImageDisplay.cs" />
     <Compile Include="Data\DogImage\DogImageEdit.cs" />
-    <Compile Include="Data\DogImage\DogImageCreate.cs" />
     <Compile Include="Data\DogBasic\DogBasicDetails.cs" />
     <Compile Include="Data\DogBasic\DogBasicEdit.cs" />
     <Compile Include="Data\DogBasic\DogBasicCreate.cs" />
@@ -75,10 +75,14 @@
     <Compile Include="Data\Vet\VetDetails.cs" />
     <Compile Include="Data\Vet\VetEdit.cs" />
     <Compile Include="Data\Vet\VetCreate.cs" />
-    <Compile Include="DisplayOnly\DogListDisplay.cs" />
+    <Compile Include="DisplayOnly\DogInfoDetails.cs" />
+    <Compile Include="DisplayOnly\DogInfoIndexView.cs" />
     <Compile Include="Joining Data\DogInfo\DogInfoEdit.cs" />
     <Compile Include="Joining Data\DogInfo\DogInfoCreate.cs" />
+    <Compile Include="Joining Data\DogVisit\DogVisitListItem.cs" />
+    <Compile Include="Joining Data\DogVisit\DogVisitEdit.cs" />
     <Compile Include="Joining Data\DogVisit\DogVisitCreate.cs" />
+    <Compile Include="Joining Data\MedicationToDogInfo\MedicationToDogInfoCreate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +95,8 @@
       <Name>Kennel.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataTransfer\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
