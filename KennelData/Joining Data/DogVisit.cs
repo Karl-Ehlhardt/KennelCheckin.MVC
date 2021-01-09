@@ -31,7 +31,5 @@ namespace KennelData.JoiningData
         public DateTimeOffset CheckInTime { get; set; }
 
         public bool OnSite { get; set; }
-
-        public int TotalHoursOnSite { get; set; }
     }
 }

@@ -54,24 +54,24 @@ namespace Kennel.Service.Data
         }
 
         //Get dogBasic by id
-        public async Task<DogBasicDetails> GetDogBasicById([FromUri] int id)
-        {
-            var query =
-                await
-                _context
-                .DogBasics
-                .Where(q => q.DogBasicId == id)
-                .Select(
-                    q =>
-                    new DogBasicDetails()
-                    {
-                        DogBasicId = q.DogBasicId,
-                        DogName = q.DogName,
-                        Breed = q.Breed,
-                        Weight = q.Weight
-                    }).ToListAsync();
-            return query[0];
-        }
+        //public async Task<DogBasicDetails> GetDogBasicById([FromUri] int id)
+        //{
+        //    var query =
+        //        await
+        //        _context
+        //        .DogBasics
+        //        .Where(q => q.DogBasicId == id)
+        //        .Select(
+        //            q =>
+        //            new DogBasicDetails()
+        //            {
+        //                DogBasicId = q.DogBasicId,
+        //                DogName = q.DogName,
+        //                Breed = q.Breed,
+        //                Weight = q.Weight
+        //            }).ToListAsync();
+        //    return query[0];
+        //}
 
         //Get dogBasic by id Editable
         public async Task<DogBasicEdit> GetDogBasicByIdEditable([FromUri] int id)

@@ -1,4 +1,5 @@
-﻿using Kennel.Models.Data.Joining_Data.DogInfo.DisplayOnly;
+﻿using Kennel.Data.Users;
+using Kennel.Models.Data.Joining_Data.DogInfo.DisplayOnly;
 using Kennel.Service.Joining;
 using KennelData.JoiningData;
 using Microsoft.AspNet.Identity;
@@ -61,6 +62,12 @@ namespace KennelCheckin.MVC.Controllers.Joining_Data
         public async Task<ActionResult> DeleteDogInfo(int id)
         {
 
+            if (new ApplicationDbContext().DogVisits.Any(q => q.DogInfoId == id && q.OnSite == true))
+            {
+                ModelState.AddModelError("", "Dog could not be deleted because it is currently at the kennel");
+
+                return await Delete(id);
+            };
             var service = CreateDogInfoService();
 
             DogInfoService infoService = CreateDogInfoService();
@@ -69,7 +76,7 @@ namespace KennelCheckin.MVC.Controllers.Joining_Data
                 return RedirectToAction("Index", "DogInfo");
             };
 
-            ModelState.AddModelError("", "Food could not be deleted.");
+            ModelState.AddModelError("", "Dog could not be deleted.");
 
             return await Delete(id);
         }

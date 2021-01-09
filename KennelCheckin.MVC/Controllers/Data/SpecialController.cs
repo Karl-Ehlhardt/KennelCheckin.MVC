@@ -37,14 +37,14 @@ namespace KennelCheckin.MVC.Controllers.Data
 
         //Add method here VVVV
         //GET
-        public async Task<ActionResult> Details(int id)
-        {
-            SpecialService service = CreateSpecialService();
+        //public async Task<ActionResult> Details(int id)
+        //{
+        //    SpecialService service = CreateSpecialService();
 
-            var model = await service.GetSpecialById(id);
+        //    var model = await service.GetSpecialById(id);
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
         //Add method here VVVV
         //GET
