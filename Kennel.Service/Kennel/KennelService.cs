@@ -4,6 +4,7 @@ using Kennel.Models.Data.Kennel.MealsAndMedications;
 using Kennel.Models.Joining_Data.DogVisit;
 using Kennel.Models.Kennel.KennelDashboardItems;
 using Kennel.Service.Shared;
+using KennelData.BillingData;
 using KennelData.Data;
 using KennelData.JoiningData;
 using System;
@@ -40,34 +41,6 @@ namespace Kennel.Service.Kennel
 
             return owner == null;
         }
-
-        ////Create new kennel
-        //public async Task<int> CreateKennel()
-        //{
-        //    DogBasic dogBasic =
-        //        _context
-        //        .DogBasics.OrderByDescending(p => p.DogBasicId)
-        //        .FirstOrDefault();
-
-        //    Owner owner =
-        //        _context
-        //        .Owners
-        //        .Single(a => a.ApplicationUserId == _userId.ToString());
-
-        //    Kennel kennel =
-        //        new Kennel()
-        //        {
-        //            DogBasicId = dogBasic.DogBasicId,
-        //            OwnerId = owner.OwnerId
-        //        };
-
-        //    _context.Kennels.Add(kennel);
-        //    if (await _context.SaveChangesAsync() == 1)
-        //    {
-        //        return kennel.KennelId;
-        //    }
-        //    return 0;
-        //}
 
         // kennel Dashboard Display
         public async Task<KennelDashboardView> DisplayKennelDashboardView()
@@ -118,7 +91,7 @@ namespace Kennel.Service.Kennel
                 await
                 _context
                 .DogVisits
-                .Where(q => q.OnSite == false && q.TotalHoursOnSite == 0 && q.DropOffTime == DateTime.Today)
+                .Where(q => q.OnSite == false && q.DropOffTime == DateTime.Today)
                 .ToListAsync();
 
             List<KennelDashboardDogListItem> incomingDogs = new List<KennelDashboardDogListItem>();
@@ -309,10 +282,19 @@ namespace Kennel.Service.Kennel
                 _context
                 .DogVisits
                 .SingleAsync(q => q.DogVisitId == id);
-            dogVisit.OnSite = false;
-            dogVisit.TotalHoursOnSite = Convert.ToInt32(Math.Ceiling((DateTimeOffset.Now - dogVisit.CheckInTime).TotalHours));
 
-            return await _context.SaveChangesAsync() == 1;
+            DogVisitComplete dogVisitComplete = new DogVisitComplete();
+            dogVisitComplete.OwnerId = await GetOwnerIdByVisitId(id);
+            dogVisitComplete.DogName = await GetDogName(id);
+            dogVisitComplete.CheckInTime = dogVisit.CheckInTime;
+            dogVisitComplete.CheckOutTime = DateTimeOffset.Now;
+            dogVisitComplete.TotalHoursOnSite = Convert.ToInt32(Math.Ceiling((DateTimeOffset.Now - dogVisit.CheckInTime).TotalHours));
+
+            _context.DogVisits.Remove(dogVisit);
+            _context.DogVisitCompletes.Add(dogVisitComplete);
+
+
+            return await _context.SaveChangesAsync() ==2;
         }
 
         public async Task<bool> ResetDogVisitById(int id)
@@ -321,7 +303,7 @@ namespace Kennel.Service.Kennel
                 await
                 _context
                 .DogVisits
-                .SingleOrDefaultAsync(q => q.DogVisitId == id && q.TotalHoursOnSite == 0);
+                .SingleOrDefaultAsync(q => q.DogVisitId == id);
 
             if(dogVisit == null)
             {
@@ -477,6 +459,9 @@ namespace Kennel.Service.Kennel
 
             return eveningMealsAndMedsList;
         }
+
+
+
         //=====HELPER======//
         public async Task<double> FoodForDogByWeight(double weight)
         {
@@ -507,7 +492,53 @@ namespace Kennel.Service.Kennel
             }
         }
 
+        //Helper the get dog name
+        public async Task<string> GetDogName(int dogVisitid)
+        {
+            DogVisit dogVisit =
+                await
+                _context
+                .DogVisits
+                .SingleAsync(a => a.DogVisitId == dogVisitid);
 
+            DogInfo dogInfo =
+                await
+                _context
+                .DogInfos
+                .SingleAsync(a => a.DogInfoId == dogVisit.DogInfoId);
+
+            DogBasic dogBasic =
+                await
+                _context
+                .DogBasics
+                .SingleAsync(q => q.DogBasicId == dogInfo.DogBasicId);
+
+            return dogBasic.DogName;
+        }
+
+        //Helper the get owner of the dog
+        public async Task<int> GetOwnerIdByVisitId(int dogVisitid)
+        {
+            DogVisit dogVisit =
+                await
+                _context
+                .DogVisits
+                .SingleAsync(a => a.DogVisitId == dogVisitid);
+
+            DogInfo dogInfo =
+                await
+                _context
+                .DogInfos
+                .SingleAsync(a => a.DogInfoId == dogVisit.DogInfoId);
+
+            Owner owner =
+                await
+                _context
+                .Owners
+                .SingleAsync(q => q.OwnerId == dogInfo.OwnerId);
+
+            return owner.OwnerId;
+        }
 
     }
 

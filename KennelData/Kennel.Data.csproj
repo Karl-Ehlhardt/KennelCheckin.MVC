@@ -61,6 +61,7 @@
     <Compile Include="Data\Medication.cs" />
     <Compile Include="Data\Owner.cs" />
     <Compile Include="Data\DogBasic.cs" />
+    <Compile Include="BillingData\DogVisitComplete.cs" />
     <Compile Include="Joining Data\MedicationToDogInfo.cs" />
     <Compile Include="Joining Data\DogVisit.cs" />
     <Compile Include="Joining Data\DogInfo.cs" />
@@ -88,6 +89,14 @@
     <Compile Include="Migrations\202101070415411_DogVisitTotalHoursOnSite.Designer.cs">
       <DependentUpon>202101070415411_DogVisitTotalHoursOnSite.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101082308095_DogVisitandBilling.cs" />
+    <Compile Include="Migrations\202101082308095_DogVisitandBilling.Designer.cs">
+      <DependentUpon>202101082308095_DogVisitandBilling.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101082312364_DogVisitandBillingOwnerAdded.cs" />
+    <Compile Include="Migrations\202101082312364_DogVisitandBillingOwnerAdded.Designer.cs">
+      <DependentUpon>202101082312364_DogVisitandBillingOwnerAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users\IdentityModels.cs" />
@@ -114,6 +123,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101070415411_DogVisitTotalHoursOnSite.resx">
       <DependentUpon>202101070415411_DogVisitTotalHoursOnSite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101082308095_DogVisitandBilling.resx">
+      <DependentUpon>202101082308095_DogVisitandBilling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101082312364_DogVisitandBillingOwnerAdded.resx">
+      <DependentUpon>202101082312364_DogVisitandBillingOwnerAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

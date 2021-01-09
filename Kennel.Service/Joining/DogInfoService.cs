@@ -260,15 +260,97 @@ namespace Kennel.Service.Joining
         public async Task<bool> DeleteDogInfo(int id)
         {
             var dogInfo =
+                await
                 _context
                 .DogInfos
-                .Single(e => e.DogInfoId == id);
-            //Clean up data base
+                .SingleAsync(e => e.DogInfoId == id);
+
+            var dogBasic =
+                _context
+                .DogBasics
+                .Single(e => e.DogBasicId == dogInfo.DogBasicId);
+
+            if (dogInfo.FoodId > 0)
+            {
+                var food =
+                _context
+                .Foods
+                .Single(e => e.FoodId == dogInfo.FoodId);
+
+                _context.Foods.Remove(food);
+            }
+
+            if (dogInfo.SpecialId > 0)
+            {
+                var special =
+                _context
+                .Specials
+                .Single(e => e.SpecialId == dogInfo.SpecialId);
+
+                _context.Specials.Remove(special);
+            }
+
+            if (dogInfo.VetId > 0)
+            {
+                var vet =
+                _context
+                .Vets
+                .Single(e => e.VetId == dogInfo.VetId);
+
+                _context.Vets.Remove(vet);
+            }
+
+            if (dogInfo.DogImageId > 0)
+            {
+                var dogImage =
+                _context
+                .DogImages
+                .Single(e => e.DogImageId == dogInfo.DogImageId);
+
+                _context.DogImages.Remove(dogImage);
+            }
+
+            if (_context.MedicationToDogInfos.Any(q => q.DogInfoId == dogInfo.DogInfoId))
+            {
+                List<MedicationToDogInfo> medicationToDogInfoList =
+                    await
+                    _context
+                    .MedicationToDogInfos
+                    .Where(q => q.DogInfoId == dogInfo.DogInfoId).ToListAsync();
+
+                List<Medication> medicationList = new List<Medication>();
+
+                foreach (MedicationToDogInfo item in medicationToDogInfoList)
+                {
+                    Medication medication =
+                    await
+                    _context
+                    .Medications
+                    .SingleAsync(q => q.MedicationId == item.MedicationId);
+                    medicationList.Add(medication);
+                    _context.MedicationToDogInfos.Remove(item);
+                    _context.Medications.Remove(medication);
+                }
+            }
+
+            if (_context.DogVisits.Any(q => q.DogInfoId == id && q.OnSite == false))
+            {
+                List<DogVisit> dogVisitList =
+                    await
+                    _context
+                    .DogVisits
+                    .Where(q => q.DogInfoId == dogInfo.DogInfoId).ToListAsync();
+
+                foreach (DogVisit item in dogVisitList)
+                {
+                    _context.DogVisits.Remove(item);
+                }
+            }
 
             _context.DogInfos.Remove(dogInfo);
+            _context.DogBasics.Remove(dogBasic);
 
-            return await _context.SaveChangesAsync() == 1;
+            return await _context.SaveChangesAsync() >= 2;
         }
     }
-
 }

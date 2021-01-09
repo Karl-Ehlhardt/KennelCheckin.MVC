@@ -3,6 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using KennelData.BillingData;
 using KennelData.Data;
 using KennelData.JoiningData;
 using Microsoft.AspNet.Identity;
@@ -46,6 +47,9 @@ namespace Kennel.Data.Users
         public DbSet<DogInfo> DogInfos { get; set; }
         public DbSet<DogVisit> DogVisits { get; set; }
         public DbSet<MedicationToDogInfo> MedicationToDogInfos { get; set; }
+
+        //Billing
+        public DbSet<DogVisitComplete> DogVisitCompletes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
