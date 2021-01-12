@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.Data
 {
+    [Authorize(Roles = "Owner,Admin")]
     public class DogBasicController : Controller
     {
         private DogBasicService CreateDogBasicService()

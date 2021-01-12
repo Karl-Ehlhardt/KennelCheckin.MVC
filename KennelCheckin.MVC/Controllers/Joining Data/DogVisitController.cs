@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.Joinging_Data
 {
+    [System.Web.Mvc.Authorize(Roles = "Owner,Admin")]
     public class DogVisitController : Controller
     {
         private DogVisitService CreateDogVisitService()

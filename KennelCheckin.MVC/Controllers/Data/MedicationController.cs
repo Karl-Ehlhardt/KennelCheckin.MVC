@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.Data
 {
+    [System.Web.Mvc.Authorize(Roles = "Owner,Admin")]
     public class MedicationController : Controller
     {
         private MedicationService CreateMedicationService()

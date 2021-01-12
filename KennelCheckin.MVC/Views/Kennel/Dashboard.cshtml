@@ -3,122 +3,223 @@
     ViewBag.Title = "Dashboard";
 }
 
-<h2>Dashboard</h2>
+<div class="jumbotron bg-kennelYellow">
+    <h1>Dashboard</h1>
+    <p>@Html.ActionLink("Morning Meals and Medications", "MorningMealsAndMeds", "Kennel", null, new { @class = "btn btn-danger" }) 
+    @Html.ActionLink("Evening Meals and Medications", "EveningMealsAndMeds", "Kennel", null, new { @class = "btn btn-danger" })</p>
+</div>
 
-@Html.ActionLink("Morning Meals and Medications", "MorningMealsAndMeds", "Kennel", null, new { @class = "btn btn-default" })
-@Html.ActionLink("Evening Meals and Medications", "EveningMealsAndMeds", "Kennel", null, new { @class = "btn btn-default" })
 
-<table class="table">
-    <br />
-    <tr>
-        <h3>
-            Dogs On Site Currently
-        </h3>
-    </tr>
-    <tr>
-        <th>
-            <h2>Dog Name</h2>
-        </th>
-        <th>
-            <h2>Visit Notes</h2>
-        </th>
-        <th>
-            <h2>Special Instructions</h2>
-        </th>
-        <th>
-            <h2>Allergies</h2>
-        </th>
-        <th></th>
-    </tr>
-    @for (int i = 0; i < Model.DogsOnSite.Count(); i++)
-    {
+<table class="table table-striped">
+    <h1>
+        Dogs On Site Currently
+    </h1>
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).DogName)
+            <th scope="col">Dog Name</th>
+            <th scope="col">Visit Notes</th>
+            <th scope="col">Special Instructions</th>
+            <th scope="col">Allergies</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.DogsOnSite.Count(); i++)
+        {
+        <tr class="info-row-dog bg-kennelYellow">
+            <td class="col-md-2">
+                <p>@Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).DogName)</p>
             </td>
-            <td>
-                @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).VisitNotes)
+            <td class="col-md-2">
+                @if (Model.DogsOnSite.ElementAt(i).VisitNotes != null)
+                {
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger bg-kennelGreen" data-toggle="modal" data-target="#@($"OnSiteNote{i}")">
+                    Viewx
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="@($"OnSiteNote{i}")" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Notes</h5>
+                            </div>
+                            <div class="modal-body">
+                                @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).VisitNotes)
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger bg-kennelGreen" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
             </td>
-            <td>
-                @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).SpecialInstructions)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).Allergies)
-            </td>
-            <td>
-                @Html.ActionLink("Dog Details", "DogDetails", "Kennel", new { id = Model.DogsOnSite.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
-                @Html.ActionLink("Check-out Early", "CheckOut", "Kennel", new { id = Model.DogsOnSite.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
+            <td class="col-md-2">
+                @if (Model.DogsOnSite.ElementAt(i).SpecialInstructions != null)
+                {
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger bg-kennelGreen" data-toggle="modal" data-target="#@($"OnSiteSpecial{i}")">
+                        View
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="@($"OnSiteSpecial{i}")" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Special Instructions</h5>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).SpecialInstructions)
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger bg-kennelGreen" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </td>
+            <td class="col-md-2">
+                @if (Model.DogsOnSite.ElementAt(i).Allergies != null)
+                {
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger bg-kennelGreen" data-toggle="modal" data-target="#@($"OnSiteAllergies{i}")">
+                        View
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="@($"OnSiteAllergies{i}")" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Allergies</h5>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.DisplayFor(model => model.DogsOnSite.ElementAt(i).Allergies)
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger bg-kennelGreen" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </td>
+            <td class="col-md-3">
+                @Html.ActionLink("Dog Details", "DogDetails", "Kennel", new { id = Model.DogsOnSite.ElementAt(i).DogVisitId }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Check-out Early", "CheckOut", "Kennel", new { id = Model.DogsOnSite.ElementAt(i).DogVisitId }, new { @class = "btn btn-danger" })
             </td>
         </tr>
-    }
-
+        }
+    </tbody>
 </table>
 
-<table class="table">
-    <br />
-    <tr>
-        <h3>
-            Dogs Incoming Today
-        </h3>
-    </tr>
-    <tr>
-        <th>
-            <h2>Dog Name</h2>
-        </th>
-        <th>
-            <h2>Visit Notes</h2>
-        </th>
-        <th>
-            <h2>Special Instructions</h2>
-        </th>
-        <th></th>
-    </tr>
-    @for (int i = 0; i < Model.IncomingDogs.Count(); i++)
-    {
+<table class="table table-striped">
+    <h1>
+        Dogs Incoming Today
+    </h1>
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(model => model.IncomingDogs.ElementAt(i).DogName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.IncomingDogs.ElementAt(i).VisitNotes)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.IncomingDogs.ElementAt(i).SpecialInstructions)
-            </td>
-            <td>
-                @Html.ActionLink("Dog Details", "DogDetails", "Kennel", new { id = Model.IncomingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
-                @Html.ActionLink("Check-In", "CheckIn", "Kennel", new { id = Model.IncomingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
-            </td>
+            <th scope="col">Dog Name</th>
+            <th scope="col">Visit Notes</th>
+            <th scope="col">Special Instructions</th>
+            <th scope="col"></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.IncomingDogs.Count(); i++)
+        {
+            <tr class="info-row-dog bg-kennelYellow">
+                <td class="col-md-3">
+                    <p>@Html.DisplayFor(model => model.IncomingDogs.ElementAt(i).DogName)</p>
+                </td>
+                <td class="col-md-3">
+                    @if (Model.IncomingDogs.ElementAt(i).VisitNotes != null)
+                    {
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger bg-kennelGreen" data-toggle="modal" data-target="#@($"IncomingNote{i}")">
+                            Viewx
+                        </button>
 
+                        <!-- Modal -->
+                        <div class="modal fade" id="@($"IncomingNote{i}")" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Notes</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        @Html.DisplayFor(model => model.IncomingDogs.ElementAt(i).VisitNotes)
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger bg-kennelGreen" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </td>
+                <td class="col-md-3">
+                    @if (Model.IncomingDogs.ElementAt(i).SpecialInstructions != null)
+                    {
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger bg-kennelGreen" data-toggle="modal" data-target="#@($"IncomingSpecial{i}")">
+                            View
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="@($"IncomingSpecial{i}")" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Special Instructions</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        @Html.DisplayFor(model => model.IncomingDogs.ElementAt(i).SpecialInstructions)
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger bg-kennelGreen" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </td>
+                <td class="col-md-3">
+                    @Html.ActionLink("Dog Details", "DogDetails", "Kennel", new { id = Model.IncomingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Check-In", "CheckIn", "Kennel", new { id = Model.IncomingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
-<table class="table">
-    <br />
-    <tr>
-        <h3>
-            Dogs Checking Out
-        </h3>
-    </tr>
-    <tr>
-        <th>
-            <h2>Dog Name</h2>
-        </th>
-        <th></th>
-    </tr>
-    @for (int i = 0; i < Model.OutgoingDogs.Count(); i++)
-    {
+<table class="table table-striped">
+    <h1>
+        Dogs Checking Out
+    </h1>
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(model => model.OutgoingDogs.ElementAt(i).DogName)
-            </td>
-            <td>
-                @Html.ActionLink("Check-out", "CheckOut", "Kennel", new { id = Model.OutgoingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
-                @Html.ActionLink("Change Pickup", "ChangePickup", "DogVisit", new { id = Model.OutgoingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-default" })
-            </td>
+            <th scope="col">Dog Name</th>
+            <th scope="col"></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.OutgoingDogs.Count(); i++)
+        {
+            <tr class="info-row-dog bg-kennelYellow">
+                <td class="col-md-9">
+                    <p>@Html.DisplayFor(model => model.OutgoingDogs.ElementAt(i).DogName)</p>
+                </td>
 
+                <td class="col-md-3">
+                    @Html.ActionLink("Check-out", "CheckOut", "Kennel", new { id = Model.OutgoingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Change Pickup", "ChangePickup", "DogVisit", new { id = Model.OutgoingDogs.ElementAt(i).DogVisitId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
-

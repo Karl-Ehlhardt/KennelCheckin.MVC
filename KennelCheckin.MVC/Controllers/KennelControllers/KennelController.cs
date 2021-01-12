@@ -14,9 +14,9 @@ using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.KennelControllers
 {
+    [System.Web.Mvc.Authorize(Roles = "Worker,Admin")]
     public class KennelController : Controller
     {
-
         private KennelService CreateKennelService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());

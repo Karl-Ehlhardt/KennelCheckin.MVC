@@ -5,8 +5,8 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -22,3 +22,82 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.navbar-kennel {
+    background-color: #0B7A75;
+    border-color: #080808;
+}
+
+    .navbar-kennel .navbar-brand {
+        color: #fff;
+    }
+
+        .navbar-kennel .navbar-brand:hover,
+        .navbar-kennel .navbar-brand:focus {
+            color: #FFB140;
+            background-color: transparent;
+        }
+
+    .navbar-kennel .navbar-text {
+        color: #fff;
+    }
+
+    .navbar-kennel .navbar-nav > li > a {
+        color: #fff;
+    }
+
+        .navbar-kennel .navbar-nav > li > a:hover,
+        .navbar-kennel .navbar-nav > li > a:focus {
+            color: #FFB140;
+            background-color: transparent;
+        }
+
+    .navbar-kennel .navbar-nav > .active > a,
+    .navbar-kennel .navbar-nav > .active > a:hover,
+    .navbar-kennel .navbar-nav > .active > a:focus {
+        color: #FFB140;
+        background-color: #080808;
+    }
+
+    .navbar-kennel .navbar-nav > .disabled > a,
+    .navbar-kennel .navbar-nav > .disabled > a:hover,
+    .navbar-kennel .navbar-nav > .disabled > a:focus {
+        color: #444;
+        background-color: transparent;
+    }
+
+    .navbar-kennel .navbar-nav > .open > a,
+    .navbar-kennel .navbar-nav > .open > a:hover,
+    .navbar-kennel .navbar-nav > .open > a:focus {
+        color: #fff;
+        background-color: #080808;
+    }
+
+.bg-kennelYellow {
+    background-color: #FFB140;
+}
+
+.bg-kennelGreen {
+    background-color: #0B7A75;
+}
+
+.bg-kennelRed {
+    background-color: #A44A3F;
+}
+
+.info-row-dog {
+    margin: 0;
+    padding: 0;
+}
+
+    .info-row-dog > td {
+        margin: 0;
+        padding: 0;
+    }
+
+        .info-row-dog > td > p {
+            margin: 0;
+            padding: 0;
+            font-size: 26px;
+        }
