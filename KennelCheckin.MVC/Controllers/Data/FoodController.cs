@@ -73,7 +73,7 @@ namespace KennelCheckin.MVC.Controllers.Data
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([FromUri] int id, FoodCreate model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid || (model.MorningMeal == false && model.EveningMeal == false)) return View(model);
 
             var service = CreateFoodService();
 
@@ -95,7 +95,7 @@ namespace KennelCheckin.MVC.Controllers.Data
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, FoodEdit model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid || (model.MorningMeal == false && model.EveningMeal == false)) return View(model);
 
             var service = CreateFoodService();
 

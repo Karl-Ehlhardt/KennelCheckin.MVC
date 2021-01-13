@@ -84,7 +84,7 @@ namespace KennelCheckin.MVC.Controllers.Data
                 return RedirectToAction($"Details/{id}", "DogInfo");
             };
 
-            ModelState.AddModelError("", "Special could not be added");
+            ModelState.AddModelError("", "Special Details could not be added");
 
             return View(model);
         }
@@ -104,7 +104,7 @@ namespace KennelCheckin.MVC.Controllers.Data
                 return RedirectToAction("Index", "DogInfo");
             };
 
-            ModelState.AddModelError("", "Dog could not be edited.");
+            ModelState.AddModelError("", "Special Details could not be edited.");
 
             return View(model);
         }
@@ -124,7 +124,7 @@ namespace KennelCheckin.MVC.Controllers.Data
                 return RedirectToAction("Index", "DogInfo");
             };
 
-            ModelState.AddModelError("", "Special could not be deleted.");
+            ModelState.AddModelError("", "Special Details could not be deleted.");
 
             return await Delete(id);
         }
