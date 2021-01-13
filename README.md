@@ -4,6 +4,7 @@ Azure Link: https://kennelcheckin.azurewebsites.net/
 
 Feel free to send any feedback!
 
+
 To get started exploring, go ahead and resister a new account.
 -The pages you can view is limited by the role you select, Admin can access everything.
 -Worker can only access Kennel Dashboard and what links from that page.
