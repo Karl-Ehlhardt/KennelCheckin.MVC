@@ -1,7 +1,8 @@
 # KennelCheckin.MVC
 
-Azure Link:
-Feel free to send any feedback to me!
+Azure Link: https://kennelcheckin.azurewebsites.net/
+
+Feel free to send any feedback!
 
 To get started exploring, go ahead and resister a new account.
 -The pages you can view is limited by the role you select, Admin can access everything.
