@@ -129,7 +129,7 @@ namespace Kennel.Service.Kennel
                 await
                 _context
                 .DogVisits
-                .Where(q => q.OnSite == true && q.PickUpTime >= DateTime.Today)
+                .Where(q => q.OnSite == true && q.PickUpTime <= DateTime.Today)
                 .ToListAsync();
 
             List<KennelDashboardDogListItem> outgoingDogs = new List<KennelDashboardDogListItem>();
