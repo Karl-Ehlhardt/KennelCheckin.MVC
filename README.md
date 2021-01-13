@@ -1,6 +1,7 @@
 # KennelCheckin.MVC
 
-Azure Link:
+Azure Link:.
+
 Feel free to send any feedback to me!
 
 To get started exploring, go ahead and resister a new account.
