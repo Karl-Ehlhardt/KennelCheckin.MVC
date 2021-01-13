@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.Joining_Data
 {
-    [Authorize(Roles = "Owner,Admin")]
+    [Authorize(Roles = "Admin,Owner")]
     public class DogInfoController : Controller
     {
 

@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.KennelControllers
 {
-    [System.Web.Mvc.Authorize(Roles = "Worker,Admin")]
+    [System.Web.Mvc.Authorize(Roles = "Admin,Worker")]
     public class KennelController : Controller
     {
         private KennelService CreateKennelService()
