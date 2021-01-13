@@ -4,84 +4,88 @@
     ViewBag.Title = "EveningMealsAndMeds";
 }
 
-<h2>Evening Meals And Meds</h2>
+<h2>Evening Meals And Medications</h2>
 
 
 <p>
     @Html.ActionLink("Back to Dashboard", "Dashboard")
 </p>
+
 @for (int i = 0; i < Model.Count(); i++)
 {
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DogBasic.DogName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ElementAt(i).DogBasic.DogName)
-        </dd>
-
-        @if (Model.ElementAt(i).Food.FoodId == 0)
-        {
-            <dt>Fed in the Morning</dt>
-            <dd></dd>
-        }
-        else
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.Food.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ElementAt(i).Food.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Food.AmountPerMeal)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ElementAt(i).Food.AmountPerMeal)
-            </dd>
-        }
-        @if (Model.ElementAt(i).MedicationList.Count() == 0)
-        {
-            <dt>No Medications for this Meal</dt>
-            <dd></dd>
-        }
-        else
-        {
-            <dt>Medications with this meal</dt>
-            <dd></dd>
-            for (int m = 0; m < Model.ElementAt(i).MedicationList.Count(); m++)
-            {
-                int displayCount = m + 1;
-                <dt>
-                    @Html.DisplayFor(model => displayCount) ) @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Name)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(m).Name)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Dose)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(m).Dose)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Instructions)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(m).Instructions)
-                </dd>
+    <div class="shadow-lg p-3 mb-5 bg-white rounded">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.DogBasic.DogName)</th>
+                    <td class="col-md-2">@Html.DisplayFor(model => model.ElementAt(i).DogBasic.DogName)</td>
+                    <td class="col-md-8"></td>
+                </tr>
+                @if (Model.ElementAt(i).Food.FoodId == 0)
+                {
+                    <tr>
+                        <th>Fed in the Morning</th>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th scope="row" class="col-md-1">Food</th>
+                        <td class="col-md-6">@Html.DisplayFor(model => model.ElementAt(i).Food.Name) ( @Html.DisplayFor(model => model.ElementAt(i).Food.AmountPerMeal) ) Cups </td>
+                    </tr>
+                }
+            </thead>
+            <tbody>
+                @if (Model.ElementAt(i).MedicationList.Count() == 0)
+                {
+            <th>
+                <h4>No Medications</h4>
+            </th>
+                }
+                else
+                {
+                    for (int c = 0; c < Model.ElementAt(i).MedicationList.Count(); c++)
+                    {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Name)</th>
+                                <th class="col-md-2">@Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(c).Name)</th>
+                                <td class="col-md-8">
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Dose)</th>
+                                <td class="col-md-2">@Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(c).Dose)</td>
+                                <td class="col-md-8"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).MorningMeal)</th>
+                                <td class="col-md-2">@Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(c).MorningMeal)</td>
+                                <td class="col-md-8"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).EveningMeal)</th>
+                                <td class="col-md-2">@Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(c).EveningMeal)</td>
+                                <td class="col-md-8"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Instructions)</th>
+                                <td class="col-md-2">@Html.DisplayFor(model => model.ElementAt(i).MedicationList.ElementAt(c).Instructions)</td>
+                                <td class="col-md-8"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
             }
-        }
-    </dl>
-    <hr />
+            </tbody>
+        </table>
+    </div>
 }
 
 <p>
