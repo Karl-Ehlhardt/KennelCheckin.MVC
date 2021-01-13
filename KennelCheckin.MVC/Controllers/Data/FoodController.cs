@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.Data
 {
+    [System.Web.Mvc.Authorize(Roles = "Owner,Admin")]
     public class FoodController : Controller
     {
         private FoodService CreateFoodService()
@@ -72,7 +73,7 @@ namespace KennelCheckin.MVC.Controllers.Data
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([FromUri] int id, FoodCreate model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid || (model.MorningMeal == false && model.EveningMeal == false)) return View(model);
 
             var service = CreateFoodService();
 
@@ -94,7 +95,7 @@ namespace KennelCheckin.MVC.Controllers.Data
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, FoodEdit model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid || (model.MorningMeal == false && model.EveningMeal == false)) return View(model);
 
             var service = CreateFoodService();
 

@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Replace this Photo?</h2>
 
 </br>
 </br>
@@ -14,9 +14,9 @@
 
 <img src="@Url.Action("RenderPhoto", "DogImage", new { photoId = Model.DogImageId})" width="100" height="100" alt="Pet Image" />
 
-
-
-<h2>Replacement Photo</h2>
+<br/>
+<br/>
+<br/>
 @using (Html.BeginForm("Edit", "DogImage", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -24,6 +24,8 @@
     <form action="/action_page.php">
         <label for="img">Select image:</label>
         <input type="file" id="ImageData" name="ImageData" accept="image/*">
+        <br />
+        <br />
         <input type="submit">
     </form>
 }

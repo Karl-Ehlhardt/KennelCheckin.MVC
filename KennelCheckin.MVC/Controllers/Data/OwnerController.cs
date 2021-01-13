@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace KennelCheckin.MVC.Controllers.Data
 {
+    [System.Web.Mvc.Authorize(Roles = "Owner,Admin")]
     public class OwnerController : Controller
     {
         private OwnerService CreateOwnerService()

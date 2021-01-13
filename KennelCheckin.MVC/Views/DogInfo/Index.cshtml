@@ -4,127 +4,151 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-<p>
-    @Html.ActionLink("View Profile", "Details", "Owner", new { id = Model.Owner.OwnerId }, null)
-</p>
+<div class="jumbotron bg-kennelYellow">
+    <h1>Control Center</h1>
+    <p>@Html.ActionLink("View Your Profile", "Details", "Owner", new { id = Model.Owner.OwnerId }, new { @class = "btn btn-danger" })</p>
+</div>
 
-<table class="table">
-    <br />
-    <tr>
-        <h3>
-            @Html.ActionLink("Create New Dog", "Create", "DogBasic")
-        </h3>
-    </tr>
-    <tr>
-        <th>
-            <h1>Dog Name</h1>
-        </th>
-        <th></th>
-    </tr>
-    @for (int i = 0; i < Model.DogBasic.Count(); i++)
-    {
+<table class="table table-striped">
+    <h1>
+        Your Dogs
+    </h1>
+    @Html.ActionLink("Create New Dog", "Create", "DogBasic", null, new { @class = "btn btn-danger" })
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(model => model.DogBasic.ElementAt(i).DogName)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = Model.DogInfo.ElementAt(i).DogInfoId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = Model.DogInfo.ElementAt(i).DogInfoId }) |
-                @Html.ActionLink("Add Visit", "Create", "DogVisit", new { id = Model.DogInfo.ElementAt(i).DogInfoId }, null)
-            </td>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.DogBasic.Count(); i++)
+        {
+            <tr class="info-row-dog bg-kennelYellow">
+                <td class="col-md-9">
+                    <p>@Html.DisplayFor(model => model.DogBasic.ElementAt(i).DogName)</p>
+                </td>
+                <td class="col-md-3">
+                    @Html.ActionLink("Details", "Details", new { id = Model.DogInfo.ElementAt(i).DogInfoId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.DogInfo.ElementAt(i).DogInfoId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Add Visit", "Create", "DogVisit", new { id = Model.DogInfo.ElementAt(i).DogInfoId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
-<table class="table upcoming">
-    <br />
-    <tr>
-        <h2>
-            Upcoming dog kennel stays
-        </h2>
-    </tr>
-    <tr>
-        <th>
-            <h1>Dog Name</h1>
-        </th>
-        <th>
-            <h1>Dropoff Date</h1>
-        </th>
-        <th>
-            <h1>Pickup Date</h1>
-        </th>
-        <th>
-            <h1>Notes</h1>
-        </th>
-        <th></th>
-    </tr>
-    @for (int i = 0; i < Model.DogFutureVisit.Count(); i++)
-    {
-<tr>
-    <td>
-        @Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).DogName)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).DropOffTime)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).PickUpTime)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).Notes)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", "DogVisit", new { id = Model.DogFutureVisit.ElementAt(i).DogVisitId }, null) |
-        @Html.ActionLink("Delete", "Delete", "DogVisit", new { id = Model.DogFutureVisit.ElementAt(i).DogVisitId }, null)
-    </td>
-</tr>
-    }
+<table class="table table-striped">
+    <h1>
+        Upcoming Kennel Stays
+    </h1>
+    <thead>
+        <tr>
+            <th scope="col">Dog Name</th>
+            <th scope="col">Dropoff Date</th>
+            <th scope="col">Pickup Date</th>
+            <th scope="col">Notes</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.DogFutureVisit.Count(); i++)
+        {
+            <tr class="info-row-dog bg-kennelYellow">
+                <td class="col-md-2">
+                    <p>@Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).DogName)</p>
+                </td>
+                <td class="col-md-2">
+                    <p>@Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).DropOffTime)</p>
+                </td>
+                <td class="col-md-2">
+                    <p>@Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).PickUpTime)</p>
+                </td>
+                <td class="col-md-3">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger bg-kennelGreen" data-toggle="modal" data-target="#@Model.DogFutureVisit.ElementAt(i).DogVisitId">
+                        Notes
+                    </button>
 
+                    <!-- Modal -->
+                    <div class="modal fade" id="@Model.DogFutureVisit.ElementAt(i).DogVisitId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Notes</h5>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.DisplayFor(model => model.DogFutureVisit.ElementAt(i).Notes)
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger bg-kennelGreen" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="col-md-3">
+                    @Html.ActionLink("Edit", "Edit", "DogVisit", new { id = Model.DogFutureVisit.ElementAt(i).DogVisitId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Delete", "Delete", "DogVisit", new { id = Model.DogFutureVisit.ElementAt(i).DogVisitId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
-<table class="table onSite">
-    <br />
-    <tr>
-        <h2>
-            Current dogs at kennel
-        </h2>
-    </tr>
-    <tr>
-        <th>
-            <h1>Dog Name</h1>
-        </th>
-        <th>
-            <h1>Dropoff Date</h1>
-        </th>
-        <th>
-            <h1>Pickup Date</h1>
-        </th>
-        <th>
-            <h1>Notes</h1>
-        </th>
-        <th></th>
-    </tr>
-    @for (int i = 0; i < Model.DogOngoingVisit.Count(); i++)
-    {
-<tr>
-    <td>
-        @Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).DogName)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).DropOffTime)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).PickUpTime)
-    </td>
-    <td>
-        @Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).Notes)
-    </td>
-    <td>
-        @Html.ActionLink("Change Pickup", "ChangePickup", "DogVisit", new { id = Model.DogOngoingVisit.ElementAt(i).DogVisitId }, null)
-    </td>
-</tr>
-    }
 
+<table class="table table-striped">
+    <h1>
+        Current Dogs at Kennel
+    </h1>
+    <thead>
+        <tr>
+            <th scope="col">Dog Name</th>
+            <th scope="col">Dropoff Date</th>
+            <th scope="col">Pickup Date</th>
+            <th scope="col">Notes</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.DogOngoingVisit.Count(); i++)
+        {
+            <tr class="info-row-dog bg-kennelYellow">
+                <td class="col-md-2">
+                    <p>@Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).DogName)</p>
+                </td>
+                <td class="col-md-2">
+                    <p>@Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).DropOffTime)</p>
+                </td>
+                <td class="col-md-2">
+                    <p>@Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).PickUpTime)</p>
+                </td>
+                <td class="col-md-3">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger bg-kennelGreen" data-toggle="modal" data-target="#@Model.DogOngoingVisit.ElementAt(i).DogVisitId">
+                        Notes
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="@Model.DogOngoingVisit.ElementAt(i).DogVisitId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Notes</h5>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.DisplayFor(model => model.DogOngoingVisit.ElementAt(i).Notes)
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger bg-kennelGreen" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="col-md-3">
+                    @Html.ActionLink("Change Pickup", "ChangePickup", "DogVisit", new { id = Model.DogOngoingVisit.ElementAt(i).DogVisitId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

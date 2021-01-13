@@ -376,7 +376,7 @@ namespace Kennel.Service.Kennel
                         }
                     }
                 //}
-                if (medicationToDogInfoList.Count() > 0 || dogInfo.FoodId > 0)
+                if (medicationToDogInfoList.Count() > 0 || morningFood.FoodId > 0)
                 {
                 morningMealsAndMedsList.Add(new MealsAndMeds(dogInfo, dogVisit, dogBasic, morningFood, medicationList.AsEnumerable()));
                 }
@@ -421,7 +421,7 @@ namespace Kennel.Service.Kennel
                     .Foods
                     .SingleAsync(q => q.FoodId == dogInfo.FoodId);
                 }
-                else if(_context.Foods.Any(q => q.FoodId != dogInfo.FoodId))
+                else if(0 == dogInfo.FoodId)
                 {
                     eveingFood.FoodId = 500;
                     eveingFood.Name = "Generic";
@@ -451,7 +451,7 @@ namespace Kennel.Service.Kennel
                     }
                 }
                 //}
-                if (medicationToDogInfoList.Count() > 0 || dogInfo.FoodId > 0)
+                if (medicationToDogInfoList.Count() > 0 || eveingFood.FoodId > 0)
                 {
                     eveningMealsAndMedsList.Add(new MealsAndMeds(dogInfo, dogVisit, dogBasic, eveingFood, medicationList.AsEnumerable()));
                 }

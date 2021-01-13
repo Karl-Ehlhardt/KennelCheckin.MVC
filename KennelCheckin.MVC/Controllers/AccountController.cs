@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using KennelCheckin.MVC.Models;
 using Kennel.Data.Users;
+using System.Web.Security;
 
 namespace KennelCheckin.MVC.Controllers
 {
@@ -77,10 +78,11 @@ namespace KennelCheckin.MVC.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Index", "DogInfo");
+                    return RedirectToAction("Redriect");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -90,6 +92,26 @@ namespace KennelCheckin.MVC.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+        [AllowAnonymous]
+        public ActionResult Redriect()
+        {
+            var userId = User.Identity.GetUserId();
+            var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            string[] roles = userManager.GetRoles(userId).ToArray();
+
+            if (roles.Contains("Owner"))
+            {
+                return RedirectToAction("Index", "DogInfo");
+            }
+
+            else if (roles.Contains("Worker"))
+            {
+                return RedirectToAction("Dashboard", "Kennel");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         //

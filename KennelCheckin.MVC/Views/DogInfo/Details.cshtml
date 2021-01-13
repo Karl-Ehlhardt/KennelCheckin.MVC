@@ -4,253 +4,252 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
 
-<div class="border border-primary">
-    <h4>DogBasicDetails</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DogBasic.DogName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DogBasic.DogName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DogBasic.Breed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DogBasic.Breed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DogBasic.Weight)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DogBasic.Weight)
-        </dd>
-    </dl>
-    <p>
-        @Html.ActionLink("Edit", "Edit", "DogBasic", new { id = Model.DogBasic.DogBasicId }, null)
-    </p>
-</div>
-
-<div class="border border-primary">
-    <h4>DogImage</h4>
-
-    @if (Model.DogInfo.DogImageId == 0)
-    {
-        @Html.ActionLink("Add", "Create", "DogImage", new { id = Model.DogInfo.DogInfoId }, null)
-    }
-    else
-    {
-        <img src="@Url.Action("RenderPhoto", "DogImage", new { photoId = Model.DogInfo.DogImageId })" width="200" height="200" alt="Pet Image" />
-        <p>
-            @Html.ActionLink("Replace", "Edit", "DogImage", new { id = Model.DogInfo.DogImageId }, null)|
-            @Html.ActionLink("Delete", "Delete", "DogImage", new { id = Model.DogInfo.DogImageId }, null)
-        </p>
-    }
-
-</div>
-
-<div class="border border-primary">
-    <h4>FoodDetails</h4>
-    <hr />
-    <h5>If there is no food entered, your dog will be fed one time a day based on their weight.</h5>
-    @if (Model.DogInfo.FoodId == 0)
-    {
-        @Html.ActionLink("Add", "Create", "Food", new { id = Model.DogInfo.DogInfoId }, null)
-    }
-    else
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Food.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Food.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Food.AmountPerMeal)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Food.AmountPerMeal)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Food.MorningMeal)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Food.MorningMeal)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Food.EveningMeal)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Food.EveningMeal)
-            </dd>
-
-        </dl>
-        <p>
-            @Html.ActionLink("Edit", "Edit", "Food", new { id = Model.Food.FoodId }, null)|
-            @Html.ActionLink("Delete", "Delete", "Food", new { id = Model.Food.FoodId }, null)
-        </p>
-    }
-</div>
-
-<div class="border border-primary">
-    <h4>SpecialDetails</h4>
-    <hr />
-    @if (Model.DogInfo.SpecialId == 0)
-    {
-        @Html.ActionLink("Add", "Create", "Special", new { id = Model.DogInfo.DogInfoId }, null)
-    }
-    else
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Special.Instructions)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Special.Instructions)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Special.Allergies)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Special.Allergies)
-            </dd>
-
-        </dl>
-        <p>
-            @Html.ActionLink("Edit", "Edit", "Special", new { id = Model.Special.SpecialId }, null)|
-            @Html.ActionLink("Delete", "Delete", "Special", new { id = Model.Special.SpecialId }, null)
-        </p>
-    }
-</div>
-
-<div class="border border-primary">
-    <h4>VetDetails</h4>
-    <hr />
-    @if (Model.DogInfo.VetId == 0)
-    {
-        @Html.ActionLink("Add", "Create", "Vet", new { id = Model.DogInfo.DogInfoId }, null)
-    }
-    else
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Vet.BusinessName)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Vet.BusinessName)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Vet.VetName)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Vet.VetName)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Vet.Phone)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Vet.Phone)
-            </dd>
-        </dl>
-        <p>
-            @Html.ActionLink("Edit", "Edit", "Vet", new { id = Model.Vet.VetId }, null)|
-            @Html.ActionLink("Delete", "Delete", "Vet", new { id = Model.Vet.VetId }, null)
-        </p>
-    }
-</div>
-
-<div class="border border-primary">
-    <h4>MedicationDetails</h4>
-    <hr />
-    @if (Model.MedicationList.Count() == 0)
-    {
-        @Html.ActionLink("Add", "Create", "Medication", new { id = Model.DogInfo.DogInfoId }, null)
-    }
-    else
-    {
-        for (int i = 0; i < Model.MedicationList.Count(); i++)
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h2 class="text-center">@Model.DogBasic.DogName Details</h2>
+        @if (Model.DogInfo.DogImageId == 0)
         {
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.MedicationList.ElementAt(i).Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Dose)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.MedicationList.ElementAt(i).Dose)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).MorningMeal)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.MedicationList.ElementAt(i).MorningMeal)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).EveningMeal)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.MedicationList.ElementAt(i).EveningMeal)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Instructions)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.MedicationList.ElementAt(i).Instructions)
-            </dd>
-        </dl>
-        <p>
-            @Html.ActionLink("Edit", "Edit", "Medication", new { id = Model.MedicationList.ElementAt(i).MedicationId }, null)|
-            @Html.ActionLink("Delete", "Delete", "Medication", new { id = Model.MedicationList.ElementAt(i).MedicationId }, null)
-        </p>
+            <h4 class="text-center">No Image</h4>
+            <p class="text-center">@Html.ActionLink("Add", "Create", "DogImage", new { id = Model.DogInfo.DogInfoId }, null)</p>
         }
-        <br />
-        <p>
-            @Html.ActionLink("Add", "Create", "Medication", new { id = Model.DogInfo.DogInfoId }, null)
-        </p>
-    }
+        else
+        {
+            <img class="center-block" src="@Url.Action("RenderPhoto", "DogImage", new { photoId = Model.DogInfo.DogImageId })" width="200" height="200" alt="Pet Image" />
+            <p class="text-center">
+                @Html.ActionLink("Replace", "Edit", "DogImage", new { id = Model.DogInfo.DogImageId }, null) |
+                @Html.ActionLink("Delete", "Delete", "DogImage", new { id = Model.DogInfo.DogImageId }, null)
+            </p>
+        }
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <table class="table">
+        <tbody>
+            <tr>
+                <h4>Basics</h4>
+                <p>@Html.ActionLink("Edit", "Edit", "DogBasic", new { id = Model.DogBasic.DogBasicId }, null)</p>
+            </tr>
+            <tr>
+                <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.DogBasic.DogName)</th>
+                <td class="col-md-2">@Html.DisplayFor(model => model.DogBasic.DogName)</td>
+                <td class="col-md-8"></td>
+            </tr>
+            <tr>
+                <th scope="row">@Html.DisplayNameFor(model => model.DogBasic.Breed)</th>
+                <td>@Html.DisplayFor(model => model.DogBasic.Breed)</td>
+            </tr>
+            <tr>
+                <th scope="row">@Html.DisplayNameFor(model => model.DogBasic.Weight)</th>
+                <td>@Html.DisplayFor(model => model.DogBasic.Weight)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <table class="table">
+        <tbody>
+            <tr>
+                <h4>Food</h4>
+                @if (Model.DogInfo.FoodId == 0)
+                {
+                    <h5>If there is no food entered, your dog will be fed one time a day based on their weight.</h5>
+                    <p>@Html.ActionLink("Add", "Create", "Food", new { id = Model.DogInfo.DogInfoId }, null)</p>
+                }
+                else
+                {
+                    <p>
+                        @Html.ActionLink("Edit", "Edit", "Food", new { id = Model.Food.FoodId }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Food", new { id = Model.Food.FoodId }, null)
+                    </p>
+                }
+            </tr>
+            @if (Model.DogInfo.FoodId == 0)
+            {
+            }
+            else
+            {
+                <tr>
+                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.Food.Name)</th>
+                    <td class="col-md-2">@Html.DisplayFor(model => model.Food.Name)</td>
+                    <td class="col-md-8"></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.Food.AmountPerMeal)</th>
+                    <td class="col-md-2">@Html.DisplayFor(model => model.Food.AmountPerMeal)</td>
+                    <td class="col-md-8"></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.Food.MorningMeal)</th>
+                    <td class="col-md-2">@Html.DisplayFor(model => model.Food.MorningMeal)</td>
+                    <td class="col-md-8"></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.Food.EveningMeal)</th>
+                    <td class="col-md-2">@Html.DisplayFor(model => model.Food.EveningMeal)</td>
+                    <td class="col-md-8"></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <table class="table">
+        <tbody>
+            <tr>
+                <h4>Special Details</h4>
+                @if (Model.DogInfo.SpecialId == 0)
+                {
+                    <p>@Html.ActionLink("Add", "Create", "Special", new { id = Model.DogInfo.DogInfoId }, null)</p>
+                }
+                else
+                {
+                    <p>
+                        @Html.ActionLink("Edit", "Edit", "Special", new { id = Model.Special.SpecialId }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Special", new { id = Model.Special.SpecialId }, null)
+                    </p>
+                }
+            </tr>
+            @if (Model.DogInfo.SpecialId == 0)
+            {
+            }
+            else
+            {
+                <tr>
+                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.Special.Instructions)</th>
+                    <td class="col-md-2">@Html.DisplayFor(model => model.Special.Instructions)</td>
+                    <td class="col-md-8"></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.Special.Allergies)</th>
+                    <td class="col-md-2">@Html.DisplayFor(model => model.Special.Allergies)</td>
+                    <td class="col-md-8"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <table class="table">
+        <tbody>
+            <tr>
+                <h4>Veterinarian Details</h4>
+                @if (Model.DogInfo.VetId == 0)
+                {
+                    <p>@Html.ActionLink("Add", "Create", "Vet", new { id = Model.DogInfo.DogInfoId }, null)</p>
+                }
+                else
+                {
+                    <p>
+                        @Html.ActionLink("Edit", "Edit", "Vet", new { id = Model.Vet.VetId }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Vet", new { id = Model.Vet.VetId }, null)
+                    </p>
+                }
+            </tr>
+            @if (Model.DogInfo.VetId == 0)
+            {
+            }
+            else
+            {
+                <tr>
+                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.Vet.BusinessName)</th>
+                    <td class="col-md-2">@Html.DisplayFor(model => model.Vet.BusinessName)</td>
+                    <td class="col-md-8"></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.Vet.VetName)</th>
+                    <td class="col-md-2">@Html.DisplayFor(model => model.Vet.VetName)</td>
+                    <td class="col-md-8"></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.Vet.Phone)</th>
+                    <td class="col-md-2">@Html.DisplayFor(model => model.Vet.Phone)</td>
+                    <td class="col-md-8"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <table class="table">
+        <tbody>
+            <tr>
+                @if (Model.MedicationList.Count() == 0)
+                {
+                    <h4>Medication Details</h4>
+                    <p>@Html.ActionLink("Add", "Create", "Medication", new { id = Model.DogInfo.DogInfoId }, null)</p>
+                }
+                else if (Model.MedicationList.Count() == 1)
+                {
+                    <h4>Medication Details</h4>
+                    <p>@Html.ActionLink("Add", "Create", "Medication", new { id = Model.DogInfo.DogInfoId }, null)</p>
+                }
+                else
+                {
+                    <h4>Medications Details</h4>
+                    <p>@Html.ActionLink("Add", "Create", "Medication", new { id = Model.DogInfo.DogInfoId }, null)</p>
+                }
+            </tr>
+            @if (Model.MedicationList.Count() == 0)
+            {
+            }
+            else
+            {
+                for (int i = 0; i < Model.MedicationList.Count(); i++)
+                {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Name)</th>
+                                    <th class="col-md-2">@Html.DisplayFor(model => model.MedicationList.ElementAt(i).Name)</th>
+                                    <td class="col-md-8">
+                                            @Html.ActionLink("Edit", "Edit", "Medication", new { id = Model.MedicationList.ElementAt(i).MedicationId }, null) |
+                                            @Html.ActionLink("Delete", "Delete", "Medication", new { id = Model.MedicationList.ElementAt(i).MedicationId }, null)
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Dose)</th>
+                                    <td class="col-md-2">@Html.DisplayFor(model => model.MedicationList.ElementAt(i).Dose)</td>
+                                    <td class="col-md-8"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).MorningMeal)</th>
+                                    <td class="col-md-2">@Html.DisplayFor(model => model.MedicationList.ElementAt(i).MorningMeal)</td>
+                                    <td class="col-md-8"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).EveningMeal)</th>
+                                    <td class="col-md-2">@Html.DisplayFor(model => model.MedicationList.ElementAt(i).EveningMeal)</td>
+                                    <td class="col-md-8"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="col-md-2">@Html.DisplayNameFor(model => model.MedicationList.ElementAt(i).Instructions)</th>
+                                    <td class="col-md-2">@Html.DisplayFor(model => model.MedicationList.ElementAt(i).Instructions)</td>
+                                    <td class="col-md-8"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 

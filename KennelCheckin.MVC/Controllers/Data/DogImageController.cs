@@ -13,9 +13,11 @@ using System.Drawing;
 using System.IO;
 using System.Web.Http;
 using Kennel.Data.Users;
+using System.Web.Security;
 
 namespace KennelCheckin.MVC.Controllers.Data
 {
+    [System.Web.Mvc.Authorize(Roles = "Owner,Admin")]
     public class DogImageController : Controller
     {
         private DogImageService CreateDogImageService()
